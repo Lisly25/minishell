@@ -1,0 +1,1 @@
+cc read_line.c -lreadline -L ~/.brew/opt/readline/lib -o minishell
