@@ -1,1 +1,1 @@
-cc read_line.c -lreadline -L ~/.brew/opt/readline/lib -o minishell
+cc *.c built_ins/*.c -lreadline -L ~/.brew/opt/readline/lib libft/libft.a -o minishell

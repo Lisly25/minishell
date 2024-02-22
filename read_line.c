@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/20 11:01:20 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/22 16:48:11 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	handle_signal(int sig)
 	}
 }
 
-int	main(void)
+int	main(int arc, char *argv[], char *env[])
 {
 	char	*line;
 
@@ -38,6 +38,16 @@ int	main(void)
 			break ;
 		}
 		add_history(line);
+		if (ft_strncmp(line, "cd", 2) == 0)
+			ft_cd(line + 3);
+		if (ft_strncmp(line, "env", 3) == 0)
+			ft_env(1, env);
+		if (ft_strncmp(line, "pwd", 3) == 0)
+			ft_print_pwd(1);
+		if (ft_strncmp(line, "echo -n", 7) == 0)
+			ft_echo(1, line, 1);
+		else if (ft_strncmp(line, "echo", 4) == 0)
+			ft_echo(1, line, 0);
 		free(line);
 	}
 	printf("exiting\n");
