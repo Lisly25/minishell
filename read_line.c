@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/22 16:48:11 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:26:33 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,11 @@ int	main(int arc, char *argv[], char *env[])
 			break ;
 		}
 		add_history(line);
+		if (ft_strncmp(line, "exit", 4) == 0)
+		{
+			free(line);
+			ft_exit();
+		}
 		if (ft_strncmp(line, "cd", 2) == 0)
 			ft_cd(line + 3);
 		if (ft_strncmp(line, "env", 3) == 0)
