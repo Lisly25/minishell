@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/22 15:27:58 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/22 15:52:43 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static int	check_if_quote_enclosed(char *str, int i)
 			return (1);
 		j++;
 	}
-	return (UNCLOSED_QUOTE_ERROR);
+	return (UNCLOSED_QUOTE_ERROR);//this should not happen, since we already check for it before
 }
 
 int	get_command_count(char *input)
@@ -92,7 +92,7 @@ int	get_command_count(char *input)
 	int	comm_count;
 
 	i = 0;
-	comm_count = 0;
+	comm_count = 1;
 	if (check_for_unclosed_quotes(input) == -1)
 		return (ft_parse_error("input error: unclosed quote"));
 	if (check_if_pipe_is_first_element(input) == -1)
@@ -107,4 +107,19 @@ int	get_command_count(char *input)
 		i++;
 	}
 	return (comm_count);
+}
+
+t_command	*init_command_array(char *input, int command_count)
+{
+	t_command	*comm_array;
+
+	comm_array = (t_command *)malloc(sizeof(t_quotes_comm **) + sizeof(t_no_quote_comm **));
+	if (comm_array == NULL)
+		ft_fatal_parse_error();//function not coded yet, but it should exit whole minishell
+	comm_array->no_quote_comms = init_no_quote_array();
+	if (comm_array->no_quote_comms == NULL)
+		ft_fatal_parse_error();
+	comm_array->quotes_comms = init_quotes_array();
+	if (comm_array->quotes_comms == NULL)
+		ft_fatal_parse_error();
 }
