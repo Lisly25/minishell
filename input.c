@@ -1,34 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read_line.c                                        :+:      :+:    :+:   */
+/*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/22 17:26:33 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/27 09:43:25 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	handle_signal(int sig)
+static int	exec_built_in(char *line, char **env)
 {
-	if (sig == SIGINT)
+	if (ft_strncmp(line, "exit", 4) == 0)
 	{
-		write(2, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
+		free(line);
+		ft_exit();
+		return (0);
 	}
+	if (ft_strncmp(line, "cd", 2) == 0)
+		return (ft_cd(line + 3));
+	if (ft_strncmp(line, "env", 3) == 0)
+		return (ft_env(1, env));
+	if (ft_strncmp(line, "pwd", 3) == 0)
+		return (ft_print_pwd(1));
+	if (ft_strncmp(line, "echo -n", 7) == 0)
+		return (ft_echo(1, (line + 7), 1));
+	else if (ft_strncmp(line, "echo", 4) == 0)
+		return (ft_echo(1, (line + 4), 0));
+	return (1);
 }
 
 int	main(int arc, char *argv[], char *env[])
 {
 	char	*line;
 
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, SIG_IGN);
+	init_signals();
 	while (1)
 	{
 		line = readline("minishell 🐢: ");
@@ -38,21 +47,11 @@ int	main(int arc, char *argv[], char *env[])
 			break ;
 		}
 		add_history(line);
-		if (ft_strncmp(line, "exit", 4) == 0)
+		if (exec_built_in(line, env) != 0)
 		{
 			free(line);
-			ft_exit();
+			return (write(2, "built-in error\n", 15));
 		}
-		if (ft_strncmp(line, "cd", 2) == 0)
-			ft_cd(line + 3);
-		if (ft_strncmp(line, "env", 3) == 0)
-			ft_env(1, env);
-		if (ft_strncmp(line, "pwd", 3) == 0)
-			ft_print_pwd(1);
-		if (ft_strncmp(line, "echo -n", 7) == 0)
-			ft_echo(1, line, 1);
-		else if (ft_strncmp(line, "echo", 4) == 0)
-			ft_echo(1, line, 0);
 		free(line);
 	}
 	printf("exiting\n");
