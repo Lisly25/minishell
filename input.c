@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/27 09:43:25 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:45:49 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,15 @@ static int	exec_built_in(char *line, char **env)
 	return (1);
 }
 
+
 int	main(int arc, char *argv[], char *env[])
 {
 	char	*line;
-
+	t_data	*data;
+	
 	init_signals();
+	data = init_data(env);
+	
 	while (1)
 	{
 		line = readline("minishell 🐢: ");
