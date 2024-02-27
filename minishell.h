@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/27 09:43:19 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/27 11:29:58 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,21 @@ void rl_clear_history (void);
 # include <stdio.h>
 # include <unistd.h>
 # include "libft/libft.h"
+
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}					t_env;
+
+typedef struct	s_data
+{
+	t_env	*env;
+}			t_data;
+
+//init.c
+t_data	*init_data(char *env[]);
 
 //input.c
 
