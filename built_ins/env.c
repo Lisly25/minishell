@@ -6,24 +6,25 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:51:32 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/22 16:56:16 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:52:01 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	ft_env(int fd, char *env[])
+int	ft_env(int fd, t_env *env)
 {
-	int	i;
-
-	i = 0;
-	while (env[i] != NULL)
+	while (env)
 	{
-		if (write(fd, env[i], ft_strlen(env[i])) != ft_strlen(env[i]))
-			return (1);
-		if (write(fd, "\n", 1) != 1)
-			return (1);
-		i ++;
+		if (write(fd, env->name, ft_strlen(env->name)) == -1)
+			return (write(2, "error displaying env\n", 21));
+		if (write(fd, "=", 1) == -1)
+			return (write(2, "error displaying env\n", 21));
+		if (write(fd, env->value, ft_strlen(env->value)) == -1)
+			return (write(2, "error displaying env\n", 21));
+		if (write(fd, "\n", 1) == -1)
+			return (write(2, "error displaying env\n", 21));
+		env = env->next;
 	}
 	return (0);
 }

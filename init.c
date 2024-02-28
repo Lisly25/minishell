@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:01:56 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/27 11:44:24 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:21:16 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,18 @@
 
 static void	add_to_back(t_env **list, t_env *new)
 {
-	t_env	*current;
+	t_env	*last;
 
-	current = *list;
-	if (current == NULL)
-		current = new;
-	while (current->next != NULL)
+	
+	if (*list == NULL)
 	{
-		printf("#\n");
-		current = current->next;
+		*list = new;
+		return ;
 	}
-	current->next = new;
+	last = *list;
+	while (last->next != NULL)
+		last = last->next;
+	last->next = new;
 }
 
 static t_env	*new_node(char *name, char *value)
@@ -34,8 +35,10 @@ static t_env	*new_node(char *name, char *value)
 	new_node = (t_env *) malloc(sizeof(t_env));
 	if (!new_node)
 		return (NULL);
-	new_node->name = name;
-	new_node->value = value;
+	// new_node->name = name;
+	new_node->name = ft_strdup(name);
+	new_node->value = ft_strdup(value);
+	// new_node->value = value;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -52,6 +55,8 @@ static t_env	*init_env(char *env[])
 	{
 		env_split = ft_split(env[i], '=');
 		add_to_back(&env_list, new_node(env_split[0], env_split[1]));
+		free(env_split[0]);
+		free(env_split[1]);
 		free(env_split);
 		i ++;
 	}

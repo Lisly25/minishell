@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:49:28 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/27 09:51:55 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:48:51 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	echo_loop(int fd, char **ptr, char **env, size_t *env_len)
 			if (*env)
 			{
 				*env_len = ft_strlen(*env);
-				if (write(fd, *env, *env_len) != *env_len)
+				if (write(fd, *env, *env_len) != (ssize_t) *env_len)
 					return (1);
 			}
 			while (ft_isprint(*str) && *str != ' ')

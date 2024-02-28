@@ -6,13 +6,13 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/27 11:45:49 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:45:22 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	exec_built_in(char *line, char **env)
+static int	exec_built_in(char *line, t_data *data)
 {
 	if (ft_strncmp(line, "exit", 4) == 0)
 	{
@@ -21,9 +21,9 @@ static int	exec_built_in(char *line, char **env)
 		return (0);
 	}
 	if (ft_strncmp(line, "cd", 2) == 0)
-		return (ft_cd(line + 3));
+		return (ft_cd(line + 3, data->env));
 	if (ft_strncmp(line, "env", 3) == 0)
-		return (ft_env(1, env));
+		return (ft_env(1, data->env));
 	if (ft_strncmp(line, "pwd", 3) == 0)
 		return (ft_print_pwd(1));
 	if (ft_strncmp(line, "echo -n", 7) == 0)
@@ -34,14 +34,17 @@ static int	exec_built_in(char *line, char **env)
 }
 
 
-int	main(int arc, char *argv[], char *env[])
+int	main(int argc, char *argv[], char *env[])
 {
 	char	*line;
 	t_data	*data;
 	
 	init_signals();
+	argc += 0;
+	argv += 0;
 	data = init_data(env);
-	
+	if (data->env == NULL)
+		printf("env is NULL\n");
 	while (1)
 	{
 		line = readline("minishell 🐢: ");
@@ -51,7 +54,7 @@ int	main(int arc, char *argv[], char *env[])
 			break ;
 		}
 		add_history(line);
-		if (exec_built_in(line, env) != 0)
+		if (exec_built_in(line, data) != 0)
 		{
 			free(line);
 			return (write(2, "built-in error\n", 15));
@@ -59,5 +62,7 @@ int	main(int arc, char *argv[], char *env[])
 		free(line);
 	}
 	printf("exiting\n");
+	free_env_list(data->env);
+	free(data);
 	return (0);
 }

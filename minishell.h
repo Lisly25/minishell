@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/27 11:29:58 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:01:00 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_data	*init_data(char *env[]);
 
 //utils.c
 char	*expand_env(char *str);
+void	free_env_list(t_env *env_list);
 
 //signals.c
 void	init_signals(void);
@@ -55,10 +56,10 @@ char	*get_pwd(void);
 int		ft_print_pwd(int fd);
 
 //env.c
-int		ft_env(int fd, char *env[]);
+int		ft_env(int fd, t_env *env);
 
 //cd.c
-int		ft_cd(char *path);
+int		ft_cd(char *path, t_env *env);
 
 //exit.c
 void	ft_exit(void);

@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:59:29 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/22 16:56:03 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 08:30:06 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,25 @@ static char	*get_cd_path(char *input)
 	return (path);
 }
 
-int ft_cd(char *input)
+static void	update_pwd(char **new_pwd, t_env **env)
+{
+	t_env	*list;
+	char	*pwd;
+
+	list = *env;
+	while (ft_strncmp(list->name, "PWD", 3) != 0)
+		list = list->next;
+	pwd = ft_strdup(list->value);
+	free(list->value);
+	list->value = ft_strdup(*new_pwd);
+	list = *env;
+	while (ft_strncmp(list->name, "OLDPWD", 6) != 0)
+		list = list->next;
+	free(list->value);
+	list->value = pwd;
+}
+
+int ft_cd(char *input, t_env *env)
 {
 	char	*path;
 
@@ -75,6 +93,7 @@ int ft_cd(char *input)
 		free(path);
 		return (1);
 	}
+	update_pwd(&path, &env);
 	if (ft_strncmp(input, path, ft_strlen(input)) != 0)
 		free(path);
 	return (0);
