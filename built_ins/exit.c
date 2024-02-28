@@ -6,14 +6,14 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:23:17 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/22 17:27:13 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 09:15:08 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	ft_exit(void)
+void	ft_exit(int status)
 {
 	printf("exiting\n");
-	exit(1);
+	exit(status);
 }

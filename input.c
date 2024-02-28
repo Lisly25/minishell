@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 08:45:22 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 09:25:02 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,14 @@
 
 static int	exec_built_in(char *line, t_data *data)
 {
-	if (ft_strncmp(line, "exit", 4) == 0)
+	if (ft_strncmp(line, "exit", 4) == 0 && ft_strlen(line) == 4)
 	{
-		free(line);
-		ft_exit();
+		ft_exit(0);
+		return (0);
+	}
+	if (ft_strncmp(line, "exit ", 5) == 0)
+	{
+		ft_exit(ft_atoi(line + 5));
 		return (0);
 	}
 	if (ft_strncmp(line, "cd", 2) == 0)

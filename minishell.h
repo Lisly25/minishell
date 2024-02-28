@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 08:01:00 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 09:16:26 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,6 @@ int		ft_env(int fd, t_env *env);
 int		ft_cd(char *path, t_env *env);
 
 //exit.c
-void	ft_exit(void);
+void	ft_exit(int status);
 
 #endif
