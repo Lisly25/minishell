@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 12:06:13 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:12:17 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,9 @@ t_command	*init_command_array(char *input, int command_count)
 	sizeof(t_unsanit_comm *));
 	if (commands == NULL)
 		ft_fatal_parse_error_str_free(input, "malloc error", 1);
+	commands->comm_count = get_command_count(input);
+	if (commands->comm_count == -1)
+		return (NULL);
 	commands->sanit_comms = init_sanitized_array();
 	if (commands->sanit_comms == NULL)
 	{
