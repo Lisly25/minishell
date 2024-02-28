@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 13:14:55 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:02:55 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_sanit_comm
 	char	append_file_output;
 	char	*infile;
 	char	*outfile;
+	char	*hdoc_limiter;
 	char	**command;
 	pid_t	child_id;
 }	t_sanit_comm;
@@ -38,6 +39,7 @@ typedef struct s_unsanit_comm
 	char	append_file_output;
 	char	*infile;
 	char	*outfile;
+	char	*hdoc_limiter;
 	char	**command;
 	pid_t	child_id;
 }	t_unsanit_comm;
