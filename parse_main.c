@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/22 15:45:36 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:13:02 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ t_command	*parser_main(char *input)
 	if (command_count == -1)
 		return (NULL);
 	full_command = init_command_array(input, command_count);
-	//if (full_command == NULL)
-	//	return (NULL);
+	if (full_command == NULL)
+	{
+		free(input);
+		return (NULL);
+	}
 }
