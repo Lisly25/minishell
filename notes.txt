@@ -1,0 +1,1 @@
+You can redirect output and STILL use pipes! -> or at least it will seem so, but the output redirection has priority, the second command will not get the input in such a case
