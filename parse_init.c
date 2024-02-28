@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 11:22:05 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/28 12:00:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,3 +133,4 @@ t_command	*init_command_array(char *input, int command_count)
 	free(input);
 	return (commands);
 }
+//This is for testing pull requests
