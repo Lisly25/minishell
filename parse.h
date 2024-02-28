@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 11:20:17 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/28 13:14:55 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_command
 {
 	t_sanit_comm	*sanit_comms;
 	t_unsanit_comm	*unsanit_comms;
+	int				comm_count;
 }	t_command;
 
 int		ft_parse_error(char *str);
@@ -54,6 +55,6 @@ int		check_for_unclosed_quotes(char *str);
 int		ft_fatal_parse_error_str_free(char *str, char *message, int exit_code);
 void	ft_free_2d_array(char **arr);//move this to minishell.h later!
 int		ft_free_comm_struct(void *struc, int mode);
-int		ft_fatal_parse_error_structs_free(t_command *comms, char *msg, int code);
+int		ft_fatal_parse_error_structs_free(t_command *comm, char *msg, int code);
 
 #endif
