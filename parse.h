@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 17:02:55 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/28 17:12:39 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 
 # define MALLOC_ERROR 2
 # define UNCLOSED_QUOTE_ERROR 3
+# define SYNTAX_ERROR 258
 
 typedef struct s_sanit_comm
 {
