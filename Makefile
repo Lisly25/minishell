@@ -23,7 +23,7 @@ $(LIBFT):
 $(NAME):	$(OBJS) $(LIBFT) $(HEADER)
 				@$(CC) $(OBJS) $(LIBFT) -lreadline -L $(RL_PATH) -o $(NAME)
 				@echo "🐢🐢🐢🐢🐢🐢🐢🐢🐢"
-				@echo "🐢 compiled ! 🐢"
+				@echo "🐢  compiled !  🐢"
 				@echo "🐢🐢🐢🐢🐢🐢🐢🐢🐢"
 
 %.o:		%.c
