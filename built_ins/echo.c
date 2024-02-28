@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:49:28 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 08:48:51 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:11:45 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,14 @@ static int	echo_loop(int fd, char **ptr, char **env, size_t *env_len)
 	return (0);
 }
 
+int	ft_echo(int fd, char *str)
+{
+	if (write(fd, str, ft_strlen(str)) != (ssize_t) ft_strlen(str))
+		return (write(2, "echo error\n", 11));
+	return (0);
+}
 
-int	ft_echo(int fd, char *str, int flag)
+int	ft_old_echo(int fd, char *str, int flag)
 {
 	char 	*env;
 	size_t	env_len;
