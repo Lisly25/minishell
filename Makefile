@@ -10,11 +10,13 @@ SRCS	=	init.c \
 			built_ins/env.c \
 			built_ins/exit.c \
 			built_ins/pwd.c \
-			built_ins/export.c
+			built_ins/export.c \
+			built_ins/export_utils.c
 OBJS	=	$(SRCS:.c=.o)
 HEADER	=	minishell.h
 RL_PATH	=	~/.brew/opt/readline/lib
 LIBFT	=	libft/libft.a
+FSAN	=	-g -fsanitize=address -static-libsan
 
 all:		$(NAME)
 
@@ -29,6 +31,9 @@ $(NAME):	$(OBJS) $(LIBFT) $(HEADER)
 
 %.o:		%.c
 				@$(CC) $(CFLAGS) -c $< -o $@
+
+san:		
+				@$(CC) $(CFLAGS) $(FSAN) $(SRCS) $(LIBFT) -lreadline -L $(RL_PATH) -o san
 
 clean:
 				@rm -f $(OBJS)
