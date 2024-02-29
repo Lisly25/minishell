@@ -11,12 +11,14 @@ SRCS	=	init.c \
 			built_ins/exit.c \
 			built_ins/pwd.c \
 			built_ins/export.c \
+			built_ins/export_utils.c \
 			parse_split.c \
 			parse_split_utils.c
 OBJS	=	$(SRCS:.c=.o)
 HEADER	=	minishell.h
 RL_PATH	=	~/.brew/opt/readline/lib
 LIBFT	=	libft/libft.a
+FSAN	=	-g -fsanitize=address -static-libsan
 
 all:		$(NAME)
 
@@ -32,6 +34,9 @@ $(NAME):	$(OBJS) $(LIBFT) $(HEADER)
 %.o:		%.c
 				@$(CC) $(CFLAGS) -c $< -o $@
 
+san:		
+				@$(CC) $(CFLAGS) $(FSAN) $(SRCS) $(LIBFT) -lreadline -L $(RL_PATH) -o san
+
 clean:
 				@rm -f $(OBJS)
 				@make clean -C ./libft
@@ -46,4 +51,4 @@ tidymake:
 				@make all
 				@make clean
 
-.PHONY:		all clean fclean re tidymake
+.PHONY:		all clean fclean re tidymake san
