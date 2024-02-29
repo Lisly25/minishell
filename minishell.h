@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 09:16:26 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:46:14 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void rl_clear_history (void);
 # include <stdio.h>
 # include <unistd.h>
 # include "libft/libft.h"
+# include "parse.h"
 
 typedef struct s_env
 {
@@ -49,7 +50,8 @@ void	free_env_list(t_env *env_list);
 void	init_signals(void);
 
 //echo.c
-int		ft_echo(int fd, char *str, int flag);
+int		ft_echo(int fd, char *str);
+int		ft_old_echo(int fd, char *str, int flag);
 
 //pwd.c
 char	*get_pwd(void);

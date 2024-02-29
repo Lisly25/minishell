@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 09:25:02 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/28 11:10:06 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ static int	exec_built_in(char *line, t_data *data)
 		return (ft_env(1, data->env));
 	if (ft_strncmp(line, "pwd", 3) == 0)
 		return (ft_print_pwd(1));
-	if (ft_strncmp(line, "echo -n", 7) == 0)
-		return (ft_echo(1, (line + 7), 1));
 	else if (ft_strncmp(line, "echo", 4) == 0)
-		return (ft_echo(1, (line + 4), 0));
+		return (ft_echo(1, (line + 4)));
 	return (1);
 }
 

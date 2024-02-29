@@ -4,7 +4,7 @@ CFLAGS	=	-Wall -Wextra -Werror
 SRCS	=	init.c \
 			input.c \
 			signals.c \
-			utils.c \
+			builtin_utils.c \
 			built_ins/cd.c \
 			built_ins/echo.c \
 			built_ins/env.c \
