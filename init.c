@@ -6,13 +6,13 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:01:56 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 11:03:00 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:31:09 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	add_to_back(t_env **list, t_env *new)
+void	add_to_back(t_env **list, t_env *new)
 {
 	t_env	*last;
 
@@ -27,7 +27,7 @@ static void	add_to_back(t_env **list, t_env *new)
 	last->next = new;
 }
 
-static t_env	*new_node(char *name, char *value)
+t_env	*new_node(char *name, char *value)
 {
 	t_env	*new_node;
 
@@ -35,9 +35,26 @@ static t_env	*new_node(char *name, char *value)
 	if (!new_node)
 		return (NULL);
 	new_node->name = ft_strdup(name);
-	new_node->value = ft_strdup(value);
+	if (value == NULL)
+		new_node->value = NULL;
+	else
+		new_node->value = ft_strdup(value);
+	new_node->printed = 0;
 	new_node->next = NULL;
 	return (new_node);
+}
+
+int		get_list_size(t_env *list)
+{
+	int	size;
+
+	size = 0;
+	while (list)
+	{
+		size ++;
+		list = list->next;
+	}
+	return (size);
 }
 
 static t_env	*init_env(char *env[])

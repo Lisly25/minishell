@@ -10,6 +10,7 @@ SRCS	=	init.c \
 			built_ins/env.c \
 			built_ins/exit.c \
 			built_ins/pwd.c \
+			built_ins/export.c \
 			parse_split.c \
 			parse_split_utils.c
 OBJS	=	$(SRCS:.c=.o)

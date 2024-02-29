@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 11:10:06 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:58:52 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,15 @@ static int	exec_built_in(char *line, t_data *data)
 		return (0);
 	}
 	if (ft_strncmp(line, "cd", 2) == 0)
-		return (ft_cd(line + 3, data->env));
+		return (ft_cd(line + 3, &(data->env)));
 	if (ft_strncmp(line, "env", 3) == 0)
 		return (ft_env(1, data->env));
 	if (ft_strncmp(line, "pwd", 3) == 0)
 		return (ft_print_pwd(1));
+	if (ft_strncmp(line, "export ", 7) == 0)
+		return (ft_export(1, line + 7, &(data->env)));
+	if (ft_strncmp(line, "export", 6) == 0)
+		return (ft_export(1, NULL, &(data->env)));
 	else if (ft_strncmp(line, "echo", 4) == 0)
 		return (ft_echo(1, (line + 4)));
 	return (1);
@@ -64,7 +68,7 @@ int	main(int argc, char *argv[], char *env[])
 		free(line);
 	}
 	printf("exiting\n");
-	free_env_list(data->env);
+	free_env_list(&(data->env));
 	free(data);
 	return (0);
 }
