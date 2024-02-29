@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 17:12:39 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/29 11:56:13 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,9 @@ int		ft_fatal_parse_error_str_free(char *str, char *message, int exit_code);
 void	ft_free_2d_array(char **arr);//move this to minishell.h later!
 int		ft_free_comm_struct(void *struc, int mode);
 int		ft_fatal_parse_error_structs_free(t_command *comm, char *msg, int code);
+char	**ft_quoted_split(char *s);
+int		count_qsplit_frag_len(char *str, int i);
+char	**qsplit_free_and_null(char **result);
+int		update_main_split_post_cpy(char *s, int i);
 
 #endif
