@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:52:30 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/29 11:51:58 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/29 13:30:03 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	count_qsplit_frag_len(char *str, int i)
 			}
 		}
 		i++;
+		len++;
 	}
 	return (len);
 }
