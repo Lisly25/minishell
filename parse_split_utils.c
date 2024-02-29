@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:52:30 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/29 13:30:03 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/29 14:25:25 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	count_qsplit_frag_len(char *str, int i)
 		else if (str[i] == '\'' || str[i] == '\"')
 		{
 			quote = str[i];
+			//ft_printf("%c found at %d\n", quote, i);
 			i++;
 			len++;
 			while (str[i] != quote)
@@ -57,14 +58,19 @@ int	update_main_split_post_cpy(char *s, int i)
 	while (s[i] != '\0')
 	{
 		if (s[i] == ' ')
+		{
+			//ft_printf("Main split should now be at %d\n", i);
 			return (i);
+		}
 		if (s[i] == '\'' || s[i] == '\"')
 		{
 			quote = s[i];
+			i++;
 			while (s[i] != quote)
 				i++;
 		}
 		i++;
 	}
+	//ft_printf("Main split should now be at %d\n", i);
 	return (i);
 }

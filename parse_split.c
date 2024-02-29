@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:02:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/29 13:52:53 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/29 14:24:38 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ static char	*quote_split_strdup(char *str, int i)
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			quote = str[i];
+			result[j++] = str[i++];
 			while (str[i] != quote)
 				result[j++] = str[i++];
 		}
