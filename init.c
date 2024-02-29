@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:01:56 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 11:56:07 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:31:09 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_env	*new_node(char *name, char *value)
 		new_node->value = NULL;
 	else
 		new_node->value = ft_strdup(value);
-	new_node->order = -1;
+	new_node->printed = 0;
 	new_node->next = NULL;
 	return (new_node);
 }
@@ -55,30 +55,6 @@ int		get_list_size(t_env *list)
 		list = list->next;
 	}
 	return (size);
-}
-
-static void		add_order(t_env **list)
-{
-	int		i;
-	t_env	*ptr;
-	t_env	*current_smallest;
-
-	i = 0;
-	ptr = *list;
-	while (i < get_list_size(*list))
-	{
-		current_smallest = ptr;
-		while (current_smallest->order != -1)
-			current_smallest = current_smallest->next;
-		while (ptr)
-		{
-			if (ptr->name[0] < current_smallest->name[0] && ptr->order == -1)
-				current_smallest = ptr;
-			ptr = ptr->next;
-		}
-		current_smallest->order = i++;
-		ptr = *list;
-	}
 }
 
 static t_env	*init_env(char *env[])
@@ -98,7 +74,6 @@ static t_env	*init_env(char *env[])
 		free(env_split);
 		i ++;
 	}
-	add_order(&env_list);
 	return (env_list);
 }
 

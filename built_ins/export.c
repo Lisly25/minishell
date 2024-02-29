@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:13:17 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 12:39:44 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:30:49 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,55 @@ static void	display_one_var(int fd, t_env *ptr)
 	write(fd, "\n", 1);
 }
 
-static void	display_vars(int fd, t_env *env)
+static int	all_printed(t_env **env)
 {
 	t_env	*ptr;
-	int		i;
 
-	i = 0;
-	ptr = env;
+	ptr = *env;
 	while (ptr)
 	{
-		if (ptr->order == i)
-		{
-			display_one_var(fd, ptr);
-			i ++;
-			ptr = env;
-		}
-		else
-			ptr = ptr->next;
+		if (ptr->printed == 0)
+			return (0);
+		ptr = ptr->next;
 	}
+	return (1);
+}
+
+static void	reset_printed(t_env **env)
+{
+	t_env	*ptr;
+
+	ptr = *env;
+	while (ptr)
+	{
+		ptr->printed = 0;
+		ptr = ptr->next;
+	}
+}
+
+static void	display_vars(int fd, t_env **env)
+{
+	t_env	*ptr;
+	t_env	*smallest;
+	
+	if (!*env)
+		return ;
+	while (!all_printed(env))
+	{
+		ptr = *env;
+		while (ptr->printed)
+			ptr ++;
+		smallest = ptr;
+		while (ptr)
+		{
+			if (ft_strncmp(ptr->name, smallest->name, INT_MAX) <= 0 && !ptr->printed)
+				smallest = ptr;
+			ptr = ptr->next;
+		}
+		display_one_var(fd, smallest);
+		smallest->printed = 1;
+	}
+	reset_printed(env);
 }
 
 static int	add_var(char *arg, t_env **env)
@@ -68,7 +99,7 @@ static int	add_var(char *arg, t_env **env)
 	}
 	new_name = arg;
 	node = new_node(new_name, new_value);
-	node->order = get_list_size(*env);
+	node->printed = 0;
 	add_to_back(env, node);
 	return (0);
 }
@@ -101,7 +132,7 @@ static void	ammend_var(char *arg, t_env **env)
 int	ft_export(int fd, char *arg, t_env **env)
 {
 	if (!arg)
-		display_vars(fd, *env);
+		display_vars(fd, env);
 	else if (already_in_list(arg, *env))
 		ammend_var(arg, env);
 	else

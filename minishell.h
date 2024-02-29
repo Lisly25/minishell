@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 12:40:37 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 14:17:08 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,13 @@ void rl_clear_history (void);
 # include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <limits.h>
 # include "libft/libft.h"
 # include "parse.h"
 
 typedef struct s_env
 {
-	int				order;
+	int				printed;
 	char			*name;
 	char			*value;
 	struct s_env	*next;
