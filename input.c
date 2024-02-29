@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 11:58:52 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:51:52 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ static int	exec_built_in(char *line, t_data *data)
 		return (ft_export(1, line + 7, &(data->env)));
 	if (ft_strncmp(line, "export", 6) == 0)
 		return (ft_export(1, NULL, &(data->env)));
+	if (ft_strncmp(line, "unset ", 6) == 0)
+		return (ft_unset((line + 6), &(data->env)));
+	if (ft_strncmp(line, "unset", 5) == 0)
+		return (ft_unset(NULL, &(data->env)));
 	else if (ft_strncmp(line, "echo", 4) == 0)
 		return (ft_echo(1, (line + 4)));
 	return (1);

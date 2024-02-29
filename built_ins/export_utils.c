@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:58:00 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 14:59:37 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:36:31 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	display_vars(int fd, t_env **env)
 		smallest = ptr;
 		while (ptr)
 		{
-			if (ft_strncmp(ptr->name, smallest->name, 100) <= 0 && !ptr->printed)
+			if (ft_strncmp(ptr->name, smallest->name, INT_MAX) <= 0 && !ptr->printed)
 				smallest = ptr;
 			ptr = ptr->next;
 		}

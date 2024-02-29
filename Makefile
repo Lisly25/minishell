@@ -10,6 +10,7 @@ SRCS	=	init.c \
 			built_ins/env.c \
 			built_ins/exit.c \
 			built_ins/pwd.c \
+			built_ins/unset.c \
 			built_ins/export.c \
 			built_ins/export_utils.c
 OBJS	=	$(SRCS:.c=.o)
