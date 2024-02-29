@@ -17,7 +17,10 @@ int	main(int argc, char **argv)
 	char	**result;
 
 	if (argc != 2)
+	{
 		ft_printf("Please put the whole command as one argument\n");
+		exit(1);
+	}
 	result = ft_quoted_split(argv[1]);
 	print_arr(result);
 }
