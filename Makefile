@@ -9,7 +9,8 @@ SRCS	=	init.c \
 			built_ins/echo.c \
 			built_ins/env.c \
 			built_ins/exit.c \
-			built_ins/pwd.c
+			built_ins/pwd.c \
+			built_ins/export.c
 OBJS	=	$(SRCS:.c=.o)
 HEADER	=	minishell.h
 RL_PATH	=	~/.brew/opt/readline/lib

@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:59:29 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 08:30:06 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:45:57 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	update_pwd(char **new_pwd, t_env **env)
 	list->value = pwd;
 }
 
-int ft_cd(char *input, t_env *env)
+int ft_cd(char *input, t_env **env)
 {
 	char	*path;
 
@@ -93,7 +93,7 @@ int ft_cd(char *input, t_env *env)
 		free(path);
 		return (1);
 	}
-	update_pwd(&path, &env);
+	update_pwd(&path, env);
 	if (ft_strncmp(input, path, ft_strlen(input)) != 0)
 		free(path);
 	return (0);

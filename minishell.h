@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 11:46:14 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 12:40:37 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void rl_clear_history (void);
 
 typedef struct s_env
 {
+	int				order;
 	char			*name;
 	char			*value;
 	struct s_env	*next;
@@ -38,13 +39,17 @@ typedef struct	s_data
 }			t_data;
 
 //init.c
+int		get_list_size(t_env *list);
+t_env	*new_node(char *name, char *value);
+void	add_to_back(t_env **list, t_env *new);
 t_data	*init_data(char *env[]);
 
 //input.c
 
-//utils.c
+//built_utils.c
 char	*expand_env(char *str);
-void	free_env_list(t_env *env_list);
+void	free_env_list(t_env **env_list);
+int		already_in_list(char *arg, t_env *env);
 
 //signals.c
 void	init_signals(void);
@@ -61,9 +66,12 @@ int		ft_print_pwd(int fd);
 int		ft_env(int fd, t_env *env);
 
 //cd.c
-int		ft_cd(char *path, t_env *env);
+int		ft_cd(char *path, t_env **env);
 
 //exit.c
 void	ft_exit(int status);
+
+//export.c
+int		ft_export(int fd, char *arg, t_env **env);
 
 #endif
