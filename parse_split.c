@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:02:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/29 12:06:38 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/29 13:52:53 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static char	**init_result(char *str)
 	frag_count = count_frags(str);
 	if (frag_count == -1)
 		return (NULL);//This should NOT happen, since we check for unclosed quotes when we split along the pipes
-	result = (char **)malloc((sizeof(char *) * count_frags(str)) + 1);
+	result = (char **)malloc((sizeof(char *) * (frag_count + 1)));
 	return (result);
 }
 
@@ -96,6 +96,7 @@ static char	*quote_split_strdup(char *str, int i)
 		}
 		result[j++] = str[i++];
 	}
+	result[j] = '\0';
 	return (result);
 }
 
