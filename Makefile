@@ -10,7 +10,9 @@ SRCS	=	init.c \
 			built_ins/env.c \
 			built_ins/exit.c \
 			built_ins/pwd.c \
-			built_ins/export.c
+			built_ins/export.c \
+			parse_split.c \
+			parse_split_utils.c
 OBJS	=	$(SRCS:.c=.o)
 HEADER	=	minishell.h
 RL_PATH	=	~/.brew/opt/readline/lib
@@ -39,4 +41,9 @@ fclean:		clean
 
 re:			fclean all
 
-.PHONY:		all clean fclean re
+tidymake:	
+				@make fclean
+				@make all
+				@make clean
+
+.PHONY:		all clean fclean re tidymake
