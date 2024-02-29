@@ -1,1 +1,72 @@
-You can redirect output and STILL use pipes! -> or at least it will seem so, but the output redirection has priority, the second command will not get the input in such a case
+1. You can redirect output and STILL use pipes! -> or at least it will seem so, but the output redirection has priority:
+
+	- if you redirect the input, the previous commands' output won't matter
+	- if you redirect the output, the commands "downstream" won't get the output, it will just be in the file
+
+2. Input redirection (< or <<):
+	- normal input redirection has to be at the beginning of the line, and is always followed by the input file, then the command
+	- heredoc can be both at the front of the line, or following the command:
+		case 1: $ << LIMITER command
+
+		case 2: $ command << LIMITER
+	- but the two '<' signs in the case of heredoc must be right next to each other, or:
+
+		"bash: syntax error near unexpected token `<'"
+	
+	- single "<" in the wrong place will be interpreted (or attempted to) as if it were a command
+
+	- if single '<' OR double "<<" is at the end of the command:
+
+		"bash: syntax error near unexpected token `newline'"
+
+	- heredoc redirection can even be after the output redirection and the command, but should be followed by the LIMITER. Such as:
+
+		minishell$ > output2.txt cat << END
+
+	- this is wild, but should we also just handle redirections to any fd? Technically, the stdin and the stdout are just the "default", but you can also redirect any fd as input or output
+
+3. Error codes
+
+	- syntax error is 258, and I added a macro for it
+		- but since that is an exit code, it feels like even though we know that's an error, we should launch a child process and have it exit with that code and message?
+		- but what if it's an error regarding the pipe symbol?
+
+4. bash builtins and quotes
+
+	- from what I can tell, when looking for quotes, the string is just parsed left to right even when a quote is found - it won't start looking from the back. With nested quotes, this means that
+
+			minishell>$ echo Hello '$PWD'$PWD'$PWD'
+
+		will return
+
+			minishell>$ Hello $PWD/Users/skorbai/new dir$PWD
+
+		And it seems that once it finds a type of quote, it will just keep looking for a pair for that instead of dealing with another type of code along the way. For example:
+
+			minishell>$ echo Hello "$PWD'$PWD'$PWD"
+
+		will return
+
+			minishell>$ Hello /Users/skorbai/new dir'/Users/skorbai/new dir'/Users/skorbai/new dir
+
+		Flipping the quote types still seems to allude to this pattern:
+
+			minishell>$ echo Hello '$PWD"$PWD"$PWD'
+
+		returns:
+
+			minishell>$ Hello $PWD"$PWD"$PWD
+
+5. Splitting
+
+	- how I think that the splitting needs to be done, with quotes in mind, is to split along spaces BUT protect spaces inside quotes
+
+	- sanitizing the spaces or not is only going to be the next step
+
+	- so, in a case where the quotes are not surrounded by spaces, they should all be one string. Example:
+
+			minishell>$ echo Hello      w"orld"
+
+		returns:
+
+			Hello world
