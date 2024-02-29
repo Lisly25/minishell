@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:02:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/29 14:24:38 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/29 14:47:17 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	handle_quotes(char *str, int i)
 		i++;
 		while (str[i] != '\0' && str[i] != '\'')
 			i++;
-		if (i == ft_strlen(str))
+		if (i == (int)ft_strlen(str))
 			return (-1);
 		else
 			return (i);
@@ -29,7 +29,7 @@ static int	handle_quotes(char *str, int i)
 		i++;
 		while (str[i] != '\0' && str[i] != '\"')
 			i++;
-		if (i == ft_strlen(str))
+		if (i == (int)ft_strlen(str))
 			return (-1);
 		else
 			return (i);
@@ -45,7 +45,7 @@ static int	count_frags(char *s)
 	count = 1;
 	while (s[i] != '\0' && s[i] == ' ')
 		i++;
-	if (i == ft_strlen(s))
+	if (i == (int)ft_strlen(s))
 		return (0);
 	while (s[i] != '\0')
 	{
