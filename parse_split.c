@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:02:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/29 11:49:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/02/29 12:06:38 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static int	count_frags(char *s)
 	return (count);
 }
 
-char	**init_result(char str)
+static char	**init_result(char *str)
 {
 	char	**result;
 	int		frag_count;
@@ -74,7 +74,7 @@ char	**init_result(char str)
 	return (result);
 }
 
-char	*quote_split_strdup(char *str, int i)
+static char	*quote_split_strdup(char *str, int i)
 {
 	char	*result;
 	int		j;
