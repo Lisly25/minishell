@@ -6,75 +6,77 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:03:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 17:26:24 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/01 17:06:31 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	find_redir_mid_input(char *str, t_command *commands)
+static void	get_input_source(char **input, int i, t_sanit_comm *cmd)
 {
+	size_t	j;
+
+	j = 0;
+	while (input[i][j] != '<')
+		j++;
+	if (input[i][j] != '\0')
+		j++;
+	if (input[i][j] == '<')
+	{
+		cmd->file_input = 'N';
+		cmd->heredoc_input = 'Y';
+	}
+	else
+	{
+		cmd->file_input = 'Y';
+		cmd->heredoc_input = 'N';
+	}
+	//we'll next need to check the next array to ther "right" of 'i':
+	// - if 'i' was last, then: syntax error near unexpected token `newline'
+	// - if not, then it'll either be de delimiter or the infile
+}
+
+static void	get_input_mode_sanit(char **input, t_sanit_comm *cmd)
+{
+	//format is <word, where word will be the input file
+	//there can be several in one command, and always the last one will take precedent
 	int	i;
 
-	i = ft_strlen(str) - 1;
-	while (str[i] != '\0')
+	i = ft_get_arr_size;
+	while (i >= 0)
 	{
-		if (str[i] == '<')
+		if (ft_strrchr(input[i], '<') != NULL)
 		{
-			if (i != 0 && str[--i] == '<')
+			if (check_if_quote_enclosed(input[i], i) == 0)
 			{
-				commands->sanit_comms->heredoc_input = 'Y';
-				commands->sanit_comms->file_input = 'N';
-			}
-			else
+				get_input_source(input, i, cmd);
 				return ;
+			}
 		}
 		i--;
 	}
+	cmd->file_input = 'N';
+	cmd->heredoc_input = 'N';
 }
 
-static void	get_input_mode_sanit(char *str, t_command *commands)
+int	get_input_sanit(char *str, t_sanit_comm *commands)
 {
-	int	i;
+	int		result;
+	char	**split_input;
 
-	i = 0;
-	while (str[i] != '\0' && str[i] == ' ')
-		i++;
-	if (str[i] == '<')
+	split_input = ft_quoted_split(str);
+	if (split_input == NULL)
+		return (-1);
+	if (check_for_max_consequitve_chars(split_input, '<') > 2)
 	{
-		if (str[++i] == '<')
-		{
-			commands->sanit_comms->heredoc_input = 'Y';
-			commands->sanit_comms->file_input = 'N';
-		}
-		else
-		{
-			commands->sanit_comms->heredoc_input = 'N';
-			commands->sanit_comms->file_input = 'Y';
-		}
+		ft_free_2d_array(split_input);
+		ft_parse_error("syntax error near unexpected token `<<'");
 	}
-	else
-	{
-		find_redir_mid_input(str, commands);
-		commands->sanit_comms->heredoc_input = 'N';
-		commands->sanit_comms->file_input = 'N';
-	}
-}
-
-static int	get_infile_sanit(char *str, t_command *commands)
-{
-	// I should flag the syntax errors at some point - where a single < is in the middle of the string for example. But where best do it???
-}
-
-void	get_input_sanit(char *str, t_command *commands)
-{
-	int	result;
-
-	get_input_mode_sanit(str, commands);
-	if (commands->sanit_comms->file_input == 'Y')
+	get_input_mode_sanit(split_input, commands);
+	if (commands->file_input == 'Y')
 		result = get_infile_sanit(str, commands);
-	else if (commands->sanit_comms->heredoc_input == 'Y')
+	else if (commands->heredoc_input == 'Y')
 		result = get_hdoc_limiter_sanit(str, commands);
 	else
-		return ;
+		return (result);
 }
