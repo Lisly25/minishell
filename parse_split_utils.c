@@ -6,13 +6,13 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:52:30 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/29 14:25:25 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/01 11:45:06 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	count_qsplit_frag_len(char *str, int i)
+int	count_qsplit_frag_len(char *str, int i, char limiter)
 {
 	int		len;
 	char	quote;
@@ -20,12 +20,11 @@ int	count_qsplit_frag_len(char *str, int i)
 	len = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == ' ')
+		if (str[i] == limiter)
 			return (len);
 		else if (str[i] == '\'' || str[i] == '\"')
 		{
 			quote = str[i];
-			//ft_printf("%c found at %d\n", quote, i);
 			i++;
 			len++;
 			while (str[i] != quote)
@@ -51,17 +50,14 @@ char	**qsplit_free_and_null(char **result)
 	return (NULL);
 }
 
-int	update_main_split_post_cpy(char *s, int i)
+int	update_main_split_post_cpy(char *s, int i, char limiter)
 {
 	char	quote;
 
 	while (s[i] != '\0')
 	{
-		if (s[i] == ' ')
-		{
-			//ft_printf("Main split should now be at %d\n", i);
+		if (s[i] == limiter)
 			return (i);
-		}
 		if (s[i] == '\'' || s[i] == '\"')
 		{
 			quote = s[i];
@@ -71,6 +67,5 @@ int	update_main_split_post_cpy(char *s, int i)
 		}
 		i++;
 	}
-	//ft_printf("Main split should now be at %d\n", i);
 	return (i);
 }

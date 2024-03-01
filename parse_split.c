@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:02:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/29 14:47:17 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/01 11:44:15 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,19 +74,19 @@ static char	**init_result(char *str)
 	return (result);
 }
 
-static char	*quote_split_strdup(char *str, int i)
+char	*quote_split_strdup(char *str, int i, char limiter)
 {
 	char	*result;
 	int		j;
 	char	quote;
 
 	j = 0;
-	result = (char *)malloc(count_qsplit_frag_len(str, i) + 1);
+	result = (char *)malloc(count_qsplit_frag_len(str, i, limiter) + 1);
 	if (result == NULL)
 		return (NULL);
 	while (str[i] != '\0')
 	{
-		if (str[i] == ' ')
+		if (str[i] == limiter)
 			break ;
 		if (str[i] == '\'' || str[i] == '\"')
 		{
@@ -116,11 +116,11 @@ char	**ft_quoted_split(char *s)
 	{
 		if (s[i] != ' ')
 		{
-			result[j] = quote_split_strdup(s, i);
+			result[j] = quote_split_strdup(s, i, ' ');
 			if (result[j] == NULL)
 				return (qsplit_free_and_null(result));
 			j++;
-			i = update_main_split_post_cpy(s, i);
+			i = update_main_split_post_cpy(s, i, ' ');
 		}
 		if (s[i] == ' ' && s[i] != '\0')
 			i++;
