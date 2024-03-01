@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 09:52:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 11:48:29 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/01 12:22:38 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	**pipe_split(char *s)
 	int		i;
 	int		j;
 
+	i = 0;
+	j = 0;
 	result = init_p_split_result(s);
 	if (result == NULL)
 		return (NULL);
@@ -65,7 +67,8 @@ char	**pipe_split(char *s)
 			j++;
 			i = update_main_split_post_cpy(s, i, '|');
 		}
-		i++;
+		if (s[i] == '|')
+			i++;
 	}
 	result[j] = NULL;
 	return (result);
