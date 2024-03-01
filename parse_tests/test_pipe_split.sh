@@ -31,3 +31,27 @@ echo Test4
 echo "More than two ||| pipe error test"
 
 ./pipe_split_test "More than two ||| pipe error test"
+
+echo ""
+
+echo Test5
+
+echo "| Testing starting with pipe"
+
+./pipe_split_test "| Testing starting with pipe"
+
+echo ""
+
+echo Test6
+
+echo "Testing ending with pipe |    "
+
+./pipe_split_test "Testing ending with pipe |    "
+
+echo ""
+
+echo Test7
+
+echo "Testing pipe 'between | quotes' | and out"
+
+./pipe_split_test "Testing pipe 'between | quotes' | and out"
