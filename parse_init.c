@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 11:22:18 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/01 14:53:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ t_command	*init_command_array(char *input, int command_count)
 		ft_fatal_parse_error_str_free(input, "malloc error", 1);
 	commands->comm_count = get_command_count(input);
 	if (commands->comm_count == -1)
-		return (NULL);
+		return (NULL);//should free the commands struct before returning...
 	commands->sanit_comms = init_sanitized_array(input, commands);
 	if (commands->sanit_comms == NULL)
 	{
@@ -143,4 +143,3 @@ t_command	*init_command_array(char *input, int command_count)
 	free(input);
 	return (commands);
 }
-//This is for testing pull requests - again
