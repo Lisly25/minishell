@@ -6,13 +6,13 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:52:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 13:52:43 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/01 14:08:08 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_free_comm_struct(void *struc, int mode)
+void	ft_free_comm_struct(void *struc, int mode)
 {
 	t_sanit_comm	*sanitized;
 	t_unsanit_comm	*unsanitized;
