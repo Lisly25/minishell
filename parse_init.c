@@ -6,39 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 10:28:13 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/01 11:22:18 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-About pipes:
-
-trying to start a command with | (like | echo Hello) will result in an error:
-
-	zsh: parse error near `|'
-	bash: syntax error near unexpected token `|'
-
-trying to end a command with | (like cat file1 |) will result in input getting requested with - in ZSH:
-
-	pipe>
-
-	If the command gets typed in correctly, it will execute as normal pipe.
-	If it is not typed correctly, it will trigger an appropriate error message, as if it were a classically structured pipe
-	If enter is pressed, it will keep asking for a prompt
-
-BASH:
-
-similar, but only the second command will be executed
-*/
-
-/*
-About quotes:
-
-- only supposed to affect shell builtins such as echo, NOT other commands like cat!
-- unclosed quotes in the shell will trigger a prompt - not sure what our minishell is supposed to do. throw a custom error?
-*/
 
 static int	check_if_first_element(char *str)
 {
@@ -95,11 +67,20 @@ static int	check_for_or_operator(char *str)
 	j = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '|')
+		if (str[i] == '|' && check_if_quote_enclosed(str, i) == 0)
 		{
 			j = i + 1;
 			if (str[j] == '|')
 				return (-1);
+			else if (str[j] == '\0')
+				return (-2);
+			else if (str[j] == ' ')
+			{
+				while (str[j] == ' ')
+					j++;
+				if (str[j] == '\0')
+					return (-2);
+			}
 		}
 		i++;
 	}
@@ -110,14 +91,18 @@ int	get_command_count(char *input)
 {
 	int	i;
 	int	comm_count;
+	int	or_operator_error;
 
 	i = 0;
 	comm_count = 1;
 	if (check_for_unclosed_quotes(input) == -1)
 		return (ft_parse_error("input error: unclosed quote"));
-	if (check_for_or_operator(input) == -1)
+	or_operator_error = check_for_or_operator(input);
+	if (or_operator_error == -1)
 		return (ft_parse_error("input error: `||' operator not supported"));
-	if (check_if_pipe_is_first_element(input) == -1)
+	else if (or_operator_error == -2)
+		return (ft_parse_error("input error: pipe symbol at the end of line"));
+	if (check_if_first_element(input) == -1)
 		return (ft_parse_error("syntax error near unexpected token `|'"));//need to revisit this, because we might need to launch a child process regardless to give the correct exit status
 	while (input[i] != '\0')
 	{
