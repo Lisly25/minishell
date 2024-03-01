@@ -33,6 +33,11 @@
 
 4. bash builtins and quotes
 
+	About quotes:
+
+	- only supposed to affect shell builtins such as echo, NOT other commands like cat!
+	- unclosed quotes in the shell will trigger a prompt - we don't need to handle that, we'll just throw an error
+
 	- from what I can tell, when looking for quotes, the string is just parsed left to right even when a quote is found - it won't start looking from the back. With nested quotes, this means that
 
 			minishell>$ echo Hello '$PWD'$PWD'$PWD'
@@ -70,3 +75,43 @@
 		returns:
 
 			Hello world
+
+	- function works with single and double quotes now (the latter only when testing in minishell)
+
+6. Splitting along pipes
+
+	- must watch out for two pipe symbols after each other with no spaces, because that is the OR operator (so that's one more reason why normal split can't be used for this)
+	- if there's a pipe in the wrong place, the error message is
+
+		bash: syntax error near unexpected token `|'
+
+	- but if there's AT LEAST two consecutive pipes (in this case, even a space will make it non-consecutive), it will be:
+
+		bash: syntax error near unexpected token `||'
+
+	- it will stay the above no matter how many extra we add
+
+7. Pipes:
+
+	trying to start a command with | (like | echo Hello) will result in an error:
+
+	zsh: parse error near `|'
+	bash: syntax error near unexpected token `|'
+
+	trying to end a command with | (like cat file1 |) will result in input getting requested with - in ZSH:
+
+	pipe>
+
+	If the command gets typed in correctly, it will execute as normal pipe.
+	If it is not typed correctly, it will trigger an appropriate error message, as if it were a classically structured pipe
+	If enter is pressed, it will keep asking for a prompt
+
+	BASH:
+
+	similar, but only the second command will be executed
+
+	- according to the subject, however:
+
+		"The output of each command in the pipeline is connected to the input of the next command via a pipe"
+
+		So, we'll just disallow input to end with a pipe :)
