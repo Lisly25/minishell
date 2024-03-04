@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 08:35:42 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 12:39:56 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/01 16:41:58 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	already_in_list(char *arg, t_env *env)
 
 	i = 0;
 	ptr = arg;
-	while (ptr[i] != '=')
+	while (ptr[i] != '=' && ptr[i] != '\0')
 		i ++;
 	while (env)
 	{

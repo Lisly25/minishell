@@ -85,4 +85,7 @@ void	display_vars(int fd, t_env **env);
 void	ammend_var(char *arg, t_env **env);
 int		add_var(char *arg, t_env **env);
 
+//unset.c
+int		ft_unset(char *arg, t_env **env);
+
 #endif

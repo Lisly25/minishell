@@ -6,11 +6,13 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:49:28 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 11:11:45 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:30:17 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+//handle echo $? (gives exit code of last process)
 
 static int	echo_loop(int fd, char **ptr, char **env, size_t *env_len)
 {
