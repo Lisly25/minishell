@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 15:05:40 by fshields         ###   ########.fr       */
+/*   Updated: 2024/02/29 15:40:39 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,8 @@ void	display_one_var(int fd, t_env *ptr);
 void	display_vars(int fd, t_env **env);
 void	ammend_var(char *arg, t_env **env);
 int		add_var(char *arg, t_env **env);
+
+//unset.c
+int		ft_unset(char *arg, t_env **env);
 
 #endif
