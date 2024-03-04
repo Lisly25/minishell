@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/04 15:36:56 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/04 15:52:56 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,8 @@ int		add_var(char *arg, t_env **env);
 
 //unset.c
 int		ft_unset(char *arg, t_env **env);
+
+//execution.c
+int		execute_built_in(char **command, int fd, t_env **env);
 
 #endif
