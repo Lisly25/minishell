@@ -6,13 +6,13 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:03:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 17:06:31 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/04 10:54:57 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	get_input_source(char **input, int i, t_sanit_comm *cmd)
+static void	get_input_redir_mode(char **input, int i, t_sanit_comm *cmd)
 {
 	size_t	j;
 
@@ -36,27 +36,54 @@ static void	get_input_source(char **input, int i, t_sanit_comm *cmd)
 	// - if not, then it'll either be de delimiter or the infile
 }
 
-static void	get_input_mode_sanit(char **input, t_sanit_comm *cmd)
+static int	get_input_arg(char **arr, int i, t_sanit_comm *cmds)
+{
+	int	arr_len;
+	int	j;
+	int	str_len;
+
+	arr_len = ft_get_arr_size(arr);
+	j = 0;
+	str_len = (int)ft_strlen(arr[i]);
+	while (arr[i][j] != '<')
+		j++;
+	if (j == str_len)
+	{
+		i++;
+		if (arr[i] == NULL)
+			return (ft_parse_error("syntax error near unexpected token `newline'"));
+		
+	}
+	
+}
+
+static int	check_if_redirected(char **input, t_sanit_comm *cmd)
 {
 	//format is <word, where word will be the input file
 	//there can be several in one command, and always the last one will take precedent
-	int	i;
+	int		i;
+	int		result;
+	int		input_redir_loc;
+	int		redir_char;
 
 	i = ft_get_arr_size;
 	while (i >= 0)
 	{
-		if (ft_strrchr(input[i], '<') != NULL)
+		ptr_to_redir = ft_strrchr_index(input[i], '<');
+		if (ptr_to_redir != NULL)
 		{
-			if (check_if_quote_enclosed(input[i], i) == 0)
+			if (check_if_quote_enclosed(input[i], i) == 0)//this ain't good, second arg should be j
 			{
-				get_input_source(input, i, cmd);
-				return ;
+				get_input_redir_mode(input, i, cmd);
+				result = get_input_arg(input, i, cmd);
+				return (result);
 			}
 		}
 		i--;
 	}
 	cmd->file_input = 'N';
 	cmd->heredoc_input = 'N';
+	return (0);
 }
 
 int	get_input_sanit(char *str, t_sanit_comm *commands)
@@ -70,13 +97,8 @@ int	get_input_sanit(char *str, t_sanit_comm *commands)
 	if (check_for_max_consequitve_chars(split_input, '<') > 2)
 	{
 		ft_free_2d_array(split_input);
-		ft_parse_error("syntax error near unexpected token `<<'");
+		return (ft_parse_error("syntax error near unexpected token `<<'"));
 	}
-	get_input_mode_sanit(split_input, commands);
-	if (commands->file_input == 'Y')
-		result = get_infile_sanit(str, commands);
-	else if (commands->heredoc_input == 'Y')
-		result = get_hdoc_limiter_sanit(str, commands);
-	else
-		return (result);
+	result = check_if_redirected(split_input, commands);
+	return (result);
 }
