@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 15:40:39 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/04 15:36:56 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ typedef struct s_env
 
 typedef struct	s_data
 {
-	t_env	*env;
+	t_env			*env;
+	t_unsanit_comm	*unsanit_comms;
+	int				comm_count;
 }			t_data;
 
 //init.c
