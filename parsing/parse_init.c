@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 14:53:46 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/04 16:43:23 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	check_if_first_element(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == ' ' || str[i] == 9 || (str[i] <= 13 && str[i] >= 10))//I do NOT check for newlines, but should I?
+		if (str[i] == ' ')
 			i++;
 		else
 			break ;
@@ -103,7 +103,7 @@ int	get_command_count(char *input)
 	else if (or_operator_error == -2)
 		return (ft_parse_error("input error: pipe symbol at the end of line"));
 	if (check_if_first_element(input) == -1)
-		return (ft_parse_error("syntax error near unexpected token `|'"));//need to revisit this, because we might need to launch a child process regardless to give the correct exit status
+		return (ft_parse_error("syntax error near unexpected token `|'"));
 	while (input[i] != '\0')
 	{
 		if (input[i] == '|')
@@ -116,30 +116,14 @@ int	get_command_count(char *input)
 	return (comm_count);
 }
 
-t_command	*init_command_array(char *input, int command_count)
+/*int	init_command_array(char *input, t_data *data)
 {
-	t_command	*commands;
-
-	commands = (t_command *)malloc(sizeof(t_sanit_comm *) + \
-	sizeof(t_unsanit_comm *));
-	if (commands == NULL)
-		ft_fatal_parse_error_str_free(input, "malloc error", 1);
-	commands->comm_count = get_command_count(input);
-	if (commands->comm_count == -1)
-		return (NULL);//should free the commands struct before returning...
-	commands->sanit_comms = init_sanitized_array(input, commands);
-	if (commands->sanit_comms == NULL)
+	data->unsanit_comms = init_unsanitized_array(input, data);
+	if (data->unsanit_comms == NULL)
 	{
-		free(commands);
-		ft_fatal_parse_error_str_free(input, "malloc error", 1);
-	}
-	commands->unsanit_comms = init_unsanitized_array();
-	if (commands->unsanit_comms == NULL)
-	{
-		ft_free_comm_struct(commands->sanit_comms, 1);
-		free(commands);
-		ft_fatal_parse_error_str_free(input, "malloc error", 1);
+		ft_putstr_fd("minishell 🐢: malloc error", 2);
+		return (MALLOC_ERROR);
 	}
 	free(input);
-	return (commands);
-}
+	return (0);
+}*/

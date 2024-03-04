@@ -1,38 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_sanitized.c                                  :+:      :+:    :+:   */
+/*   parse_unsanitized.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 14:58:49 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/04 16:34:01 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_sanit_comm	*init_sanitized_array(char *str, t_command *cmds)
+int	init_unsanitized_array(char *str, t_data *data)
 {
-	t_sanit_comm	*result;
-	char			**split_cmds;
-	int				i;
+	int		status;
+	char	**split_cmds;
+	int		i;
 
 	i = 0;
-	result = (t_sanit_comm *)malloc(sizeof(t_sanit_comm) * cmds->comm_count);
-	if (result == NULL)
-		return (NULL);
+	status = 0;
+	data->unsanit_comms = (t_unsanit_comm *)malloc(sizeof(t_unsanit_comm)\
+	 * data->comm_count);
+	if (data->unsanit_comms == NULL)
+		return (MALLOC_ERROR);
 	split_cmds = pipe_split(str);
 	while (split_cmds[i] != NULL)
 	{
-		if (get_input_sanit(split_cmds[i], &result[i]) == -1)
-			return (NULL);//we should have a specific function for this that frees the allocated structs
-		if (get_output_sanit(split_cmds[i], &result[i]) == -1)
-			return (NULL);
-		if (get_cmd_sanit(split_cmds[i], &result[i]) == -1)
-			return (NULL);
+		status = get_input_unsanit(split_cmds[i], &data->unsanit_comms[i]);
+		if (status != 0)
+			break ;//we should have a specific function for this that frees the allocated structs
+		status = get_output_sanit(split_cmds[i], &data->unsanit_comms[i]);
+		if (status != 0)
+			break ;
+		status = get_cmd_sanit(split_cmds[i], &data->unsanit_comms[i]);
+		if (status != 0)
+			break ;
 		i++;
 	}
 	ft_free_2d_array(split_cmds);
-	return (result);
+	return (status);
 }

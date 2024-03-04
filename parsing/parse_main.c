@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/02/28 13:13:02 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/04 16:22:08 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,14 @@
 //this function should only be called if the input is not empty: 
 //neither NULL, nor containing only whitespace
 
-t_command	*parser_main(char *input)
+int	parser_main(char *input, t_data *data)
 {
-	int			command_count;
-	t_command	*full_command;
+	int	status;
 
-	command_count = get_command_count(input);
-	if (command_count == -1)
-		return (NULL);
-	full_command = init_command_array(input, command_count);
-	if (full_command == NULL)
-	{
-		free(input);
-		return (NULL);
-	}
+	data->comm_count = get_command_count(input);
+	if (data->comm_count == -1)
+		return (SYNTAX_ERROR);
+	status = init_unsanitized_array(input, data);
+	free(input);
+	return (status);
 }
