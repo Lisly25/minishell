@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:19:31 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/05 17:58:10 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/05 18:06:49 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit)
 
 	j = i;
 	k = 0;
-	while (str[i] != c && str[i] != limit)
+	while (str[i] != c && (str[i] != limit || (check_if_quote_enclosed(str, i == 0))))
 		i++;
 	result = (char *)malloc(i + 1);
 	if (result == NULL)
