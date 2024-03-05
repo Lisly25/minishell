@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 16:31:06 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 17:21:18 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,25 @@ static int	execute_built_in(char **command, t_env **env)
 			return (-1);
 		if (command[i] == NULL)
 			break ;
+		if ((code == 1 || code == 2) && command[i + 1] != NULL)
+			printf(" ");
 		i ++;
 	}
 	if (code == 2)
 		printf("\n");
 	exit(0);
+	return (0);
+}
+
+static int	is_n_flag(t_unsanit_comm *command)
+{
+	char	*str;
+
+	str = command->command[1];
+	if (!str)
+		return (0);
+	if (ft_strncmp("-n", str, 2) == 0 && ft_strlen(str) == 2)
+		return (1);
 	return (0);
 }
 
@@ -49,13 +63,17 @@ static int	exec_built_in_no_exit(t_data *data)
 	i = 1;
 	while (command->command[i] != NULL || i == 1)
 	{
+		if (code  == 1 && is_n_flag(command) && i == 1)
+			i ++;
 		if (run_built_in(command->command[i], code, &data->env) != 0)
 			return (-1);
 		if (command->command[i] == NULL)
 			break ;
+		if (code == 1 && command->command[i + 1] != NULL)
+				printf(" ");
 		i ++;
 	}
-	if (code == 2)
+	if (!is_n_flag(command))
 		printf("\n");
 	return (0);
 }
