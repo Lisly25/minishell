@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 15:23:07 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:29:26 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,14 @@ int		already_in_list(char *arg, t_env *env);
 void	init_signals(void);
 
 //echo.c
-int		ft_echo(int fd, char *str);
-int		ft_old_echo(int fd, char *str, int flag);
+int		ft_echo(char *str);
 
 //pwd.c
 char	*get_pwd(void);
-int		ft_print_pwd(int fd);
+int		ft_print_pwd(void);
 
 //env.c
-int		ft_env(int fd, t_env *env);
+int		ft_env(t_env *env);
 
 //cd.c
 int		ft_cd(char *path, t_env **env);
@@ -76,13 +75,12 @@ int		ft_cd(char *path, t_env **env);
 void	ft_exit(char *status);
 
 //export.c
-int		ft_export(int fd, char *arg, t_env **env);
+int		ft_export(char *arg, t_env **env);
 void	reset_printed(t_env **env);
 int		all_printed(t_env **env);
 
 //export_utils.c
-void	display_one_var(int fd, t_env *ptr);
-void	display_vars(int fd, t_env **env);
+void	display_vars(t_env **env);
 void	ammend_var(char *arg, t_env **env);
 int		add_var(char *arg, t_env **env);
 
@@ -95,6 +93,6 @@ int		execute(t_data *data);
 //execution_utils.c
 char	*find_path(t_unsanit_comm *command);
 int		detect_built_in(char *command);
-int		run_built_in(char *arg, int fd, int code, t_env **env);
+int		run_built_in(char *arg, int code, t_env **env);
 
 #endif

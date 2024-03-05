@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 15:22:18 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:29:23 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,20 @@ int	detect_built_in(char *command)
 	return (0);
 }
 
-int	run_built_in(char *arg, int fd, int code, t_env **env)
+int	run_built_in(char *arg, int code, t_env **env)
 {
 	if (code == 1 || code == 2)
-		return (ft_echo(fd, arg));
+		return (ft_echo(arg));
 	else if (code == 3)
 		return (ft_cd(arg, env));
 	else if (code == 4)
-		return (ft_print_pwd(fd));
+		return (ft_print_pwd());
 	else if (code == 5)
-		return (ft_export(fd, arg, env));
+		return (ft_export(arg, env));
 	else if (code == 6)
 		return (ft_unset(arg, env));
 	else if (code == 7)
-		return (ft_env(fd, *env));
+		return (ft_env(*env));
 	else if (code == 8)
 	{
 		ft_exit(arg);

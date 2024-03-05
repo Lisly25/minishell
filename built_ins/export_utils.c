@@ -6,33 +6,13 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:58:00 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 15:36:31 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:27:35 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-void	display_one_var(int fd, t_env *ptr)
-{
-	char	quote;
-	
-	quote = 34;	
-	write(fd, "declare -x ", 11);
-	write(fd, ptr->name, ft_strlen(ptr->name));
-	if (!(ptr->value))
-	{
-		write(fd, "\n", 1);
-		return ;
-	}
-	write(fd, "=", 1);
-	write(fd, &quote, 1);
-	if ((ptr->value)[0] != '\0')
-		write(fd, ptr->value, ft_strlen(ptr->value));
-	write(fd, &quote, 1);
-	write(fd, "\n", 1);
-}
-
-void	display_vars(int fd, t_env **env)
+void	display_vars(t_env **env)
 {
 	t_env	*ptr;
 	t_env	*smallest;
@@ -51,7 +31,7 @@ void	display_vars(int fd, t_env **env)
 				smallest = ptr;
 			ptr = ptr->next;
 		}
-		display_one_var(fd, smallest);
+		printf("declare -x %s=\"%s\"\n", smallest->name, smallest->value);
 		smallest->printed = 1;
 	}
 	reset_printed(env);

@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:13:17 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 15:05:25 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:26:41 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	reset_printed(t_env **env)
 	}
 }
 
-int	ft_export(int fd, char *arg, t_env **env)
+int	ft_export(char *arg, t_env **env)
 {
 	if (!arg)
-		display_vars(fd, env);
+		display_vars(env);
 	else if (already_in_list(arg, *env))
 		ammend_var(arg, env);
 	else

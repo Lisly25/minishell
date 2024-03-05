@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 15:22:07 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:31:06 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //ret of 1: not built_in
 //ret of -1: error
 //exit: succcessul run of built-in
-static int	execute_built_in(char **command, int fd, t_env **env)
+static int	execute_built_in(char **command, t_env **env)
 {
 	int	code;
 	int	i;
@@ -26,14 +26,14 @@ static int	execute_built_in(char **command, int fd, t_env **env)
 	i = 1;
 	while (command[i] != NULL || i == 1)
 	{
-		if (run_built_in(command[i], fd, code, env) != 0)
+		if (run_built_in(command[i], code, env) != 0)
 			return (-1);
 		if (command[i] == NULL)
 			break ;
 		i ++;
 	}
 	if (code == 2)
-		write(fd, "\n", 1);
+		printf("\n");
 	exit(0);
 	return (0);
 }
@@ -41,42 +41,34 @@ static int	execute_built_in(char **command, int fd, t_env **env)
 static int	exec_built_in_no_exit(t_data *data)
 {
 	int	code;
-	int	fd;
 	int	i;
 	t_unsanit_comm *command;
 
 	command = data->unsanit_comms;
 	code = detect_built_in(command->command[0]);
 	i = 1;
-	if (command->output == NULL)
-		fd = 1;
-	else
-		fd = ft_atoi(command->output[0]);
 	while (command->command[i] != NULL || i == 1)
 	{
-		if (run_built_in(command->command[i], fd, code, &data->env) != 0)
+		if (run_built_in(command->command[i], code, &data->env) != 0)
 			return (-1);
 		if (command->command[i] == NULL)
 			break ;
 		i ++;
 	}
 	if (code == 2)
-		write(fd, "\n", 1);
+		printf("\n");
 	return (0);
 }
 
+//free all memory in child processs
+
 static int	child_process(t_unsanit_comm *command, t_env *env, char **env_s)
 {
-	int		fd;
 	char	*path;
 	char	**arr;
 
 	arr = env_s;
-	if (command->output == NULL)
-		fd = 1;
-	else
-		fd = ft_atoi(command->output[0]);
-	if (execute_built_in(command->command, fd, &env) == -1)
+	if (execute_built_in(command->command, &env) == -1)
 	{
 		write(2, "execution failure\n", 18);
 		exit(EXIT_FAILURE);
