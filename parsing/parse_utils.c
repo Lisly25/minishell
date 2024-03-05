@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:19:31 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 16:49:32 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/05 17:58:10 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_get_arr_size(char **arr)
 	return (i);
 }
 
-int	check_for_max_consequitve_chars(char **arr, char c)
+int	check_for_max_consequitve_chars(char **arr, char c)//need to re-check this: echo Hello again! > > newout2 should give a syntax error
 {
 	int	i;
 	int	j;
@@ -46,5 +46,65 @@ int	check_for_max_consequitve_chars(char **arr, char c)
 		}
 		i++;
 	}
+	return (result);
+}
+
+/*char	*ft_char_to_str(char c, int count)
+{
+	char	*result;
+	int		i;
+
+	result = (char *)malloc(count + 1);
+	while(i < count)
+	{
+		result[i] = c;
+		i++;
+	}
+	result[i] = '\0';
+	return (result);
+}*/
+
+char	*ft_strdup_only_char_c_str(char c, char *str, int i)
+{
+	int		j;
+	int		c_count;
+	char	*result;
+
+	j = 0;
+	c_count = 0;
+	while (str[i] == c)
+		c_count++;
+	result = (char *)malloc(c_count + 1);
+	if (result == NULL)
+		return (NULL);
+	while (j < c_count)
+	{
+		result[j] = c;
+		j++;
+	}
+	result[j] = '\0';
+	return (result);
+}
+
+char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit)
+{
+	int		j;
+	int		k;
+	char	*result;
+
+	j = i;
+	k = 0;
+	while (str[i] != c && str[i] != limit)
+		i++;
+	result = (char *)malloc(i + 1);
+	if (result == NULL)
+		return (NULL);
+	while (j < i)
+	{
+		result[k] = str[j];
+		k++;
+		j++;
+	}
+	result[k] = '\0';
 	return (result);
 }
