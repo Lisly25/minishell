@@ -6,16 +6,47 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/04 11:47:21 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:04:54 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static void	free_comm(t_data * data)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < data->comm_count)
+	{
+		while (data->unsanit_comms[i].command[j] != NULL)
+			free(data->unsanit_comms[i].command[j++]);
+		free(data->unsanit_comms[i].command);
+		i ++;
+		j = 0;
+	}
+	free(data->unsanit_comms);
+	data->unsanit_comms = NULL;
+}
+
+static t_unsanit_comm *init_sample_parsed(char *input)
+{
+	t_unsanit_comm *command;
+
+	command = (t_unsanit_comm *) malloc(sizeof(t_unsanit_comm));
+	if (!command)
+		return (NULL);
+	command->command = ft_split(input, ' ');
+	command->input = NULL;
+	command->output = NULL;
+	return (command);
+}
+
 int	main(int argc, char *argv[], char *env[])
 {
 	char	*line;
-	char	**split;
 	t_data	*data;
 	
 	argc += 0;
@@ -31,13 +62,12 @@ int	main(int argc, char *argv[], char *env[])
 			break ;
 		}
 		add_history(line);
-		split = ft_split(line, ' ');
-		if (execute_built_in(split, 1, &data->env) != 0)
-			ft_putstr_fd("not a built-in\n", 2);
+		data->unsanit_comms = init_sample_parsed(line);
+		execute(data);
 		free(line);
-		free(split);
+		free_comm(data);
 	}
-	printf("exiting\n");
+	printf("🐢💨 exiting\n");
 	free_env_list(&(data->env));
 	free(data);
 	return (0);

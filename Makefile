@@ -5,6 +5,7 @@ SRCS	=	init.c \
 			input.c \
 			signals.c \
 			execution.c \
+			execution_utils.c \
 			builtin_utils.c \
 			built_ins/cd.c \
 			built_ins/echo.c \
