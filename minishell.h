@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/04 15:36:56 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/05 15:23:07 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_env
 typedef struct	s_data
 {
 	t_env			*env;
+	char			**env_s;
 	t_unsanit_comm	*unsanit_comms;
 	int				comm_count;
 }			t_data;
@@ -72,7 +73,7 @@ int		ft_env(int fd, t_env *env);
 int		ft_cd(char *path, t_env **env);
 
 //exit.c
-void	ft_exit(int status);
+void	ft_exit(char *status);
 
 //export.c
 int		ft_export(int fd, char *arg, t_env **env);
@@ -87,5 +88,13 @@ int		add_var(char *arg, t_env **env);
 
 //unset.c
 int		ft_unset(char *arg, t_env **env);
+
+//execution.c
+int		execute(t_data *data);
+
+//execution_utils.c
+char	*find_path(t_unsanit_comm *command);
+int		detect_built_in(char *command);
+int		run_built_in(char *arg, int fd, int code, t_env **env);
 
 #endif

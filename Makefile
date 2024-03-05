@@ -4,6 +4,8 @@ CFLAGS	=	-Wall -Wextra -Werror
 SRCS	=	init.c \
 			input.c \
 			signals.c \
+			execution.c \
+			execution_utils.c \
 			builtin_utils.c \
 			built_ins/cd.c \
 			built_ins/echo.c \
@@ -13,8 +15,8 @@ SRCS	=	init.c \
 			built_ins/unset.c \
 			built_ins/export.c \
 			built_ins/export_utils.c \
-			parse_split.c \
-			parse_split_utils.c
+			# parse_split.c \
+			# parse_split_utils.c
 OBJS	=	$(SRCS:.c=.o)
 HEADER	=	minishell.h
 RL_PATH	=	~/.brew/opt/readline/lib

@@ -6,55 +6,53 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/29 15:51:52 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 14:04:54 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	exec_built_in(char *line, t_data *data)
+static void	free_comm(t_data * data)
 {
-	if (ft_strncmp(line, "exit", 4) == 0 && ft_strlen(line) == 4)
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (i < data->comm_count)
 	{
-		ft_exit(0);
-		return (0);
+		while (data->unsanit_comms[i].command[j] != NULL)
+			free(data->unsanit_comms[i].command[j++]);
+		free(data->unsanit_comms[i].command);
+		i ++;
+		j = 0;
 	}
-	if (ft_strncmp(line, "exit ", 5) == 0)
-	{
-		ft_exit(ft_atoi(line + 5));
-		return (0);
-	}
-	if (ft_strncmp(line, "cd", 2) == 0)
-		return (ft_cd(line + 3, &(data->env)));
-	if (ft_strncmp(line, "env", 3) == 0)
-		return (ft_env(1, data->env));
-	if (ft_strncmp(line, "pwd", 3) == 0)
-		return (ft_print_pwd(1));
-	if (ft_strncmp(line, "export ", 7) == 0)
-		return (ft_export(1, line + 7, &(data->env)));
-	if (ft_strncmp(line, "export", 6) == 0)
-		return (ft_export(1, NULL, &(data->env)));
-	if (ft_strncmp(line, "unset ", 6) == 0)
-		return (ft_unset((line + 6), &(data->env)));
-	if (ft_strncmp(line, "unset", 5) == 0)
-		return (ft_unset(NULL, &(data->env)));
-	else if (ft_strncmp(line, "echo", 4) == 0)
-		return (ft_echo(1, (line + 4)));
-	return (1);
+	free(data->unsanit_comms);
+	data->unsanit_comms = NULL;
 }
 
+static t_unsanit_comm *init_sample_parsed(char *input)
+{
+	t_unsanit_comm *command;
+
+	command = (t_unsanit_comm *) malloc(sizeof(t_unsanit_comm));
+	if (!command)
+		return (NULL);
+	command->command = ft_split(input, ' ');
+	command->input = NULL;
+	command->output = NULL;
+	return (command);
+}
 
 int	main(int argc, char *argv[], char *env[])
 {
 	char	*line;
 	t_data	*data;
 	
-	init_signals();
 	argc += 0;
 	argv += 0;
+	init_signals();
 	data = init_data(env);
-	if (data->env == NULL)
-		printf("env is NULL\n");
 	while (1)
 	{
 		line = readline("minishell 🐢: ");
@@ -64,14 +62,12 @@ int	main(int argc, char *argv[], char *env[])
 			break ;
 		}
 		add_history(line);
-		if (exec_built_in(line, data) != 0)
-		{
-			free(line);
-			return (write(2, "built-in error\n", 15));
-		}
+		data->unsanit_comms = init_sample_parsed(line);
+		execute(data);
 		free(line);
+		free_comm(data);
 	}
-	printf("exiting\n");
+	printf("🐢💨 exiting\n");
 	free_env_list(&(data->env));
 	free(data);
 	return (0);
