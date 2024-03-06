@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 11:43:04 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 14:23:51 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 		i++;
 	buffer = ft_strdup_from_i_to_char(c, str, i, ' ');
 	if (buffer == NULL)
+		return (MALLOC_ERROR);
+	if (vector_add_back(redir_array, buffer) == MALLOC_ERROR)
 		return (MALLOC_ERROR);
 	while (str[i] != '\0' && str[i] != c && str[i] != ' ')
 		str[i++] = ' ';
