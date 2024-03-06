@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 10:31:59 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 11:43:04 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	extract_redir_array(char *str, char c, t_vector *redir_array)
 	return (result);
 }
 
-int	add_redir_data_to_parse_struct(char str, char c, t_unsanit_comm *cmd)
+int	add_redir_data_to_parse_struct(char *str, char c, t_unsanit_comm *cmd)
 {
 	t_vector	*redir_array;
 	int			result;
@@ -75,9 +75,9 @@ int	add_redir_data_to_parse_struct(char str, char c, t_unsanit_comm *cmd)
 	result = extract_redir_array(str, c, redir_array);
 	if (result == MALLOC_ERROR)
 		return (MALLOC_ERROR);
-	if (c == '<')
+	if (c == '<' && redir_array->used_nodes != 0)
 		cmd->input = redir_array->text;
-	else
+	else if (redir_array->used_nodes != 0)
 		cmd->output = redir_array->text;
 	free(redir_array);
 	return (result);
