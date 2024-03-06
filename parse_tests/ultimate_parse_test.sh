@@ -1,0 +1,3 @@
+cc -Wall -Wextra -Werror -g -fsanitize=address ../init.c ../parsing/parse_main.c ../parsing/parse_errors.c ../parsing/parse_init.c ../parsing/parse_redirection.c ../parsing/parse_split_pipes.c ../parsing/parse_split_utils.c ../parsing/parse_split.c ../parsing/parse_unsanitized.c ../parsing/parse_utils.c ../parsing/vector.c ../errors.c ../libft/libft.a ultimate_parse_test_main.c -I ../ -o ultimate_parse_test
+
+./ultimate_parse_test "echo Hello >input.txt <output.txt"
