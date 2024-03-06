@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 13:50:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 14:57:12 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ static int	get_output_unsanit(char *str, t_unsanit_comm *cmd)
 	int	result;
 	int	max_consequitve_chars;
 
+	if (ft_strchr(str, '>') == NULL)
+	{
+		cmd->output = NULL;
+		return (0);
+	}
 	max_consequitve_chars = check_for_max_consequitve_chars_in_str(str, '>');
 	if (max_consequitve_chars > 2)
 		return (ft_parse_error("syntax error near unexpected token `>>'"));
@@ -61,6 +66,11 @@ static int	get_input_unsanit(char *str, t_unsanit_comm *cmd)
 	int	result;
 	int	max_consequitve_chars;
 
+	if (ft_strchr(str, '<') == NULL)
+	{
+		cmd->input = NULL;
+		return (0);
+	}
 	max_consequitve_chars = check_for_max_consequitve_chars_in_str(str, '<');
 	if (max_consequitve_chars > 2)
 		return (ft_parse_error("syntax error near unexpected token `<<'"));
