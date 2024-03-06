@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/04 15:40:21 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 12:05:52 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 # define UNCLOSED_QUOTE_ERROR 3
 # define SYNTAX_ERROR 258
 
-typedef struct s_unsanit_comm
+typedef struct s_comm
 {
 	char	**input;
 	char	**output;
 	char	**command;
 	pid_t	child_id;
-}	t_unsanit_comm;
+}	t_comm;
 
 int				ft_parse_error(char *str);
 int				get_command_count(char *input);

@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 16:29:26 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:21:54 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ typedef struct s_env
 
 typedef struct	s_data
 {
-	t_env			*env;
-	char			**env_s;
-	t_unsanit_comm	*unsanit_comms;
-	int				comm_count;
-}			t_data;
+	t_env		*env;
+	char		**env_s;
+	t_comm		**comms;
+	int			comm_count;
+	int			**pipe_array;
+}				t_data;
 
 //init.c
 int		get_list_size(t_env *list);
@@ -49,6 +50,7 @@ void	add_to_back(t_env **list, t_env *new);
 t_data	*init_data(char *env[]);
 
 //input.c
+void	free_comm(t_data *data);
 
 //built_utils.c
 char	*expand_env(char *str);
@@ -91,8 +93,9 @@ int		ft_unset(char *arg, t_env **env);
 int		execute(t_data *data);
 
 //execution_utils.c
-char	*find_path(t_unsanit_comm *command);
+char	*find_path(t_comm *command);
 int		detect_built_in(char *command);
 int		run_built_in(char *arg, int code, t_env **env);
+void	wait_for_children(t_data *data);
 
 #endif

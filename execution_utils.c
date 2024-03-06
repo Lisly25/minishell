@@ -6,13 +6,13 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 17:05:11 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:57:36 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*find_path(t_unsanit_comm *command)
+char	*find_path(t_comm *command)
 {
 	char	*path;
 
@@ -54,10 +54,17 @@ int	run_built_in(char *arg, int code, t_env **env)
 	else if (code == 6)
 		return (ft_env(*env));
 	else if (code == 7)
-	{
 		ft_exit(arg);
-		return (0);
-	}
-	else
-		return (1);
+	return (1);
+}
+
+void	wait_for_children(t_data *data)
+{
+	int		i;
+	int		child_status;
+	
+	i = 0;
+	while (i < data->comm_count)
+		waitpid(data->comms[i++]->child_id, &child_status, 0);
+
 }
