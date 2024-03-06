@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:07:50 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/05 10:13:24 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 14:20:05 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ t_vector	*vector_new(size_t size)
 	new_vector = (t_vector *)malloc(sizeof(t_vector));
 	if (new_vector == NULL)
 		return (NULL);
-	new_vector->text = (char **)malloc(size * sizeof(char *));
+	new_vector->text = (char **)malloc((size + 1) * sizeof(char *));
 	if (new_vector->text == NULL)
 		return (NULL);
 	new_vector->max_nodes = size;
 	new_vector->used_nodes = 0;
+	new_vector->text[0] = NULL;
 	return (new_vector);
 }
 
@@ -47,7 +48,7 @@ char	**vector_array_realloc(char ***old_text, size_t node_max)
 	size_t	i;
 
 	i = 0;
-	new_text = (char **)malloc(sizeof(char *) * node_max * 2);
+	new_text = (char **)malloc(sizeof(char *) * ((node_max * 2) + 1));
 	if (new_text == NULL)
 		return (NULL);
 	while (i < node_max)
@@ -55,6 +56,7 @@ char	**vector_array_realloc(char ***old_text, size_t node_max)
 		new_text[i] = (char *)(*old_text)[i];
 		i++;
 	}
+	new_text[i] = NULL;
 	free(*old_text);
 	return (new_text);
 }
@@ -83,5 +85,6 @@ int	vector_add_back(t_vector *old, char *new_data)
 	}
 	old->text[old->used_nodes] = new_data;
 	old->used_nodes++;
+	old->text[old->used_nodes] = NULL;
 	return (0);
 }
