@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/04 16:22:08 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 10:43:41 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,7 @@ int	parser_main(char *input, t_data *data)
 	free(input);
 	return (status);
 }
+
+//it returns -1 on parse error - in such a case, we just need to ask for a new prompt
+//if it returns MALLOC ERROR, the data struct must be freed and minishell must exit
+//if it returns 0, all is good and we can move on to the execution phase

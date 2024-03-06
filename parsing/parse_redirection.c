@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/05 18:01:19 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 10:31:59 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,12 @@
 static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 {
 	char	*buffer;
+	char	opposite_redir;
 
+	if (c == '<')
+		opposite_redir = '>';
+	else
+		opposite_redir = '<';
 	buffer = ft_strdup_only_char_c_str(c, str, i);
 	if (buffer == NULL)
 		return (MALLOC_ERROR);
@@ -23,7 +28,8 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 		return (MALLOC_ERROR);
 	while (str[i] == c)
 		str[i++] = ' ';
-	while (str[i] != '\0' && str[i] == ' ')
+	while (str[i] != '\0' && str[i] == ' ' && (str[i] != opposite_redir \
+	|| check_if_quote_enclosed(str, i) == 0))
 		i++;
 	buffer = ft_strdup_from_i_to_char(c, str, i, ' ');
 	if (buffer == NULL)
@@ -33,17 +39,13 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 	return (0);
 }
 
-int	extract_redir_array(char *str, char c, t_unsanit_comm *cmd)
+static int	extract_redir_array(char *str, char c, t_vector *redir_array)
 {
 	int			i;
 	int			result;
-	t_vector	*redir_array;
 
 	i = 0;
 	result = 0;
-	redir_array = vector_new(1);
-	if (redir_array == NULL)
-		return (MALLOC_ERROR);
 	while (str[i] != '\0')
 	{
 		if (str[i] == c && check_if_quote_enclosed(str, i) == 0)
@@ -59,5 +61,24 @@ int	extract_redir_array(char *str, char c, t_unsanit_comm *cmd)
 		else
 			i++;
 	}
+	return (result);
+}
+
+int	add_redir_data_to_parse_struct(char str, char c, t_unsanit_comm *cmd)
+{
+	t_vector	*redir_array;
+	int			result;
+
+	redir_array = vector_new(1);
+	if (redir_array == NULL)
+		return (MALLOC_ERROR);
+	result = extract_redir_array(str, c, redir_array);
+	if (result == MALLOC_ERROR)
+		return (MALLOC_ERROR);
+	if (c == '<')
+		cmd->input = redir_array->text;
+	else
+		cmd->output = redir_array->text;
+	free(redir_array);
 	return (result);
 }
