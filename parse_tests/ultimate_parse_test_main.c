@@ -5,6 +5,8 @@ void	print_arr(char **arr)
 	int	i;
 
 	i = 0;
+	if (arr == NULL)
+		return ;
 	while (arr[i] != NULL)
 	{
 		ft_printf("%s\n", arr[i]);
