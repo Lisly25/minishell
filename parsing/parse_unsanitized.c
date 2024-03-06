@@ -6,11 +6,30 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 12:06:41 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:50:11 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	init_t_unsanit_comm_struct(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	data->unsanit_comms = (t_unsanit_comm **)malloc(sizeof(t_unsanit_comm *) * \
+	data->comm_count);
+	if (data->unsanit_comms == NULL)
+		return (MALLOC_ERROR);
+	while (i < data->comm_count)
+	{
+		data->unsanit_comms[i] = (t_unsanit_comm *)malloc(sizeof(t_unsanit_comm));
+		if (data->unsanit_comms[i] == NULL)
+			return (MALLOC_ERROR);
+		i++;
+	}
+	return (0);
+}
 
 static int	get_cmd_unsanit(char *str, t_unsanit_comm *cmd)
 {
@@ -59,16 +78,14 @@ int	init_unsanitized_array(char *str, t_data *data)
 
 	i = 0;
 	status = 0;
-	data->unsanit_comms = (t_unsanit_comm **)malloc(sizeof(t_unsanit_comm *) *\
-	 data->comm_count);
-	if (data->unsanit_comms == NULL)
+	if (init_t_unsanit_comm_struct(data) == MALLOC_ERROR)
 		return (MALLOC_ERROR);
 	split_cmds = pipe_split(str);
 	while (split_cmds[i] != NULL)
 	{
 		status = get_input_unsanit(split_cmds[i], data->unsanit_comms[i]);
 		if (status != 0)
-			break ;//we should have a specific function for this that frees the allocated structs
+			break ;
 		status = get_output_unsanit(split_cmds[i], data->unsanit_comms[i]);
 		if (status != 0)
 			break ;
