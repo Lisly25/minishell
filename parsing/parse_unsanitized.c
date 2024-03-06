@@ -6,13 +6,13 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 10:39:37 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/06 12:06:41 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_cmd_sanit(char *str, t_unsanit_comm *cmd)
+static int	get_cmd_unsanit(char *str, t_unsanit_comm *cmd)
 {
 	char	**cmd_array;
 
@@ -28,7 +28,7 @@ static int	get_output_unsanit(char *str, t_unsanit_comm *cmd)
 	int	result;
 	int	max_consequitve_chars;
 
-	max_consequitve_chars = check_for_max_consequitve_chars(str, '>');
+	max_consequitve_chars = check_for_max_consequitve_chars_in_str(str, '>');
 	if (max_consequitve_chars > 2)
 		return (ft_parse_error("syntax error near unexpected token `>>'"));
 	else if (max_consequitve_chars == -1)
@@ -42,7 +42,7 @@ static int	get_input_unsanit(char *str, t_unsanit_comm *cmd)
 	int	result;
 	int	max_consequitve_chars;
 
-	max_consequitve_chars = check_for_max_consequitve_chars(str, '<');
+	max_consequitve_chars = check_for_max_consequitve_chars_in_str(str, '<');
 	if (max_consequitve_chars > 2)
 		return (ft_parse_error("syntax error near unexpected token `<<'"));
 	else if (max_consequitve_chars == -1)
@@ -59,20 +59,20 @@ int	init_unsanitized_array(char *str, t_data *data)
 
 	i = 0;
 	status = 0;
-	data->unsanit_comms = (t_unsanit_comm *)malloc(sizeof(t_unsanit_comm) *\
+	data->unsanit_comms = (t_unsanit_comm **)malloc(sizeof(t_unsanit_comm *) *\
 	 data->comm_count);
 	if (data->unsanit_comms == NULL)
 		return (MALLOC_ERROR);
 	split_cmds = pipe_split(str);
 	while (split_cmds[i] != NULL)
 	{
-		status = get_input_unsanit(split_cmds[i], &data->unsanit_comms[i]);
+		status = get_input_unsanit(split_cmds[i], data->unsanit_comms[i]);
 		if (status != 0)
 			break ;//we should have a specific function for this that frees the allocated structs
-		status = get_output_unsanit(split_cmds[i], &data->unsanit_comms[i]);
+		status = get_output_unsanit(split_cmds[i], data->unsanit_comms[i]);
 		if (status != 0)
 			break ;
-		status = get_cmd_sanit(split_cmds[i], &data->unsanit_comms[i]);
+		status = get_cmd_unsanit(split_cmds[i], data->unsanit_comms[i]);
 		if (status != 0)
 			break ;
 		i++;
