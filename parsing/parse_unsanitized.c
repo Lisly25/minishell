@@ -6,32 +6,32 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 14:57:12 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:25:36 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	init_t_unsanit_comm_struct(t_data *data)
+static int	init_t_comm_struct(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	data->unsanit_comms = (t_unsanit_comm **)malloc(sizeof(t_unsanit_comm *) * \
+	data->comms = (t_comm **)malloc(sizeof(t_comm *) * \
 	data->comm_count);
-	if (data->unsanit_comms == NULL)
+	if (data->comms == NULL)
 		return (MALLOC_ERROR);
 	while (i < data->comm_count)
 	{
-		data->unsanit_comms[i] = (t_unsanit_comm *)malloc(sizeof(t_unsanit_comm));
-		if (data->unsanit_comms[i] == NULL)
+		data->comms[i] = (t_comm *)malloc(sizeof(t_comm));
+		if (data->comms[i] == NULL)
 			return (MALLOC_ERROR);
 		i++;
 	}
 	return (0);
 }
 
-static int	get_cmd_unsanit(char *str, t_unsanit_comm *cmd)
+static int	get_cmd_unsanit(char *str, t_comm *cmd)
 {
 	char	**cmd_array;
 
@@ -42,7 +42,7 @@ static int	get_cmd_unsanit(char *str, t_unsanit_comm *cmd)
 	return (0);
 }
 
-static int	get_output_unsanit(char *str, t_unsanit_comm *cmd)
+static int	get_output_unsanit(char *str, t_comm *cmd)
 {
 	int	result;
 	int	max_consequitve_chars;
@@ -61,7 +61,7 @@ static int	get_output_unsanit(char *str, t_unsanit_comm *cmd)
 	return (result);
 }
 
-static int	get_input_unsanit(char *str, t_unsanit_comm *cmd)
+static int	get_input_unsanit(char *str, t_comm *cmd)
 {
 	int	result;
 	int	max_consequitve_chars;
@@ -88,18 +88,18 @@ int	init_unsanitized_array(char *str, t_data *data)
 
 	i = 0;
 	status = 0;
-	if (init_t_unsanit_comm_struct(data) == MALLOC_ERROR)
+	if (init_t_comm_struct(data) == MALLOC_ERROR)
 		return (MALLOC_ERROR);
 	split_cmds = pipe_split(str);
 	while (split_cmds[i] != NULL)
 	{
-		status = get_input_unsanit(split_cmds[i], data->unsanit_comms[i]);
+		status = get_input_unsanit(split_cmds[i], data->comms[i]);
 		if (status != 0)
 			break ;
-		status = get_output_unsanit(split_cmds[i], data->unsanit_comms[i]);
+		status = get_output_unsanit(split_cmds[i], data->comms[i]);
 		if (status != 0)
 			break ;
-		status = get_cmd_unsanit(split_cmds[i], data->unsanit_comms[i]);
+		status = get_cmd_unsanit(split_cmds[i], data->comms[i]);
 		if (status != 0)
 			break ;
 		i++;

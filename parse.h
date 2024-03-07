@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 15:57:48 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:27:04 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define UNCLOSED_QUOTE_ERROR 3
 # define SYNTAX_ERROR 258
 
-typedef struct	s_data
+typedef struct s_data
 {
 	t_env		*env;
 	char		**env_s;
@@ -61,7 +61,7 @@ int		count_qsplit_frag_len(char *str, int i, char limiter);
 char	**qsplit_free_and_null(char **result);
 int		update_main_split_post_cpy(char *s, int i, char limiter);
 char	**pipe_split(char *s);
-int		add_redir_data_to_parse_struct(char *str, char c, t_unsanit_comm *cmd);
+int		add_redir_data_to_parse_struct(char *str, char c, t_comm *cmd);
 int		check_for_max_consequitve_chars_in_str(char *str, char c);
 char	*ft_strdup_only_char_c_str(char c, char *str, int i);
 char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit);

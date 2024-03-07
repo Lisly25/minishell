@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 15:55:03 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:26:14 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ void	ft_free_t_data_struct(t_data *data)
 	{
 		if (data->env != NULL)
 			free_env_list(&(data->env));
-		if (data->unsanit_comms != NULL)
+		if (data->comms != NULL)
 		{
 			while (i < data->comm_count)
 			{
-				if (data->unsanit_comms[i] != NULL)
+				if (data->comms[i] != NULL)
 				{
-					ft_free_2d_array(data->unsanit_comms[i]->input);
-					ft_free_2d_array(data->unsanit_comms[i]->output);
-					ft_free_2d_array(data->unsanit_comms[i]->command);
+					ft_free_2d_array(data->comms[i]->input);
+					ft_free_2d_array(data->comms[i]->output);
+					ft_free_2d_array(data->comms[i]->command);
 				}
 				i++;
 			}
-			free(data->unsanit_comms);
+			free(data->comms);
 		}
 		free(data);
 	}
