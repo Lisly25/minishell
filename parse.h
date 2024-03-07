@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 10:27:04 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:29:50 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,6 @@
 # define MALLOC_ERROR 2
 # define UNCLOSED_QUOTE_ERROR 3
 # define SYNTAX_ERROR 258
-
-typedef struct s_data
-{
-	t_env		*env;
-	char		**env_s;
-	t_comm		**comms;
-	int			comm_count;
-	int			**pipe_array;
-}				t_data;
 
 typedef struct s_comm
 {
@@ -45,6 +36,15 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }					t_env;
+
+typedef struct s_data
+{
+	t_env		*env;
+	char		**env_s;
+	t_comm		**comms;
+	int			comm_count;
+	int			**pipe_array;
+}				t_data;
 
 int		parser_main(char *input, t_data *data);
 int		init_unsanitized_array(char *str, t_data *data);
