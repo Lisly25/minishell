@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 16:07:37 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:25:53 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,18 @@ int	init_child(t_comm *cmd)
 	return (status);
 }
 
-int	open_redirect_files(t_comm *cmd)
+int	open_redirect_files(t_data *data, int i)
 {
-	int	status;
+	int		status;
+	t_comm	*cmd;
 
+	cmd = data->comms[i];
 	if (cmd->input != NULL)
-		status = open_read(cmd->input);
+		status = open_read(data, i);
 	if (status != 0)
 		return (status);
 	if (cmd->output != NULL)
-		status = open_write(cmd->output);
+		status = open_write(data, i);
 	if (status != 0)
 		return (status);
 	return (0);
@@ -86,7 +88,7 @@ int	init_children_and_fds(t_data *data)
 			return (FORK_ERROR);
 		if (data->comms[i]->child_id == 0)
 		{
-			if (open_redirect_files(data->comms[i]) == -1)
+			if (open_redirect_files(data, i) == -1)
 				continue ;
 			if (redirect(data->comms[i]) == DUP2_ERROR)
 				return (DUP2_ERROR);
