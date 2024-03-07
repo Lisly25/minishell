@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 11:02:03 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:12:46 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,8 @@ int		add_redir_data_to_parse_struct(char *str, char c, t_comm *cmd);
 int		check_for_max_consequitve_chars_in_str(char *str, char c);
 char	*ft_strdup_only_char_c_str(char c, char *str, int i);
 char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit);
+
+//parse_sanitiser
+int		get_san_len(char *str, t_env *env);
 
 #endif
