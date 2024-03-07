@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 10:29:50 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 11:02:03 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ int		ft_parse_error(char *str);
 int		get_command_count(char *input);
 int		check_for_unclosed_quotes(char *str);
 int		check_if_quote_enclosed(char *str, int i);
-void	ft_free_2d_array(char **arr);//move this to minishell.h later!
 int		ft_get_arr_size(char **arr);//this, too!
-void	ft_free_t_data_struct(t_data *data);//and this!
 char	**ft_quoted_split(char *s);
 char	*quote_split_strdup(char *str, int i, char limiter);
 int		count_qsplit_frag_len(char *str, int i, char limiter);
