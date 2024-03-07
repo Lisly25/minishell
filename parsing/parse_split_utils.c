@@ -6,11 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 10:52:30 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 12:23:00 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:30:59 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	count_qsplit_frag_len(char *str, int i, char limiter)
 {

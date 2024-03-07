@@ -6,11 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 10:25:36 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:31:07 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	init_t_comm_struct(t_data *data)
 {

@@ -6,11 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:19:31 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 15:05:36 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:31:12 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	ft_get_arr_size(char **arr)
 {

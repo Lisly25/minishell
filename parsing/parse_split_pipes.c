@@ -6,11 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 09:52:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 12:22:38 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:30:54 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	count_frags(char *str)
 {
