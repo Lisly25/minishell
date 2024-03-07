@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 15:22:07 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/06 14:22:34 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //ret of 1: not built_in
 //ret of -1: error
 //exit: succcessul run of built-in
-static int	execute_built_in(char **command, int fd, t_env **env)
+static int	execute_built_in(char **command, t_env **env)
 {
 	int	code;
 	int	i;
@@ -26,92 +26,90 @@ static int	execute_built_in(char **command, int fd, t_env **env)
 	i = 1;
 	while (command[i] != NULL || i == 1)
 	{
-		if (run_built_in(command[i], fd, code, env) != 0)
+		if (run_built_in(command[i], code, env) != 0)
 			return (-1);
 		if (command[i] == NULL)
 			break ;
+		if ((code == 1 || code == 2) && command[i + 1] != NULL)
+			printf(" ");
 		i ++;
 	}
 	if (code == 2)
-		write(fd, "\n", 1);
+		printf("\n");
 	exit(0);
+	return (0);
+}
+
+static int	is_n_flag(t_comm *command)
+{
+	char	*str;
+
+	str = command->command[1];
+	if (!str)
+		return (0);
+	if (ft_strncmp("-n", str, 2) == 0 && ft_strlen(str) == 2)
+		return (1);
 	return (0);
 }
 
 static int	exec_built_in_no_exit(t_data *data)
 {
 	int	code;
-	int	fd;
 	int	i;
-	t_unsanit_comm *command;
+	t_comm *command;
 
-	command = data->unsanit_comms;
+	command = *(data->comms);
 	code = detect_built_in(command->command[0]);
 	i = 1;
-	if (command->output == NULL)
-		fd = 1;
-	else
-		fd = ft_atoi(command->output[0]);
 	while (command->command[i] != NULL || i == 1)
 	{
-		if (run_built_in(command->command[i], fd, code, &data->env) != 0)
+		if (code  == 1 && is_n_flag(command) && i == 1)
+			i ++;
+		if (run_built_in(command->command[i], code, &data->env) != 0)
 			return (-1);
 		if (command->command[i] == NULL)
 			break ;
+		if (code == 1 && command->command[i + 1] != NULL)
+			printf(" ");
 		i ++;
 	}
-	if (code == 2)
-		write(fd, "\n", 1);
+	if (code == 1 && !is_n_flag(command))
+		printf("\n");
 	return (0);
 }
 
-static int	child_process(t_unsanit_comm *command, t_env *env, char **env_s)
+static int	child_process(t_data *data, t_comm *comm)
 {
-	int		fd;
 	char	*path;
-	char	**arr;
 
-	arr = env_s;
-	if (command->output == NULL)
-		fd = 1;
-	else
-		fd = ft_atoi(command->output[0]);
-	if (execute_built_in(command->command, fd, &env) == -1)
-	{
-		write(2, "execution failure\n", 18);
+	if (execute_built_in(comm->command, &data->env) == -1)
 		exit(EXIT_FAILURE);
-	}
-	path = find_path(command);
-	if (!path)
-	{
-		write(2, "command not found\n", 18);
-		exit(EXIT_FAILURE);
-	}
-	execve(path, command->command, env_s);
-	write(2, "execve failure\n", 15);
+	path = find_path(comm);
+	if (execve(path, comm->command, data->env_s) == -1)
+		ft_putstr_fd("execve failure\n", 2);
+	free_comm(data);
+	free(data);
 	exit(EXIT_FAILURE);
 }
 
 int	execute(t_data *data)
 {
-	t_unsanit_comm	*commands;
-	int				i;
-	int				child_status;
+	int		i;
+	t_comm	**comms;
 	
 	i = 0;
-	commands = data->unsanit_comms;
-	if (data->comm_count == 1 && detect_built_in(commands->command[0]))
+	comms = data->comms;
+	if (data->comm_count == 1 && detect_built_in(comms[0]->command[0]))
 		return (exec_built_in_no_exit(data));
 	while (i < data->comm_count)
 	{
-		commands[i].child_id = fork();
-		if (commands[i].child_id == -1)
+		comms[i]->child_id = fork();
+		if (comms[i]->child_id == -1)
 			return (write(2, "fork failure\n", 13));
-		if (commands[i].child_id == 0)
-			return (child_process(&commands[i], data->env, data->env_s));
-		if (commands[i].child_id > 0)
-			waitpid(commands[i].child_id, &child_status, 0);
+		if (comms[i]->child_id == 0)
+			return (child_process(data, comms[i]));
 		i ++;
 	}
+	wait_for_children(data);
 	return (0);
 }

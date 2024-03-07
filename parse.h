@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
 /*   Updated: 2024/03/06 15:57:48 by skorbai          ###   ########.fr       */
@@ -21,13 +21,22 @@
 # define UNCLOSED_QUOTE_ERROR 3
 # define SYNTAX_ERROR 258
 
-typedef struct s_unsanit_comm
+typedef struct	s_data
+{
+	t_env		*env;
+	char		**env_s;
+	t_comm		**comms;
+	int			comm_count;
+	int			**pipe_array;
+}				t_data;
+
+typedef struct s_comm
 {
 	char	**input;
 	char	**output;
 	char	**command;
 	pid_t	child_id;
-}	t_unsanit_comm;
+}	t_comm;
 
 typedef struct s_env
 {
@@ -36,13 +45,6 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 }					t_env;
-
-typedef struct s_data
-{
-	t_env			*env;
-	t_unsanit_comm	**unsanit_comms;
-	int				comm_count;
-}					t_data;
 
 int		parser_main(char *input, t_data *data);
 int		init_unsanitized_array(char *str, t_data *data);
