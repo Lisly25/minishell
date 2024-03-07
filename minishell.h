@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 15:23:07 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/07 09:43:51 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,6 @@ void rl_clear_history (void);
 # include <limits.h>
 # include "libft/libft.h"
 # include "parse.h"
-
-typedef struct s_env
-{
-	int				printed;
-	char			*name;
-	char			*value;
-	struct s_env	*next;
-}					t_env;
-
-typedef struct	s_data
-{
-	t_env			*env;
-	char			**env_s;
-	t_unsanit_comm	*unsanit_comms;
-	int				comm_count;
-}			t_data;
 
 //init.c
 int		get_list_size(t_env *list);
