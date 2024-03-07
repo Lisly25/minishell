@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 16:50:36 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/28 08:52:27 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/05 16:20:15 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,12 @@ char	*get_pwd(void)
 	return (ret_path);
 }
 
-int	ft_print_pwd(int fd)
+int	ft_print_pwd(void)
 {
 	char	*pwd;
 	
 	pwd = get_pwd();
-	if (write(fd, pwd, ft_strlen(pwd)) != (ssize_t) ft_strlen(pwd))
-		return (1);
-	if (write(fd, "\n", 1) != 1)
-		return (1);
+	printf("%s\n", pwd);
 	free(pwd);
 	return (0);
 }
