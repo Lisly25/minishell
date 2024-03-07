@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 10:26:14 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 11:04:42 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,11 @@ void	ft_free_t_data_struct(t_data *data)
 		}
 		free(data);
 	}
+}
+
+void	ft_message_and_exit(t_data *data, int code)
+{
+	printf("🐢💨 exiting\n");
+	ft_free_t_data_struct(data);
+	exit(code);
 }
