@@ -1,7 +1,8 @@
 NAME	=	minishell
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
-SRCS	=	init.c \
+SRCS	=	main.c \
+			init.c \
 			input.c \
 			signals.c \
 			execution.c \

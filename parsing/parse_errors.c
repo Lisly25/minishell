@@ -6,53 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:52:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/04 16:17:20 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:55:11 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
-/*void	ft_free_comm_struct(void *struc, int mode)
-{
-	t_sanit_comm	*sanitized;
-	t_unsanit_comm	*unsanitized;
-
-	if (mode == 1)
-	{
-		sanitized = struc;
-		free(sanitized->infile);
-		free(sanitized->outfile);
-		ft_free_2d_array(sanitized->command);
-		free(sanitized);
-	}
-	else if (mode == 2)
-	{
-		unsanitized = struc;
-		free(unsanitized->infile);
-		free(unsanitized->outfile);
-		ft_free_2d_array(unsanitized->command);
-		free(unsanitized);
-	}
-	return ;
-}*/
-
-int	ft_fatal_parse_error_str_free(char *str, char *message, int exit_code)
-{
-	ft_putstr_fd("minishell 🐢: fatal error: ", 2);
-	ft_putendl_fd(message, 2);
-	free(str);
-	exit(exit_code);
-}
-
-/*int	ft_fatal_parse_error_structs_free(t_command *commands, char *msg, int code)
-{
-	ft_putstr_fd("minishell 🐢: fatal error: ", 2);
-	ft_putendl_fd(msg, 2);
-	ft_free_comm_struct(commands->sanit_comms, 1);
-	ft_free_comm_struct(commands->unsanit_comms, 2);
-	free(commands);
-	exit(code);
-}*/
+#include "../minishell.h"
 
 int	ft_parse_error(char *str)
 {

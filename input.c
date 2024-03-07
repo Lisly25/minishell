@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/06 14:20:06 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:09:41 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_comm(t_data *data)
+void	free_comm(t_data *data)//move this to error.c!
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
 	t_comm	**comms;
 
 	comms = data->comms;
@@ -37,12 +37,12 @@ void	free_comm(t_data *data)
 	data->comms = NULL;
 }
 
-static t_comm	**dumb_parser(char *input)
+/*static t_comm	**dumb_parser(char *input)
 {
-	int	comm_no;
-	int	i;
+	int		comm_no;
+	int		i;
 	t_comm	**comm_arr;
-	
+
 	comm_no = 1;
 	i = 0;
 	comm_arr = (t_comm **) malloc(sizeof(t_comm *) * (comm_no + 1));
@@ -56,13 +56,13 @@ static t_comm	**dumb_parser(char *input)
 	}
 	comm_arr[i] = NULL;
 	return (comm_arr);
-}
+}*/
 
-int	main(int argc, char *argv[], char *env[])
+/*int	main(int argc, char *argv[], char *env[])
 {
 	char	*line;
 	t_data	*data;
-	
+
 	argc += 0;
 	argv += 0;
 	init_signals();
@@ -85,4 +85,4 @@ int	main(int argc, char *argv[], char *env[])
 	free_env_list(&(data->env));
 	free(data);
 	return (0);
-}
+}*/

@@ -6,11 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 14:23:51 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:30:50 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 {
@@ -66,7 +66,7 @@ static int	extract_redir_array(char *str, char c, t_vector *redir_array)
 	return (result);
 }
 
-int	add_redir_data_to_parse_struct(char *str, char c, t_unsanit_comm *cmd)
+int	add_redir_data_to_parse_struct(char *str, char c, t_comm *cmd)
 {
 	t_vector	*redir_array;
 	int			result;

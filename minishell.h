@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/07 09:43:51 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 11:04:48 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_env(t_env *env);
 int		ft_cd(char *path, t_env **env);
 
 //exit.c
-void	ft_exit(char *status);
+void	ft_exit(char *status);//this does not exist anymore, right?
 
 //export.c
 int		ft_export(char *arg, t_env **env);
@@ -80,5 +80,10 @@ char	*find_path(t_comm *command);
 int		detect_built_in(char *command);
 int		run_built_in(char *arg, int code, t_env **env);
 void	wait_for_children(t_data *data);
+
+//errors.c
+void	ft_message_and_exit(t_data *data, int code);
+void	ft_free_2d_array(char **arr);
+void	ft_free_t_data_struct(t_data *data);
 
 #endif
