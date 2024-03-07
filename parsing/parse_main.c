@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 11:28:20 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 11:31:36 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	parser_main(char *input, t_data *data)
 	if (ft_strlen(input) == 0)
 	{
 		data->comms = NULL;
+		data->comm_count = 0;
 		free(input);
 		return (0);
 	}
