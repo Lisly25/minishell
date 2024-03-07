@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/06 14:22:34 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/07 11:32:31 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,11 @@ int	execute(t_data *data)
 {
 	int		i;
 	t_comm	**comms;
-	
+
 	i = 0;
 	comms = data->comms;
+	if (data->comm_count == 0)
+		return (0);
 	if (data->comm_count == 1 && detect_built_in(comms[0]->command[0]))
 		return (exec_built_in_no_exit(data));
 	while (i < data->comm_count)
