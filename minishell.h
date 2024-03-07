@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/07 11:04:48 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:39:40 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void rl_clear_history (void);
 # include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
+# include <fcntl.h>
 # include "libft/libft.h"
 # include "parse.h"
 
