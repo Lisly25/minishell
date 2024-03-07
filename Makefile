@@ -14,8 +14,17 @@ SRCS	=	init.c \
 			built_ins/unset.c \
 			built_ins/export.c \
 			built_ins/export_utils.c \
-			# parse_split.c \
-			# parse_split_utils.c
+			errors.c \
+			parsing/parse_errors.c \
+			parsing/parse_init.c \
+			parsing/parse_main.c \
+			parsing/parse_redirection.c \
+			parsing/parse_split_pipes.c \
+			parsing/parse_split.c \
+			parsing/parse_split_utils.c \
+			parsing/parse_unsanitized.c \
+			parsing/parse_utils.c \
+			parsing/vector.c \
 OBJS	=	$(SRCS:.c=.o)
 HEADER	=	minishell.h
 RL_PATH	=	~/.brew/opt/readline/lib
