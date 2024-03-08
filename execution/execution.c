@@ -6,11 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/07 11:32:31 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 10:12:38 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //ret of 1: not built_in
 //ret of -1: error
@@ -54,16 +54,16 @@ static int	is_n_flag(t_comm *command)
 
 static int	exec_built_in_no_exit(t_data *data)
 {
-	int	code;
-	int	i;
-	t_comm *command;
+	int		code;
+	int		i;
+	t_comm	*command;
 
 	command = *(data->comms);
 	code = detect_built_in(command->command[0]);
 	i = 1;
 	while (command->command[i] != NULL || i == 1)
 	{
-		if (code  == 1 && is_n_flag(command) && i == 1)
+		if (code == 1 && is_n_flag(command) && i == 1)
 			i ++;
 		if (run_built_in(command->command[i], code, &data->env) != 0)
 			return (-1);
@@ -78,7 +78,7 @@ static int	exec_built_in_no_exit(t_data *data)
 	return (0);
 }
 
-static int	child_process(t_data *data, t_comm *comm)
+int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
 
@@ -103,7 +103,8 @@ int	execute(t_data *data)
 		return (0);
 	if (data->comm_count == 1 && detect_built_in(comms[0]->command[0]))
 		return (exec_built_in_no_exit(data));
-	while (i < data->comm_count)
+	init_children_and_fds(data);
+	/*while (i < data->comm_count)
 	{
 		comms[i]->child_id = fork();
 		if (comms[i]->child_id == -1)
@@ -111,7 +112,7 @@ int	execute(t_data *data)
 		if (comms[i]->child_id == 0)
 			return (child_process(data, comms[i]));
 		i ++;
-	}
+	}*/
 	wait_for_children(data);
 	return (0);
 }
