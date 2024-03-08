@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/06 12:57:36 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/08 10:38:13 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*find_path(t_comm *command)
 {
@@ -62,9 +62,17 @@ void	wait_for_children(t_data *data)
 {
 	int		i;
 	int		child_status;
-	
+
 	i = 0;
 	while (i < data->comm_count)
-		waitpid(data->comms[i++]->child_id, &child_status, 0);
-
+	{
+		if (waitpid(data->comms[i]->child_id, &child_status, 0) == -1)
+		{
+			ft_printf("minishell 🐢: wait error\n");
+			ft_free_t_data_struct(data);
+			exit(1);
+		}
+		//this is also where we need to check &child_status -> this is the info we need to return when the exit status is queried
+		i++;
+	}
 }
