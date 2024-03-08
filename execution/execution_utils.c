@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/08 10:38:13 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:54:20 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,16 @@ void	wait_for_children(t_data *data)
 	i = 0;
 	while (i < data->comm_count)
 	{
+		if (data->comms[i]->child_id < 1)
+			return ;
 		if (waitpid(data->comms[i]->child_id, &child_status, 0) == -1)
 		{
 			ft_printf("minishell 🐢: wait error\n");
 			ft_free_t_data_struct(data);
 			exit(1);
 		}
-		//this is also where we need to check &child_status -> this is the info we need to return when the exit status is queried
 		i++;
 	}
+	//this is also where we need to check &child_status -> this is the info we need to return when the exit status is queried
+	//we might need the &child_status from the middle children, too,
 }
