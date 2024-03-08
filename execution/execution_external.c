@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/08 10:51:30 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:52:43 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ static int	init_child(t_comm *cmd)
 	return (status);
 }
 
+//we'll need to see which order bash handles redirections in
+//does it open the input files first?
+//or does it do it the order they are in in the input string, regardless of input/output?
 static int	open_redirect_files(t_data *data, int i)
 {
 	int		status;
@@ -46,13 +49,21 @@ static int	open_redirect_files(t_data *data, int i)
 	status = 0;
 	cmd = data->comms[i];
 	if (cmd->input != NULL)
+	{
 		status = open_read(data, i);
-	if (status != 0)
-		return (status);
+		if (status != 0)
+			return (status);
+	}
+	if (cmd->input == NULL && i == 0)
+		cmd->input_fd = STDIN_FILENO;
 	if (cmd->output != NULL)
+	{
 		status = open_write(data, i);
-	if (status != 0)
-		return (status);
+		if (status != 0)
+			return (status);
+	}
+	if (cmd->output == NULL && i == (data->comm_count - 1))
+		cmd->output_fd = STDOUT_FILENO;
 	return (0);
 }
 
@@ -63,6 +74,7 @@ static int	redirect(t_comm *cmd)
 	if (cmd->input_fd != 0)
 	{
 		status = dup2(cmd->input_fd, STDIN_FILENO);
+		printf("input fd: %d\n", cmd->input_fd);
 		close(cmd->input_fd);
 		if (status == -1)
 			return (DUP2_ERROR);
@@ -96,6 +108,10 @@ int	init_children_and_fds(t_data *data)
 				return (DUP2_ERROR);
 			child_process(data, data->comms[i]);
 		}
+		if (data->comms[i]->input_fd != STDIN_FILENO)//the unused pipe_fds for the child need to be closed as well!
+			close(data->comms[i + 1]->input_fd);
+		if (data->comms[i]->output_fd != STDOUT_FILENO)
+			close(data->comms[i]->output_fd);
 		i++;
 	}
 	return (0);
