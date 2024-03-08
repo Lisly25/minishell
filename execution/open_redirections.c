@@ -6,13 +6,24 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 17:16:41 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 10:31:51 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-static void	close_files(char **filenames, int j, int is_after_error)
+static int	check_if_file_exists(char *filename)
+{
+	if (access(filename, F_OK) == 1)
+		return (1);
+	else
+		return (0);
+}
+
+//this close_files() function is used for both commands currently. For the input, it's completely fine
+//for the output, we obviously should not get the "no such file or directory" message, since we are supposed to create it
+//but I'm not sure why open() would fail otherwise, or what message bash would give
+static int	close_files(char **filenames, int j, int is_error, t_data *data)
 {
 	int	i;
 
@@ -22,6 +33,16 @@ static void	close_files(char **filenames, int j, int is_after_error)
 		close(filenames[i + 1]);
 		i = i + 2;
 	}
+	if (is_error == 1)
+	{
+		if (check_if_file_exists(filenames[j + 1]) == 1)
+			ft_printf("minishell 🐢: %s: Permission denied\n", filenames[j + 1]);
+		else
+			ft_printf("minishell 🐢: %s: No such file or dierctory\n", filenames[j + 1]);
+		ft_free_t_data_struct(data);
+		exit(1);
+	}
+	return (0);
 }
 
 int	open_read(t_data *data, int i)
@@ -43,12 +64,10 @@ int	open_read(t_data *data, int i)
 		else
 			data->comms[i]->input_fd = heredoc(data->comms[i]);
 		if (data->comms[i]->input_fd == -1)
-			break ;
+			return (close_files(input, j, 1, data));
 		j = j + 2;
 	}
-	close_files(input, j);
-	if (data->comms[i]->input_fd == -1)
-		return (-1);
+	close_files(input, j, 0, data);
 	return (0);
 }
 
@@ -59,7 +78,7 @@ int	open_write(t_data *data, int i)
 
 	j = 0;
 	output = data->comms[i]->output;
-	if (i == (data->comm_count - 1) && output == NULL)//should move this check for an edge case to a helper function to save lines
+	if (i == (data->comm_count - 1) && output == NULL)
 	{
 		data->comms[i]->output_fd = 1;
 		return (0);
@@ -73,11 +92,9 @@ int	open_write(t_data *data, int i)
 			data->comms[i]->output_fd = open(output[j + 1], \
 			O_CREAT | O_WRONLY | O_APPEND, 0644);
 		if (data->comms[i]->output_fd == -1)
-			break ;
+			return (close_files(output, j, 1, data));
 		j = j + 2;
 	}
-	close_files(output, j);
-	if (data->comms[i]->output_fd == -1)
-		return (-1);
+	close_files(output, j, 0, data);
 	return (0);
 }
