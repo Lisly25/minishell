@@ -6,13 +6,13 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 16:25:53 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 10:13:44 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-int	init_pipe(t_data *data, int i)
+static int	init_pipe(t_data *data, int i)
 {
 	int	status;
 	int	fds[2];
@@ -27,7 +27,7 @@ int	init_pipe(t_data *data, int i)
 	return (0);
 }
 
-int	init_child(t_comm *cmd)
+static int	init_child(t_comm *cmd)
 {
 	int	status;
 
@@ -38,7 +38,7 @@ int	init_child(t_comm *cmd)
 	return (status);
 }
 
-int	open_redirect_files(t_data *data, int i)
+static int	open_redirect_files(t_data *data, int i)
 {
 	int		status;
 	t_comm	*cmd;
@@ -55,7 +55,7 @@ int	open_redirect_files(t_data *data, int i)
 	return (0);
 }
 
-int	redirect(t_comm *cmd)
+static int	redirect(t_comm *cmd)
 {
 	int	status;
 
@@ -92,7 +92,7 @@ int	init_children_and_fds(t_data *data)
 				continue ;
 			if (redirect(data->comms[i]) == DUP2_ERROR)
 				return (DUP2_ERROR);
-			execute_child(data, i);
+			child_process(data, data->comms[i]);
 		}
 		i++;
 	}
