@@ -6,11 +6,21 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/08 13:18:28 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 13:30:37 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+//we'll need to modify this so that several cmds in the pipe using heredoc does not cause problems
+//also, the heredocs should be created in the parent process, this really should just open it!
+static int	heredoc(void)
+{
+	int	fd;
+
+	fd = open("heredoc", O_RDONLY);
+	return (fd);
+}
 
 static int	check_if_file_exists(char *filename)
 {
@@ -61,7 +71,7 @@ int	open_read(t_data *data, int i)
 		if (ft_strlen(input[j]) == 1)
 			data->comms[i]->input_fd = open(input[j + 1], O_RDONLY);
 		else
-			data->comms[i]->input_fd = heredoc(data->comms[i]);
+			data->comms[i]->input_fd = heredoc();
 		close_file(data, data->comms[i]->input_fd, j, input);
 		j = j + 2;
 	}
