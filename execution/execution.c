@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/08 10:12:38 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 15:56:50 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	execute(t_data *data)
 {
 	int		i;
 	t_comm	**comms;
+	int		exit_status;
 
 	i = 0;
 	comms = data->comms;
@@ -103,7 +104,12 @@ int	execute(t_data *data)
 		return (0);
 	if (data->comm_count == 1 && detect_built_in(comms[0]->command[0]))
 		return (exec_built_in_no_exit(data));
-	init_children_and_fds(data);
+	exit_status = init_children_and_fds(data);
+	if (exit_status != 0)
+	{
+		printf("%d\n", exit_status);//this is just for debugging
+		exit(exit_status);
+	}
 	/*while (i < data->comm_count)
 	{
 		comms[i]->child_id = fork();
