@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/07 16:39:40 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 10:49:57 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int		add_var(char *arg, t_env **env);
 int		ft_unset(char *arg, t_env **env);
 
 //execution.c
+int		child_process(t_data *data, t_comm *comm);
 int		execute(t_data *data);
 
 //execution_utils.c
@@ -81,6 +82,13 @@ char	*find_path(t_comm *command);
 int		detect_built_in(char *command);
 int		run_built_in(char *arg, int code, t_env **env);
 void	wait_for_children(t_data *data);
+
+//execution_external.c
+int		init_children_and_fds(t_data *data);
+
+//open_redirections.c
+int		open_read(t_data *data, int i);
+int		open_write(t_data *data, int i);
 
 //errors.c
 void	ft_message_and_exit(t_data *data, int code);
