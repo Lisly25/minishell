@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/08 10:13:44 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/08 10:51:30 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	open_redirect_files(t_data *data, int i)
 	int		status;
 	t_comm	*cmd;
 
+	status = 0;
 	cmd = data->comms[i];
 	if (cmd->input != NULL)
 		status = open_read(data, i);
@@ -80,6 +81,7 @@ int	init_children_and_fds(t_data *data)
 {
 	int	i;
 
+	i = 0;
 	while (i < data->comm_count)
 	{
 		if (init_pipe(data, i) == PIPE_ERROR)
