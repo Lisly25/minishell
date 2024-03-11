@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/11 10:51:30 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:59:17 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static int	redirect(t_comm *cmd)
 	if (cmd->input_fd != 0)
 	{
 		status = dup2(cmd->input_fd, STDIN_FILENO);
-		printf("input fd: %d\n", cmd->input_fd);
 		close(cmd->input_fd);
 		if (status == -1)
 			return (DUP2_ERROR);
