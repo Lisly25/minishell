@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/08 15:52:43 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/11 10:51:30 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	init_children_and_fds(t_data *data)
 				return (DUP2_ERROR);
 			child_process(data, data->comms[i]);
 		}
-		if (data->comms[i]->input_fd != STDIN_FILENO)//the unused pipe_fds for the child need to be closed as well!
+		if ((i != data->comm_count - 1) && data->comms[i]->input_fd != STDIN_FILENO)//the unused pipe_fds for the child need to be closed as well!
 			close(data->comms[i + 1]->input_fd);
 		if (data->comms[i]->output_fd != STDOUT_FILENO)
 			close(data->comms[i]->output_fd);
