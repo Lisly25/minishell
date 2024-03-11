@@ -6,17 +6,23 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/08 15:54:20 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:30:50 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*find_path(t_comm *command)
+char	*find_path(t_comm *cmd, char **env_s)
 {
 	char	*path;
 
-	path = ft_strjoin("/usr/bin/", command->command[0]);
+	//we also should check somewhere if the cmd is an empty string! this is assuming it's not
+	if (cmd->command[0][0] == '/')
+		path = find_absolute_path(cmd->command[0]);
+	else if (ft_strchr(cmd->command[0], '/') != NULL && cmd->command[0][0] != '/')
+		path = find_relative_path(cmd->command[0]);
+	else
+		path = find_path_from_path_env(cmd->command[0], env_s);
 	return (path);
 }
 
