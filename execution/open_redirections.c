@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/08 13:30:37 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/12 09:47:16 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	open_write(t_data *data, int i)
 	output = data->comms[i]->output;
 	if (i == (data->comm_count - 1) && output == NULL)
 	{
-		data->comms[i]->output_fd = 1;
+		data->comms[i]->output_fd = STDOUT_FILENO;
 		return (0);
 	}
 	while (output[j] != NULL)
