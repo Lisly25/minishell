@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/11 15:30:50 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:19:35 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	wait_for_children(t_data *data)
 	i = 0;
 	while (i < data->comm_count)
 	{
-		if (data->comms[i]->child_id < 1)
-			return ;
 		if (waitpid(data->comms[i]->child_id, &child_status, 0) == -1)
 		{
 			ft_printf("minishell 🐢: wait error\n");

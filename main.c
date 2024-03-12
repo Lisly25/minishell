@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 11:21:36 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/12 10:07:50 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char *argv[], char *env[])
 		if (line == NULL)
 		{
 			rl_clear_history();
-			break ;//should this not just be continue?
+			break ;//we need to do some signal magic here
 		}
 		add_history(line);
 		parse_status = parser_main(line, data);

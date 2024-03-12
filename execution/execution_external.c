@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/12 10:24:23 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:01:28 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ static int	open_redirect_files(t_data *data, int i)
 			return (status);
 	}
 	if (cmd->input == NULL && i == 0)
+	{
+		//if (data->comm_count > 1)
+		//	close(data->comms[i]->input_fd);
 		cmd->input_fd = STDIN_FILENO;
+	}
 	if (cmd->output != NULL)
 	{
 		status = open_write(data, i);
@@ -63,7 +67,9 @@ static int	open_redirect_files(t_data *data, int i)
 			return (status);
 	}
 	if (cmd->output == NULL && i == (data->comm_count - 1))
+	{
 		cmd->output_fd = STDOUT_FILENO;
+	}
 	return (0);
 }
 
@@ -71,14 +77,14 @@ static int	redirect(t_comm *cmd)
 {
 	int	status;
 
-	if (cmd->input_fd != 0)
+	if (cmd->input_fd != STDIN_FILENO)
 	{
 		status = dup2(cmd->input_fd, STDIN_FILENO);
 		close(cmd->input_fd);
 		if (status == -1)
 			return (DUP2_ERROR);
 	}
-	if (cmd->output_fd != 1)
+	if (cmd->output_fd != STDOUT_FILENO)
 	{
 		status = dup2(cmd->output_fd, STDOUT_FILENO);
 		close (cmd->output_fd);
@@ -110,7 +116,8 @@ int	init_children_and_fds(t_data *data)
 		if (i == (data->comm_count - 1))
 			break ;
 		close(data->comms[i]->output_fd);
-		close(data->comms[i + 1]->input_fd);
+		if (i != 0)
+			close(data->comms[i]->input_fd);
 		i++;
 	}
 	return (0);
