@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/11 10:59:17 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/12 10:24:23 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,15 +102,15 @@ int	init_children_and_fds(t_data *data)
 		if (data->comms[i]->child_id == 0)
 		{
 			if (open_redirect_files(data, i) == -1)
-				continue ;
+				exit(1);//need better error handling here
 			if (redirect(data->comms[i]) == DUP2_ERROR)
-				return (DUP2_ERROR);
+				exit(DUP2_ERROR);//this is not okay - also need to free!
 			child_process(data, data->comms[i]);
 		}
-		if ((i != data->comm_count - 1) && data->comms[i]->input_fd != STDIN_FILENO)//the unused pipe_fds for the child need to be closed as well!
-			close(data->comms[i + 1]->input_fd);
-		if (data->comms[i]->output_fd != STDOUT_FILENO)
-			close(data->comms[i]->output_fd);
+		if (i == (data->comm_count - 1))
+			break ;
+		close(data->comms[i]->output_fd);
+		close(data->comms[i + 1]->input_fd);
 		i++;
 	}
 	return (0);
