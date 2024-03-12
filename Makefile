@@ -27,6 +27,7 @@ SRCS	=	main.c \
 			parsing/parse_unsanitized.c \
 			parsing/parse_utils.c \
 			parsing/parse_sanitiser.c \
+			parsing/parse_sanitiser_utils.c \
 			parsing/vector.c
 OBJS	=	$(SRCS:.c=.o)
 HEADER	=	minishell.h

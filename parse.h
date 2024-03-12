@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 16:12:46 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/12 16:27:18 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ char	*ft_strdup_only_char_c_str(char c, char *str, int i);
 char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit);
 
 //parse_sanitiser
+char	*sanitise_str(char *str, t_env *env);
+void	sanitiser(t_data *data);
+
+//parse_sanitiser_utils
+char	*expand_env_san(char *str, t_env *env);
 int		get_san_len(char *str, t_env *env);
 
 #endif

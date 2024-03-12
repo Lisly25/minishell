@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/07 16:12:32 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:34:41 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		ft_env(t_env *env);
 int		ft_cd(char *path, t_env **env);
 
 //exit.c
-void	ft_exit(char *status);//this does not exist anymore, right?
+void	ft_exit(char *status);//this does not exist anymore, right? It does!!
 
 //export.c
 int		ft_export(char *arg, t_env **env);
