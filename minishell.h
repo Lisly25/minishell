@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/07 11:04:48 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:30:57 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void rl_clear_history (void);
 # include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
+# include <fcntl.h>
 # include "libft/libft.h"
 # include "parse.h"
 
@@ -73,17 +74,35 @@ int		add_var(char *arg, t_env **env);
 int		ft_unset(char *arg, t_env **env);
 
 //execution.c
+int		child_process(t_data *data, t_comm *comm);
 int		execute(t_data *data);
 
 //execution_utils.c
-char	*find_path(t_comm *command);
+char	*find_path(t_comm *command, char **env_s);
 int		detect_built_in(char *command);
 int		run_built_in(char *arg, int code, t_env **env);
 void	wait_for_children(t_data *data);
+
+//execution_external.c
+int		init_children_and_fds(t_data *data);
+
+//open_redirections.c
+int		open_read(t_data *data, int i);
+int		open_write(t_data *data, int i);
+
+//execution_path.c
+char	*find_path_from_path_env(char *cmd, char **env_s);
+char	*find_absolute_path(char *cmd);
+
+//execution_path_utils.c
+char	**get_path_env_array(char **env_s, char *cmd);
+int		check_access_to_command(char *path);
+int		check_if_cmd_is_directory(char *path, char *cmd);
 
 //errors.c
 void	ft_message_and_exit(t_data *data, int code);
 void	ft_free_2d_array(char **arr);
 void	ft_free_t_data_struct(t_data *data);
+char	*find_relative_path(char *cmd);
 
 #endif

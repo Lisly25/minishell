@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 11:15:19 by skorbai           #+#    #+#             */
-/*   Updated: 2023/12/19 14:51:48 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:48:14 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,5 +143,9 @@ char	*newline_strdup(char *str);
 char	*gnl_strjoin(char const *pref, char const *suff, ssize_t bytes);
 
 char	*malloc_fail_cleanup(char **leftover);
+
+char	*ft_find_str_by_prefix_in_array(char *prefix, char **arr);
+
+char	*ft_three_strs_join(char *s1, char *s2, char *s3);
 
 #endif
