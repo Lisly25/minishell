@@ -28,7 +28,7 @@ int	main(int argc, char *argv[], char *env[])
 		if (line == NULL)
 		{
 			rl_clear_history();
-			break ;//should this not just be continue?
+			break ;//we need to do some signal magic here
 		}
 		add_history(line);
 		parse_status = parser_main(line, data);

@@ -5,8 +5,12 @@ SRCS	=	main.c \
 			init.c \
 			input.c \
 			signals.c \
-			execution.c \
-			execution_utils.c \
+			execution/execution.c \
+			execution/execution_utils.c \
+			execution/execution_external.c \
+			execution/open_redirections.c \
+			execution/execution_path_utils.c \
+			execution/execution_path.c \
 			builtin_utils.c \
 			built_ins/cd.c \
 			built_ins/echo.c \

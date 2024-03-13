@@ -17,8 +17,14 @@
 # include "vector.h"
 # include "minishell.h"
 
+# define PIPE_READ_END 0
+# define PIPE_WRITE_END 1
+
 # define MALLOC_ERROR 2
 # define UNCLOSED_QUOTE_ERROR 3
+# define PIPE_ERROR 4
+# define FORK_ERROR 5
+# define DUP2_ERROR 6
 # define SYNTAX_ERROR 258
 
 typedef struct s_comm
@@ -27,6 +33,8 @@ typedef struct s_comm
 	char	**output;
 	char	**command;
 	pid_t	child_id;
+	int		input_fd;
+	int		output_fd;
 }	t_comm;
 
 typedef struct s_env
@@ -43,7 +51,6 @@ typedef struct s_data
 	char		**env_s;
 	t_comm		**comms;
 	int			comm_count;
-	int			**pipe_array;
 }				t_data;
 
 int		parser_main(char *input, t_data *data);
