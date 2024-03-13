@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/07 11:09:41 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:42:46 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,12 @@ void	free_comm(t_data *data)//move this to error.c!
 	{
 		while (comms[i]->command[j] != NULL)
 		{
-			free(comms[i]->command[j++]);
+			free(comms[i]->command[j]);
+			free(comms[i]->san_command[j]);
+			j ++;
 		}
 		free(comms[i]->command);
+		free(comms[i]->san_command);
 		i ++;
 		j = 0;
 	}

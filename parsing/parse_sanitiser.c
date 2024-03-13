@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 12:07:33 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:40:42 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,25 +80,28 @@ char	*sanitise_str(char *str, t_data *data)
 
 void	sanitiser(t_data *data)
 {
-	int		i;
-	int		j;
-	char	*temp;
+	int	i;
+	int	j;
+	int	count;
 	t_comm	**comms;
 
 	i = 0;
 	j = 0;
+	count = 0;
 	comms = data->comms;
 	while (i < data->comm_count)
 	{
+		while (comms[i]->command[count])
+			count ++;
+		comms[i]->san_command = (char **) malloc(sizeof(char *) * (count + 1));
 		while (comms[i]->command[j])
 		{
-			temp = sanitise_str(comms[i]->command[j], data);
-			free(comms[i]->command[j]);
-			comms[i]->command[j] = ft_strdup(temp);
-			free(temp);
+			comms[i]->san_command[j] = sanitise_str(comms[i]->command[j], data);
 			j ++;
 		}
-		i ++;
+		comms[i]->san_command[j] = NULL;
 		j = 0;
+		count = 0;
+		i ++;
 	}
 }
