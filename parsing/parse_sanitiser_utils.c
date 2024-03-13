@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:21:43 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/12 16:27:17 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:25:38 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,36 @@ char	*expand_env_san(char *str, t_env *env)
 	return (rtn);
 }
 
-int	get_san_len(char *str, t_env *env)
+static void	handle_dollar(char **str_p, int *len, t_data *data)
+{
+	char	*str;
+	int		n;
+
+	str = *str_p;
+	n = data->exit_code;
+	if (*(str + 1) != '?')
+	{
+		*len += env_len(str, data->env);
+		while (**str_p && **str_p != ' ' && **str_p != 34 && **str_p != 39)
+			(*str_p) ++;
+		(*str_p) --;
+	}
+	else
+	{
+		if (n == 0)
+			(*len) ++;
+		while (n > 1)
+		{
+			(*len) ++;
+			n /= 10;
+		}
+		while (**str_p && **str_p != ' ' && **str_p != 34 && **str_p != 39)
+			(*str_p) ++;
+		(*str_p) --;
+	}
+}
+
+int	get_san_len(char *str, t_data *data)
 {
 	int	d;
 	int	s;
@@ -89,13 +118,7 @@ int	get_san_len(char *str, t_env *env)
 	while (*str)
 	{
 		if (*str == '$' && !s)
-		{
-			str ++;
-			len += env_len((str - 1),  env);
-			while (*str && *str != ' ' && *str != 34 && *str != 39)
-				str ++;
-			str --;
-		}
+			handle_dollar(&str, &len, data);
 		else if (*str != 34 && *str != 39)
 			len ++;
 		else if (*str == 34 || *str == 39)

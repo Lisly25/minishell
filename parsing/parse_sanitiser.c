@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sanitiser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 10:07:10 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:07:33 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,7 @@ static void	handle_q2(char ch, int *d, int *s, char **san_str)
 	}
 }
 
-static void	handle_env(char **env, char **san_str)
-{
-	char	*ptr;
-	char	*san_str_p;
-
-	ptr = *env;
-	san_str_p = *san_str;
-	if (!ptr)
-		return ;
-	while (*ptr)
-	{
-		*(san_str_p++) = *(ptr++);
-		(*san_str) ++;
-	}
-	free(*env);
-}
-
-static void	fill_str(char *str, char **san_str, int *d, int *s, t_env *env)
+static void	fill_str(char *str, char **san_str, int *d, int *s, t_data *data)
 {
 	char	*ptr;
 	char	*temp;
@@ -59,9 +42,11 @@ static void	fill_str(char *str, char **san_str, int *d, int *s, t_env *env)
 	ptr = *san_str;
 	while (*str)
 	{
-		if (*str == '$' && !*s)
+		if (ft_strncmp(str, "$?", 2) == 0 && !*s)
+			handle_question(&str, &ptr, data->exit_code);
+		else if (*str == '$' && !*s)
 		{
-			temp = expand_env_san(str, env);
+			temp = expand_env_san(str, data->env);
 			handle_env(&temp, &ptr);
 			while (*str && *str != ' ' && *str != 34 && *str != 39)
 				str ++;
@@ -76,20 +61,20 @@ static void	fill_str(char *str, char **san_str, int *d, int *s, t_env *env)
 	*(ptr) = '\0';
 }
 
-char	*sanitise_str(char *str, t_env *env)
+char	*sanitise_str(char *str, t_data *data)
 {
 	int		len;
 	int		d;
 	int		s;
 	char	*san_str;
 
-	len = get_san_len(str, env);
+	len = get_san_len(str, data);
 	d = 0;
 	s = 0;
 	san_str = (char *) malloc((len + 1) * sizeof(char));
 	if (!san_str)
 		return (NULL);
-	fill_str(str, &san_str, &d, &s, env);
+	fill_str(str, &san_str, &d, &s, data);
 	return (san_str);
 }
 
@@ -107,7 +92,7 @@ void	sanitiser(t_data *data)
 	{
 		while (comms[i]->command[j])
 		{
-			temp = sanitise_str(comms[i]->command[j], data->env);
+			temp = sanitise_str(comms[i]->command[j], data);
 			free(comms[i]->command[j]);
 			comms[i]->command[j] = ft_strdup(temp);
 			free(temp);

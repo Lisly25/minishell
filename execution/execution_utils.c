@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/11 17:19:35 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 10:43:35 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	wait_for_children(t_data *data)
 			ft_free_t_data_struct(data);
 			exit(1);
 		}
+		data->exit_code = child_status;
 		i++;
 	}
 	//this is also where we need to check &child_status -> this is the info we need to return when the exit status is queried
