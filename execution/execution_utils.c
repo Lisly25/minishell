@@ -6,17 +6,23 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/06 12:57:36 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:43:35 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
-char	*find_path(t_comm *command)
+char	*find_path(t_comm *cmd, char **env_s)
 {
 	char	*path;
 
-	path = ft_strjoin("/usr/bin/", command->command[0]);
+	//we also should check somewhere if the cmd is an empty string! this is assuming it's not
+	if (cmd->command[0][0] == '/')
+		path = find_absolute_path(cmd->command[0]);
+	else if (ft_strchr(cmd->command[0], '/') != NULL && cmd->command[0][0] != '/')
+		path = find_relative_path(cmd->command[0]);
+	else
+		path = find_path_from_path_env(cmd->command[0], env_s);
 	return (path);
 }
 
@@ -62,9 +68,19 @@ void	wait_for_children(t_data *data)
 {
 	int		i;
 	int		child_status;
-	
+
 	i = 0;
 	while (i < data->comm_count)
-		waitpid(data->comms[i++]->child_id, &child_status, 0);
-
+	{
+		if (waitpid(data->comms[i]->child_id, &child_status, 0) == -1)
+		{
+			ft_printf("minishell 🐢: wait error\n");
+			ft_free_t_data_struct(data);
+			exit(1);
+		}
+		data->exit_code = child_status;
+		i++;
+	}
+	//this is also where we need to check &child_status -> this is the info we need to return when the exit status is queried
+	//we might need the &child_status from the middle children, too,
 }

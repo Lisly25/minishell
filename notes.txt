@@ -25,6 +25,14 @@
 
 	- this is wild, but should we also just handle redirections to any fd? Technically, the stdin and the stdout are just the "default", but you can also redirect any fd as input or output
 
+	- there can be multiple inputs and outputs - even multiple heredocs
+		- with normal input file, the sum of their content is the input
+		- with output, it is outputted to all the files the same way
+		- with multiple heredocs, both limiters have to be entered in the correct order to end the input (but there can be extra, non-limiter strings between them)
+
+	- we separated the input- and output redirections, and went through the input redirection first: WHICH IS WRONG, because bash just opens and redirects them in the order they are given
+
+
 3. Error codes
 
 	- syntax error is 258, and I added a macro for it
@@ -114,4 +122,51 @@
 
 		"The output of each command in the pipeline is connected to the input of the next command via a pipe"
 
-		So, we'll just disallow input to end with a pipe :)
+	So, we'll just disallow input to end with a pipe :)
+
+	- bash seems to check for syntax errors before forking, because a syntax error in just one part of the command will also prevent all others from executing (but will set the last exit status as 258)
+
+8. sanitization
+
+	- open() does not do any sort of sanitization, but the redirections in bash clearly does:
+
+		- even environment variables can be used in names, and they will be expanded
+
+		- one new type of error I discovered: "ambiguous redirect".
+
+		Scenario:
+
+		1. Make new environment variable:
+
+			> export $HELLO=Hello
+
+		2. try to use it, but it is in lower case:
+
+			> echo Hello > $hello
+
+		3. Get error message:
+
+			bash: $hello: ambiguous redirect
+
+		Trying to use builtins environment variables in such a way, for example pwd, regardless of if it's upper or lower case, will gave the same error message.
+
+9. Finding path to file:
+
+	- Bash simply seems to look for the first executable in the PATH environment variable - it will not keep looking for another even if the first it found had some issues.
+
+	- for example, I made an executable, and added the current directory to the PATH variable: at that point, I could execute it without the ("./") prefix.
+		- then, I renamed it to "cat": at that point, the new path was at the end of the PATH variable, so the original "cat" shell command was getting executed when running "cat"
+		- but then I edited the PATH variable, and moved my current directory to be the first array:
+			- "cat" executed my executable now, not the shell command
+			- when I removed the execute permission from my "cat", I got a permission denied message as expected
+			- thus, it should be perfectly possible to "break" the terminal, and should be allowed
+
+	- What order does bash actually look for executables in? Along path variable/relative/absolute?
+		Does it matter? One executable can only be reached one way, or another.
+			- a shell command will have either no "/" in its name -> look in the PATH variable
+			- or it will, and then it must be an absolute path if it's what it starts with.
+			- and if it does have "/", but that's not what it starts with, it must be a relative path
+
+		Normally, you can't run an executable without specifying a path if its path is not in the environment variable
+			BUT if you unset the path, you can! -> unsetting the path seems to "set" the path to the current directory (relative paths will still work)
+

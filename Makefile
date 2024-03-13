@@ -1,11 +1,17 @@
 NAME	=	minishell
 CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
-SRCS	=	init.c \
+SRCS	=	main.c \
+			init.c \
 			input.c \
 			signals.c \
-			execution.c \
-			execution_utils.c \
+			execution/execution.c \
+			execution/execution_utils.c \
+			execution/execution_external.c \
+			execution/open_redirections.c \
+			execution/redirect_utils.c \
+			execution/execution_path_utils.c \
+			execution/execution_path.c \
 			builtin_utils.c \
 			built_ins/cd.c \
 			built_ins/echo.c \
@@ -25,6 +31,9 @@ SRCS	=	init.c \
 			parsing/parse_split_utils.c \
 			parsing/parse_unsanitized.c \
 			parsing/parse_utils.c \
+			parsing/parse_sanitiser.c \
+			parsing/parse_sanitiser_utils.c \
+			parsing/parse_sanitiser_utils_2.c \
 			parsing/vector.c
 OBJS	=	$(SRCS:.c=.o)
 HEADER	=	minishell.h

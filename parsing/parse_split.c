@@ -6,11 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 13:02:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/01 11:44:15 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:31:03 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static int	handle_quotes(char *str, int i)
 {

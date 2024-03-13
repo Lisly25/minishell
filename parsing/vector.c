@@ -6,11 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 10:07:50 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/06 14:20:05 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/07 10:31:16 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	free_vector(t_vector *vector)
 {

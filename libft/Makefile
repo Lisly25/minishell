@@ -6,7 +6,7 @@
 #    By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:59:07 by skorbai           #+#    #+#              #
-#    Updated: 2023/12/19 14:51:24 by skorbai          ###   ########.fr        #
+#    Updated: 2024/03/11 13:48:25 by skorbai          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,7 +63,9 @@ SRCS = ft_atoi.c \
 			ft_printf_uint.c \
 			ft_printf_void.c \
 			get_next_line_bonus.c \
-			get_next_line_utils_bonus.c
+			get_next_line_utils_bonus.c \
+			ft_find_str_by_prefix_in_array.c \
+			ft_three_strs_join.c
 
 OBJS = $(SRCS:.c=.o)
 
