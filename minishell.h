@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 12:41:52 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:55:30 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,9 @@ void	wait_for_children(t_data *data);
 int		init_children_and_fds(t_data *data);
 
 //open_redirections.c
-int		open_read(t_data *data, int i);
-int		open_write(t_data *data, int i);
+int		open_read(char **redirect, int j);
+int		open_write(char **redirect, int j);
+void	close_file(t_data *data, int fd, int j, char **file_arr);
 
 //redirect_utils.c
 int		check_if_last_redirect(char c, char **redirect, int j);
