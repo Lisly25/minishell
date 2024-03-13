@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:41:21 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/11 15:30:41 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:46:56 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*find_path_from_path_env(char *cmd, char **env_s)
 char	*find_absolute_path(char *cmd)//we might want to malloc this path, so then we can error handle it the same way after an execve way as everything else
 {
 	char	*result;
-	
+
 	if (check_access_to_command(cmd) == 0)
 	{
 		if (check_if_cmd_is_directory(cmd, cmd) == 1)

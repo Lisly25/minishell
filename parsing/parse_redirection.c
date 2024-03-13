@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 10:30:50 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:40:59 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 	while (str[i] == c)
 		str[i++] = ' ';
 	while (str[i] != '\0' && str[i] == ' ' && (str[i] != opposite_redir \
-	|| check_if_quote_enclosed(str, i) == 0))
+	|| check_if_quoted(str, i) == 0))
 		i++;
 	buffer = ft_strdup_from_i_to_char(c, str, i, ' ');
 	if (buffer == NULL)
@@ -41,17 +41,19 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 	return (0);
 }
 
-static int	extract_redir_array(char *str, char c, t_vector *redir_array)
+static int	extract_redir_array(char *str, t_vector *redir_array)
 {
-	int			i;
-	int			result;
+	int		i;
+	int		result;
+	char	c;	
 
 	i = 0;
 	result = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == c && check_if_quote_enclosed(str, i) == 0)
+		if ((str[i] == '<' || str[i] == '>') && check_if_quoted(str, i) == 0)
 		{
+			c = str[i];
 			result = extract_redir(str, i, redir_array, c);
 			if (result == MALLOC_ERROR)
 			{
@@ -66,7 +68,7 @@ static int	extract_redir_array(char *str, char c, t_vector *redir_array)
 	return (result);
 }
 
-int	add_redir_data_to_parse_struct(char *str, char c, t_comm *cmd)
+int	add_redir_data_to_parse_struct(char *str, t_comm *cmd)
 {
 	t_vector	*redir_array;
 	int			result;
@@ -74,13 +76,13 @@ int	add_redir_data_to_parse_struct(char *str, char c, t_comm *cmd)
 	redir_array = vector_new(1);
 	if (redir_array == NULL)
 		return (MALLOC_ERROR);
-	result = extract_redir_array(str, c, redir_array);
+	result = extract_redir_array(str, redir_array);
 	if (result == MALLOC_ERROR)
 		return (MALLOC_ERROR);
-	if (c == '<' && redir_array->used_nodes != 0)
-		cmd->input = redir_array->text;
-	else if (redir_array->used_nodes != 0)
-		cmd->output = redir_array->text;
+	if (redir_array->used_nodes != 0)
+		cmd->redirect = redir_array->text;
+	else
+		cmd->redirect = NULL;
 	free(redir_array);
 	return (result);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/12 12:34:41 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:41:52 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,9 @@ int		init_children_and_fds(t_data *data);
 //open_redirections.c
 int		open_read(t_data *data, int i);
 int		open_write(t_data *data, int i);
+
+//redirect_utils.c
+int		check_if_last_redirect(char c, char **redirect, int j);
 
 //execution_path.c
 char	*find_path_from_path_env(char *cmd, char **env_s);

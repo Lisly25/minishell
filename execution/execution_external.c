@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/12 16:01:28 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:30:47 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,19 @@ static int	init_pipe(t_data *data, int i)
 	int	fds[2];
 
 	if ((data->comm_count - 1) == i)
+	{
+		data->comms[i]->output_fd = STDOUT_FILENO;
+		if (data->comm_count == 1)
+			data->comms[i]->input_fd = STDIN_FILENO;
 		return (0);
+	}
 	status = pipe(fds);
 	if (status == -1)
 		return (PIPE_ERROR);
 	data->comms[i]->output_fd = fds[PIPE_WRITE_END];
 	data->comms[i + 1]->input_fd = fds[PIPE_READ_END];
+	if (i == 0)
+		data->comms[i]->input_fd = STDIN_FILENO;
 	return (0);
 }
 
@@ -38,37 +45,23 @@ static int	init_child(t_comm *cmd)
 	return (status);
 }
 
-//we'll need to see which order bash handles redirections in
-//does it open the input files first?
-//or does it do it the order they are in in the input string, regardless of input/output?
-static int	open_redirect_files(t_data *data, int i)
+static int	open_redirects(t_data *data, int i)
 {
-	int		status;
-	t_comm	*cmd;
+	int		j;
+	char	**redirect;
 
-	status = 0;
-	cmd = data->comms[i];
-	if (cmd->input != NULL)
+	j = 0;
+	redirect = data->comms[i]->redirect;
+	if (redirect == NULL)
+		return (0);
+	while (redirect[j] != NULL)
 	{
-		status = open_read(data, i);
-		if (status != 0)
-			return (status);
-	}
-	if (cmd->input == NULL && i == 0)
-	{
-		//if (data->comm_count > 1)
-		//	close(data->comms[i]->input_fd);
-		cmd->input_fd = STDIN_FILENO;
-	}
-	if (cmd->output != NULL)
-	{
-		status = open_write(data, i);
-		if (status != 0)
-			return (status);
-	}
-	if (cmd->output == NULL && i == (data->comm_count - 1))
-	{
-		cmd->output_fd = STDOUT_FILENO;
+		if (redirect[j][0] == '<')
+			data->comms[i]->input_fd = open_read(redirect, j);
+		else
+			data->comms[i]->output_fd = open_write(redirect, j);
+		//we need to use close_file here, but we need to modify that ffunction - it's harder to detect now if something's the last redirection of a kind
+		j = j + 2;
 	}
 	return (0);
 }
@@ -107,7 +100,7 @@ int	init_children_and_fds(t_data *data)
 			return (FORK_ERROR);
 		if (data->comms[i]->child_id == 0)
 		{
-			if (open_redirect_files(data, i) == -1)
+			if (open_redirects(data, i) == -1)
 				exit(1);//need better error handling here
 			if (redirect(data->comms[i]) == DUP2_ERROR)
 				exit(DUP2_ERROR);//this is not okay - also need to free!
