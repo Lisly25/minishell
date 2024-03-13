@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 12:30:47 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:53:43 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,15 @@ static int	open_redirects(t_data *data, int i)
 	while (redirect[j] != NULL)
 	{
 		if (redirect[j][0] == '<')
+		{
 			data->comms[i]->input_fd = open_read(redirect, j);
+			close_file(data, data->comms[i]->input_fd, j, redirect);
+		}
 		else
+		{
 			data->comms[i]->output_fd = open_write(redirect, j);
-		//we need to use close_file here, but we need to modify that ffunction - it's harder to detect now if something's the last redirection of a kind
+			close_file(data, data->comms[i]->output_fd, j, redirect);
+		}
 		j = j + 2;
 	}
 	return (0);
