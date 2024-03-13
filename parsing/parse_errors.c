@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:52:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 11:29:58 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 12:56:05 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	ft_parse_error_too_many_chars(char c)
 	ft_putstr_fd("minishell 🐢: syntax error near unexpected token `", 2);
 	if (c == '<')
 		ft_putstr_fd("<<", 2);
-	else if (c == ">")
+	else if (c == '>')
 		ft_putstr_fd(">>", 2);
 	else
 		ft_putstr_fd("newline", 2);
