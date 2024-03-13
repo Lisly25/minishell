@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 10:35:21 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:56:51 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	main(int argc, char *argv[], char *env[])
 		if (line == NULL)
 		{
 			rl_clear_history();
-			break ;//we need to do some signal magic here
+			ft_message_and_exit(data, 1);
 		}
 		add_history(line);
 		parse_status = parser_main(line, data);
