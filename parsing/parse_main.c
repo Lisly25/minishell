@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 11:31:36 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/12 16:16:43 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	parser_main(char *input, t_data *data)
 		return (SYNTAX_ERROR);
 	status = init_unsanitized_array(input, data);
 	free(input);
+	sanitiser(data);
 	return (status);
 }
 
