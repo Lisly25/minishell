@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:52:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 10:55:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 10:54:47 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,21 @@ int	ft_parse_error(char *str)
 
 int	check_for_unclosed_quotes(char *str)
 {
-	int	i;
-	int	single_quote_count;
-	int	double_quote_count;
+	int		i;
+	char	quote;
 
 	i = 0;
-	single_quote_count = 0;
-	double_quote_count = 0;
-	while (str[i])
+	while (str[i] != '\0')
 	{
-		if (str[i] == '\'')
-			single_quote_count++;
-		if (str[i] == '\"')
-			double_quote_count++;
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i++];
+			while (str[i] != quote && str[i] != '\0')
+				i++;
+			if (str[i] == '\0')
+				return (-1);
+		}
 		i++;
 	}
-	if (single_quote_count % 2 != 0)
-		return (-1);
-	if (double_quote_count % 2 != 0)
-		return (-1);
 	return (0);
 }
