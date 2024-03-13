@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sanitiser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/12 16:26:04 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:07:10 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,18 +98,18 @@ void	sanitiser(t_data *data)
 	int		i;
 	int		j;
 	char	*temp;
-	t_comm	*comms;
+	t_comm	**comms;
 
 	i = 0;
 	j = 0;
-	comms = *(data->comms);
+	comms = data->comms;
 	while (i < data->comm_count)
 	{
-		while (comms[i].command[j])
+		while (comms[i]->command[j])
 		{
-			temp = sanitise_str(comms[i].command[j], data->env);
-			free(comms[i].command[j]);
-			comms[i].command[j] = ft_strdup(temp);
+			temp = sanitise_str(comms[i]->command[j], data->env);
+			free(comms[i]->command[j]);
+			comms[i]->command[j] = ft_strdup(temp);
 			free(temp);
 			j ++;
 		}
