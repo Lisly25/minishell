@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 10:30:42 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:27:26 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_if_first_element(char *str)
 		return (0);
 }
 
-int	check_if_quote_enclosed(char *str, int i)
+int	check_if_quoted(char *str, int i)
 {
 	int	j;
 	int	single_quote_count;
@@ -67,7 +67,7 @@ static int	check_for_or_operator(char *str)
 	j = 0;
 	while (str[i] != '\0')
 	{
-		if (str[i] == '|' && check_if_quote_enclosed(str, i) == 0)
+		if (str[i] == '|' && check_if_quoted(str, i) == 0)
 		{
 			j = i + 1;
 			if (str[j] == '|')
@@ -108,22 +108,10 @@ int	get_command_count(char *input)
 	{
 		if (input[i] == '|')
 		{
-			if (check_if_quote_enclosed(input, i) == 0)
+			if (check_if_quoted(input, i) == 0)
 				comm_count++;
 		}
 		i++;
 	}
 	return (comm_count);
 }
-
-/*int	init_command_array(char *input, t_data *data)
-{
-	data->unsanit_comms = init_unsanitized_array(input, data);
-	if (data->unsanit_comms == NULL)
-	{
-		ft_putstr_fd("minishell 🐢: malloc error", 2);
-		return (MALLOC_ERROR);
-	}
-	free(input);
-	return (0);
-}*/

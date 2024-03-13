@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:32:19 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/11 15:31:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 11:46:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_access_to_command(char *path)
 			return (0);
 		else
 		{
-			perror("minishell 🐢");//it should print out minishell: "cmd": permission denied
+			perror("minishell 🐢");//does not produce the correct format :(
 			return (1);
 		}
 	}
@@ -74,23 +74,3 @@ char	**get_path_env_array(char **env_s, char *cmd)
 	}
 	return (path_env_array);
 }
-
-/*char	*find_path_from_path_env(char *cmd, char **env_s)
-{
-	char	*full_path;
-
-	full_path = find_full_path(env_s, cmd);
-	if (full_path == NULL)
-		return (NULL);
-	if (check_access_to_command(cmd) == 0)
-	{
-		if (check_if_cmd_is_directory(cmd, cmd) == 1)
-			return (NULL);
-		return (cmd);
-	}
-	ft_putstr_fd("minishell 🐢: ", 2);//we can shorten this code by creating a function for writing these error messages
-	ft_putstr_fd(cmd, 2);
-	ft_putendl_fd(": No such file or directory", 2);
-	free(full_path);
-	return (NULL);
-}*/
