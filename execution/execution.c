@@ -3,42 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/11 12:53:04 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:09:38 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//ret of 1: not built_in
-//ret of -1: error
-//exit: succcessul run of built-in
-static int	execute_built_in(char **command, t_env **env)
-{
-	int	code;
-	int	i;
-
-	code = detect_built_in(command[0]);
-	if (code == 0)
-		return (1);
-	i = 1;
-	while (command[i] != NULL || i == 1)
-	{
-		if (run_built_in(command[i], code, env) != 0)
-			return (-1);
-		if (command[i] == NULL)
-			break ;
-		if ((code == 1 || code == 2) && command[i + 1] != NULL)
-			printf(" ");
-		i ++;
-	}
-	if (code == 2)
-		printf("\n");
-	exit(0);
-	return (0);
-}
 
 static int	is_n_flag(t_comm *command)
 {
@@ -49,6 +21,38 @@ static int	is_n_flag(t_comm *command)
 		return (0);
 	if (ft_strncmp("-n", str, 2) == 0 && ft_strlen(str) == 2)
 		return (1);
+	return (0);
+}
+
+//ret of 1: not built_in
+//ret of -1: error
+//exit: succcessul run of built-in
+static int	execute_built_in(t_data *data)
+{
+	int	code;
+	int	i;
+	t_comm	*comm;
+
+	comm = *(data->comms);
+	code = detect_built_in(comm->command[0]);
+	if (code == 0)
+		return (1);
+	i = 1;
+	while (comm->command[i] != NULL || i == 1)
+	{
+		if (code == 1 && is_n_flag(comm) && i == 1)
+			i ++;
+		if (run_built_in(comm->command[i], code, &data->env) != 0)
+			return (-1);
+		if (comm->command[i] == NULL)
+			break ;
+		if (code == 1 && comm->command[i + 1] != NULL)
+			printf(" ");
+		i ++;
+	}
+	if (code == 1 && !is_n_flag(comm))
+		printf("\n");
+	exit(0);
 	return (0);
 }
 
@@ -82,7 +86,7 @@ int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
 
-	if (execute_built_in(comm->command, &data->env) == -1)
+	if (execute_built_in(data) == -1)
 		exit(EXIT_FAILURE);
 	path = find_path(comm, data->env_s);
 	if (path == NULL)
