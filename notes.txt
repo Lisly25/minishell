@@ -154,6 +154,16 @@
 
 		- there may be several reasons for it - not sure, but I know at least one thing will cause it: trying to use and environment variable for a redirection, if the value of the variable, when expanded, has a whitespace in it
 
+		- I should try using a folder in a redirect
+
+		//Having an env variable with " " in its name will always be an amb. red. error
+		//whether its > not$PWD or just > $PWD
+		//Having a non-existant env variable
+		//should be an amb.red. error if that is the entire redirect, such as > $NOT_AN_ENV
+		//but if there's some prefix, that's what the redir will be
+		//So, > not$AN_ENV
+		// will result in the file "not" getting created	
+
 9. Finding path to file:
 
 	- Bash simply seems to look for the first executable in the PATH environment variable - it will not keep looking for another even if the first it found had some issues.
