@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 13:51:55 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:54:14 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void rl_clear_history (void);
 
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include <stdlib.h>
 # include <signal.h>
 # include <stdio.h>
@@ -118,5 +119,8 @@ void	ft_message_and_exit(t_data *data, int code);
 void	ft_free_2d_array(char **arr);
 void	ft_free_t_data_struct(t_data *data);
 char	*find_relative_path(char *cmd);
+
+//handle_exit_codes.c
+void	handle_exit_codes(t_data *data);
 
 #endif

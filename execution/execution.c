@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 13:52:09 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:04:02 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
 
+	signal(SIGINT, ctl_c_exe);
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
 	path = find_path(comm, data->env_s);
@@ -106,7 +107,7 @@ int	execute(t_data *data)
 	int		exit_status;
 
 	i = 0;
-	signal(SIGINT, ctl_c_exe);
+	signal(SIGINT, SIG_IGN);
 	comms = data->comms;
 	if (data->comm_count == 0)
 		return (0);
@@ -119,6 +120,7 @@ int	execute(t_data *data)
 		exit(exit_status);
 	}
 	wait_for_children(data);
+	handle_exit_codes(data);
 	if (delete_heredocs(data) == -1)//we'll need to use malloc here, we might have to check the return value of execute() int the main function after all...
 		return (MALLOC_ERROR);
 	return (0);
