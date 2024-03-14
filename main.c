@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 16:11:47 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 10:09:00 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ int	main(int argc, char *argv[], char *env[])
 		else if (parse_status == SYNTAX_ERROR)
 			data->exit_code = SYNTAX_ERROR;
 		else
-			execute(data);//we must check the return value of this for malloc errors!
+		{
+			if (execute(data) == MALLOC_ERROR)
+				ft_message_and_exit(data, 1);
+		}
 		free_comm(data);
 	}
 	ft_message_and_exit(data, 0);
