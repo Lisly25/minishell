@@ -92,12 +92,15 @@ void	wait_for_children(t_data *data);
 int		init_children_and_fds(t_data *data);
 
 //open_redirections.c
-int		open_read(char **redirect, int j, int i);
-int		open_write(char **redirect, int j);
+int		open_read(char **redirect, int j, int i, t_data *data);
+int		open_write(char **redirect, int j, t_data *data);
 void	close_file(t_data *data, int fd, int j, char **file_arr);
 
 //redirect_utils.c
 int		check_if_last_redirect(char c, char **redirect, int j);
+
+//redirect_errors.c
+int		detect_ambiguous_redirect(char	*redirect, t_data *data);
 
 //execution_path.c
 char	*find_path_from_path_env(char *cmd, char **env_s);
