@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 11:34:36 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:18:10 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_comm
 {
 	char	**redirect;
 	char	**command;
+	char	**san_command;
 	pid_t	child_id;
 	int		input_fd;
 	int		output_fd;
@@ -50,6 +51,7 @@ typedef struct s_data
 	char		**env_s;
 	t_comm		**comms;
 	int			comm_count;
+	int			exit_code;
 }				t_data;
 
 int		parser_main(char *input, t_data *data);
@@ -72,11 +74,15 @@ char	*ft_strdup_only_char_c_str(char c, char *str, int i);
 char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit);
 
 //parse_sanitiser
-char	*sanitise_str(char *str, t_env *env);
+char	*sanitise_str(char *str, t_data *data);
 void	sanitiser(t_data *data);
 
 //parse_sanitiser_utils
 char	*expand_env_san(char *str, t_env *env);
-int		get_san_len(char *str, t_env *env);
+int		get_san_len(char *str, t_data *data);
+
+//parse_sanitiser_utils_2
+void	handle_question(char **str, char **san_str, int exit_code);
+void	handle_env(char **env, char **san_str);
 
 #endif

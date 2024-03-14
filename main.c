@@ -12,8 +12,6 @@
 
 #include "minishell.h"
 
-int	exit_code = 0;
-
 int	main(int argc, char *argv[], char *env[])
 {
 	char	*line;
@@ -28,14 +26,14 @@ int	main(int argc, char *argv[], char *env[])
 		if (line == NULL)
 		{
 			rl_clear_history();
-			break ;//we need to do some signal magic here
+			ft_message_and_exit(data, 1);
 		}
 		add_history(line);
 		parse_status = parser_main(line, data);
 		if (parse_status == MALLOC_ERROR)
 			ft_message_and_exit(data, 1);
 		else if (parse_status == SYNTAX_ERROR)
-			exit_code = SYNTAX_ERROR;
+			data->exit_code = SYNTAX_ERROR;
 		else
 			execute(data);//we must check the return value of this for malloc errors!
 		free_comm(data);

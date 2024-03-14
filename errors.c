@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 11:44:51 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:43:55 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	ft_free_t_data_struct(t_data *data)
 				{
 					ft_free_2d_array(data->comms[i]->redirect);
 					ft_free_2d_array(data->comms[i]->command);
+					ft_free_2d_array(data->comms[i]->san_command);
 				}
 				i++;
 			}
