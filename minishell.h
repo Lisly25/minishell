@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 16:15:06 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 10:10:20 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,12 @@ char	**get_path_env_array(char **env_s, char *cmd);
 int		check_access_to_command(char *path);
 int		check_if_cmd_is_directory(char *path, char *cmd);
 
-//read_heredoc.c
+//heredoc.c
 int		get_heredoc(t_data *data);
 int		delete_heredocs(t_data *data);
+
+//heredoc_utils.c
+char	*derive_heredoc_name(int num);
 
 //errors.c
 void	ft_message_and_exit(t_data *data, int code);

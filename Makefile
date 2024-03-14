@@ -11,6 +11,7 @@ SRCS	=	main.c \
 			execution/open_redirections.c \
 			execution/redirect_utils.c \
 			execution/heredoc.c \
+			execution/heredoc_utils.c \
 			execution/execution_path_utils.c \
 			execution/execution_path.c \
 			builtin_utils.c \
