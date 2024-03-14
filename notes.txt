@@ -150,6 +150,10 @@
 
 		Trying to use builtins environment variables in such a way, for example pwd, regardless of if it's upper or lower case, will gave the same error message.
 
+	- ambiguous redirect error:
+
+		- there may be several reasons for it - not sure, but I know at least one thing will cause it: trying to use and environment variable for a redirection, if the value of the variable, when expanded, has a whitespace in it
+
 9. Finding path to file:
 
 	- Bash simply seems to look for the first executable in the PATH environment variable - it will not keep looking for another even if the first it found had some issues.

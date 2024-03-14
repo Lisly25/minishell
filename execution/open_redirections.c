@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 12:54:46 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 10:09:39 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 
 //we'll need to modify this so that several cmds in the pipe using heredoc does not cause problems
 //also, the heredocs should be created in the parent process, this really should just open it!
-static int	heredoc(void)
+static int	heredoc(int i)
 {
-	int	fd;
+	int		fd;
+	char	*hdoc_name;
 
-	fd = open("heredoc", O_RDONLY);
+	hdoc_name = derive_heredoc_name(i);
+	if (hdoc_name == NULL)
+		return (-2);
+	fd = open(hdoc_name, O_RDONLY);
 	return (fd);
 }
 
@@ -38,6 +42,12 @@ void	close_file(t_data *data, int fd, int j, char **file_arr)
 {
 	int	is_last_redir;
 
+	if (fd == -2)
+	{
+		ft_printf("minishell 🐢: malloc error");
+		ft_free_t_data_struct(data);
+		exit(1);
+	}
 	is_last_redir = check_if_last_redirect(file_arr[j][0], file_arr, j);
 	if (fd > 0 && is_last_redir == 0)
 	{
@@ -54,14 +64,14 @@ void	close_file(t_data *data, int fd, int j, char **file_arr)
 	exit(1);
 }
 
-int	open_read(char **redirect, int j)
+int	open_read(char **redirect, int j, int i)
 {
 	int	fd;
 
 	if (ft_strlen(redirect[j]) == 1)
 		fd = open(redirect[j + 1], O_RDONLY);
 	else
-		fd = heredoc();
+		fd = heredoc(i);
 	return (fd);
 }
 
