@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 08:27:53 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/27 08:30:06 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:40:54 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@ static void	handle_signal(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(2, "\n", 1);
-		rl_replace_line("", 0);
+		printf("\33[2K\rminishell 🐢:\n");
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }

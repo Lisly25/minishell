@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/14 10:09:00 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 12:17:32 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,11 @@ int	main(int argc, char *argv[], char *env[])
 	char	*line;
 	t_data	*data;
 	int		parse_status;
+	struct termios	termios;
 
 	init_signals();
 	data = init_data(env);
+	tcgetattr(0, &termios);
 	while (argc != 0 && argv != NULL)
 	{
 		line = readline("minishell 🐢: ");

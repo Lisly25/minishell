@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 10:10:20 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 12:41:32 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void rl_clear_history (void);
 # include <unistd.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <termios.h>
 # include "libft/libft.h"
 # include "parse.h"
 
