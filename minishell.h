@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 12:41:32 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:51:55 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int		already_in_list(char *arg, t_env *env);
 
 //signals.c
 void	init_signals(void);
+void	ctl_c(int sig);
+void	ctl_c_exe(int sig);
 
 //echo.c
 int		ft_echo(char *str);
