@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 08:35:42 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/01 16:41:58 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:25:06 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,4 +60,25 @@ int	already_in_list(char *arg, t_env *env)
 		env = env->next;
 	}
 	return (0);
+}
+
+void	update_dir(char dir, char *value, t_env **env)
+{
+	t_env	*ptr;
+
+	ptr = *env;
+	if (dir == 'o')
+	{
+		while (ft_strncmp("OLDPWD", ptr->name, 6) != 0)
+			ptr = ptr->next;
+		free(ptr->value);
+		ptr->value = ft_strdup(value);
+	}
+	else if (dir == 'p')
+	{
+		while (ft_strncmp("PWD", ptr->name, 3) != 0)
+			ptr = ptr->next;
+		free(ptr->value);
+		ptr->value = ft_strdup(value);
+	}
 }
