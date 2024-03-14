@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 15:40:51 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 09:48:03 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	parser_main(char *input, t_data *data)
 		return (SYNTAX_ERROR);
 	status = init_unsanitized_array(input, data);
 	free(input);
+	if (status == MALLOC_ERROR)
+		return (MALLOC_ERROR);
 	sanitiser(data);
 	if (get_heredoc(data) == -1)
 		return (MALLOC_ERROR);
