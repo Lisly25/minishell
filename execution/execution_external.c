@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 16:14:48 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 12:54:39 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static int	open_redirects(t_data *data, int i)
 	{
 		if (redirect[j][0] == '<')
 		{
-			data->comms[i]->input_fd = open_read(redirect, j, i);
+			data->comms[i]->input_fd = open_read(redirect, j, i, data);
 			close_file(data, data->comms[i]->input_fd, j, redirect);
 		}
 		else
 		{
-			data->comms[i]->output_fd = open_write(redirect, j);
+			data->comms[i]->output_fd = open_write(redirect, j, data);
 			close_file(data, data->comms[i]->output_fd, j, redirect);
 		}
 		j = j + 2;
