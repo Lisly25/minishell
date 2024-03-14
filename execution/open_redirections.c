@@ -6,14 +6,12 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/14 10:09:39 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:11:37 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//we'll need to modify this so that several cmds in the pipe using heredoc does not cause problems
-//also, the heredocs should be created in the parent process, this really should just open it!
 static int	heredoc(int i)
 {
 	int		fd;
@@ -48,6 +46,11 @@ void	close_file(t_data *data, int fd, int j, char **file_arr)
 		ft_free_t_data_struct(data);
 		exit(1);
 	}
+	if (fd == -3)
+	{
+		ft_free_t_data_struct(data);
+		exit(1);
+	}
 	is_last_redir = check_if_last_redirect(file_arr[j][0], file_arr, j);
 	if (fd > 0 && is_last_redir == 0)
 	{
@@ -64,24 +67,40 @@ void	close_file(t_data *data, int fd, int j, char **file_arr)
 	exit(1);
 }
 
-int	open_read(char **redirect, int j, int i)
+int	open_read(char **redirect, int j, int i, t_data *data)
 {
-	int	fd;
+	int		fd;
+	char	*sanitized_name;
 
 	if (ft_strlen(redirect[j]) == 1)
-		fd = open(redirect[j + 1], O_RDONLY);
+	{
+		if (detect_ambiguous_redirect(redirect[j + 1], data) == 1)
+			return (-3);
+		sanitized_name = sanitise_str(redirect[j + 1], data);
+		if (sanitized_name == NULL)
+			return (-2);
+		fd = open(sanitized_name, O_RDONLY);
+		free(sanitized_name);
+	}
 	else
 		fd = heredoc(i);
 	return (fd);
 }
 
-int	open_write(char **redirect, int j)
+int	open_write(char **redirect, int j, t_data *data)
 {
-	int	fd;
+	int		fd;
+	char	*sanitized_name;
 
+	if (detect_ambiguous_redirect(redirect[j + 1], data) == 1)
+		return (-3);
+	sanitized_name = sanitise_str(redirect[j + 1], data);
+	if (sanitized_name == NULL)
+		return (-2);
 	if (ft_strlen(redirect[j]) == 1)
-		fd = open(redirect[j + 1], O_CREAT | O_WRONLY | O_TRUNC, 0644);
+		fd = open(sanitized_name, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	else
-		fd = open(redirect[j + 1], O_CREAT | O_WRONLY | O_APPEND, 0644);
+		fd = open(sanitized_name, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	free (sanitized_name);
 	return (fd);
 }
