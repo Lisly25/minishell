@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 11:43:49 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:52:09 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ int	execute(t_data *data)
 	int		exit_status;
 
 	i = 0;
+	signal(SIGINT, ctl_c_exe);
 	comms = data->comms;
 	if (data->comm_count == 0)
 		return (0);
