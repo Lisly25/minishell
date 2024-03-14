@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 13:52:09 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 14:35:53 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ int	execute(t_data *data)
 		exit(exit_status);
 	}
 	wait_for_children(data);
+	handle_exit_codes(data);
 	if (delete_heredocs(data) == -1)//we'll need to use malloc here, we might have to check the return value of execute() int the main function after all...
 		return (MALLOC_ERROR);
 	return (0);
