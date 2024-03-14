@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 16:19:12 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 10:09:39 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	heredoc(int i)
 	int		fd;
 	char	*hdoc_name;
 
-	hdoc_name = ft_strjoin(".heredoc", (char)i);
+	hdoc_name = derive_heredoc_name(i);
 	if (hdoc_name == NULL)
 		return (-2);
 	fd = open(hdoc_name, O_RDONLY);
