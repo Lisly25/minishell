@@ -6,25 +6,32 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 08:27:53 by fshields          #+#    #+#             */
-/*   Updated: 2024/02/27 08:30:06 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:34:55 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_signal(int sig)
+void	ctl_c(int sig)
 {
 	if (sig == SIGINT)
 	{
-		write(2, "\n", 1);
-		rl_replace_line("", 0);
+		printf("\33[2K\rminishell 🐢:\n");
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
 
+void	ctl_c_exe(int sig)
+{
+	if (sig == SIGINT)
+		printf("\n");
+}
+
+
 void	init_signals(void)
 {
-	signal(SIGINT, handle_signal);
+	signal(SIGINT, ctl_c);
 	signal(SIGQUIT, SIG_IGN);
 }

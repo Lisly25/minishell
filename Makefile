@@ -15,6 +15,7 @@ SRCS	=	main.c \
 			execution/heredoc_utils.c \
 			execution/execution_path_utils.c \
 			execution/execution_path.c \
+			execution/handle_exit_codes.c \
 			builtin_utils.c \
 			built_ins/cd.c \
 			built_ins/echo.c \

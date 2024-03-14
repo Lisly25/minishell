@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 15:01:04 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:24:51 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,14 @@ void rl_clear_history (void);
 
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/wait.h>
 # include <stdlib.h>
 # include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <termios.h>
 # include "libft/libft.h"
 # include "parse.h"
 
@@ -40,9 +42,12 @@ void	free_comm(t_data *data);
 char	*expand_env(char *str);
 void	free_env_list(t_env **env_list);
 int		already_in_list(char *arg, t_env *env);
+void	update_dir(char dir, char *value, t_env **env);
 
 //signals.c
 void	init_signals(void);
+void	ctl_c(int sig);
+void	ctl_c_exe(int sig);
 
 //echo.c
 int		ft_echo(char *str);
@@ -118,5 +123,8 @@ void	ft_message_and_exit(t_data *data, int code);
 void	ft_free_2d_array(char **arr);
 void	ft_free_t_data_struct(t_data *data);
 char	*find_relative_path(char *cmd);
+
+//handle_exit_codes.c
+void	handle_exit_codes(t_data *data);
 
 #endif

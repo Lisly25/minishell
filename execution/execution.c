@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 16:12:19 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:04:02 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,11 @@ static int	is_n_flag(t_comm *command)
 //ret of 1: not built_in
 //ret of -1: error
 //exit: succcessul run of built-in
-static int	execute_built_in(t_data *data)
+static int	execute_built_in(t_data *data, t_comm *comm)
 {
 	int	code;
 	int	i;
-	t_comm	*comm;
 
-	comm = *(data->comms);
 	code = detect_built_in(comm->san_command[0]);
 	if (code == 0)
 		return (1);
@@ -86,7 +84,8 @@ int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
 
-	if (execute_built_in(data) == -1)
+	signal(SIGINT, ctl_c_exe);
+	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
 	path = find_path(comm, data->env_s);
 	if (path == NULL)
@@ -108,6 +107,7 @@ int	execute(t_data *data)
 	int		exit_status;
 
 	i = 0;
+	signal(SIGINT, SIG_IGN);
 	comms = data->comms;
 	if (data->comm_count == 0)
 		return (0);
@@ -120,6 +120,7 @@ int	execute(t_data *data)
 		exit(exit_status);
 	}
 	wait_for_children(data);
+	handle_exit_codes(data);
 	if (delete_heredocs(data) == -1)//we'll need to use malloc here, we might have to check the return value of execute() int the main function after all...
 		return (MALLOC_ERROR);
 	return (0);

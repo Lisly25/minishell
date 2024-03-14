@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:59:29 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/01 16:48:21 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:24:58 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,25 +65,13 @@ static char	*get_cd_path(char *input)
 	return (path);
 }
 
-static void	update_dir(char dir, char *value, t_env **env)
+static void	handle_bad_path(char **oldpwd, char *input, t_env **env)
 {
-	t_env	*ptr;
-
-	ptr = *env;
-	if (dir == 'o')
-	{
-		while (ft_strncmp("OLDPWD", ptr->name, 6) != 0)
-			ptr = ptr->next;
-		free(ptr->value);
-		ptr->value = ft_strdup(value);
-	}
-	else if (dir == 'p')
-	{
-		while (ft_strncmp("PWD", ptr->name, 3) != 0)
-			ptr = ptr->next;
-		free(ptr->value);
-		ptr->value = ft_strdup(value);
-	}
+	if (*oldpwd)
+		update_dir('o', *oldpwd, env);
+	ft_putstr_fd("minishell 🐢: cd: ", 2);
+	ft_putstr_fd(input, 2);
+	ft_putstr_fd(": No such file or directory\n", 2);
 }
 
 int ft_cd(char *input, t_env **env)
@@ -101,8 +89,7 @@ int ft_cd(char *input, t_env **env)
 	{
 		free(pwd);
 		free(path);
-		if (oldpwd)
-			update_dir('o', oldpwd, env);
+		handle_bad_path(&oldpwd, input, env);
 		return (1);
 	}
 	free(pwd);
