@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:18:02 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 16:10:36 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 10:48:19 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static int	is_limiter(char *limiter, char *str)
 {
-	int	i;
-	int	result;
+	size_t	i;
+	int		result;
 
 	i = 0;
 	while (str[i] != '\0' && limiter[i] != '\0')
@@ -42,7 +42,7 @@ static int	read_to_heredoc(int i, char *limiter)
 	int		hdoc;
 	char	*input;
 
-	hdoc_name = ft_strjoin(".heredoc", (char)i);
+	hdoc_name = derive_heredoc_name(i);
 	if (hdoc_name == NULL)
 		return (-1);
 	hdoc = open(hdoc_name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
@@ -56,15 +56,17 @@ static int	read_to_heredoc(int i, char *limiter)
 			free(input);
 			break ;
 		}
-		ft_putstr_fd(input, hdoc);
+		ft_putendl_fd(input, hdoc);
 		free(input);
 	}
 	close(hdoc);
+	free(hdoc_name);
+	return (0);
 }
 
 static int	is_heredoc(char *str)
 {
-	if (ft_strlen(str) != 1)
+	if (ft_strlen(str) != 2)
 		return (0);
 	if (str[0] != '<')
 		return (0);
@@ -80,6 +82,11 @@ int	get_heredoc(t_data *data)
 	j = 0;
 	while (i < data->comm_count)
 	{
+		if (data->comms[i]->redirect == NULL)
+		{
+			i++;
+			continue ;
+		}
 		while (data->comms[i]->redirect[j] != NULL)
 		{
 			if (is_heredoc(data->comms[i]->redirect[j]) == 1)
@@ -90,7 +97,9 @@ int	get_heredoc(t_data *data)
 			j = j + 2;
 		}
 		i++;
+		j = 0;
 	}
+	return (0);
 }
 
 int	delete_heredocs(t_data *data)
@@ -102,7 +111,7 @@ int	delete_heredocs(t_data *data)
 	i = 0;
 	while (i < data->comm_count)
 	{
-		hdoc_name = ft_strjoin(".heredoc", (char)i);
+		hdoc_name = derive_heredoc_name(i);
 		if (hdoc_name == NULL)
 			return (-1);
 		unlink(hdoc_name);
