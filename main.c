@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/12 16:21:01 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:11:47 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char *argv[], char *env[])
 		else if (parse_status == SYNTAX_ERROR)
 			exit_code = SYNTAX_ERROR;
 		else
-			execute(data);
+			execute(data);//we must check the return value of this for malloc errors!
 		free_comm(data);
 	}
 	ft_message_and_exit(data, 0);

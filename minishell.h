@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 12:55:30 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/13 16:15:06 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	wait_for_children(t_data *data);
 int		init_children_and_fds(t_data *data);
 
 //open_redirections.c
-int		open_read(char **redirect, int j);
+int		open_read(char **redirect, int j, int i);
 int		open_write(char **redirect, int j);
 void	close_file(t_data *data, int fd, int j, char **file_arr);
 
@@ -102,6 +102,10 @@ char	*find_absolute_path(char *cmd);
 char	**get_path_env_array(char **env_s, char *cmd);
 int		check_access_to_command(char *path);
 int		check_if_cmd_is_directory(char *path, char *cmd);
+
+//read_heredoc.c
+int		get_heredoc(t_data *data);
+int		delete_heredocs(t_data *data);
 
 //errors.c
 void	ft_message_and_exit(t_data *data, int code);
