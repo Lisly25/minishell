@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 14:36:49 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 16:12:19 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,8 @@ int	execute(t_data *data)
 		printf("%d\n", exit_status);//this is just for debugging
 		exit(exit_status);
 	}
-	/*while (i < data->comm_count)
-	{
-		comms[i]->child_id = fork();
-		if (comms[i]->child_id == -1)
-			return (write(2, "fork failure\n", 13));
-		if (comms[i]->child_id == 0)
-			return (child_process(data, comms[i]));
-		i ++;
-	}*/
 	wait_for_children(data);
+	if (delete_heredocs(data) == -1)//we'll need to use malloc here, we might have to check the return value of execute() int the main function after all...
+		return (MALLOC_ERROR);
 	return (0);
 }

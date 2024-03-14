@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_main.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/12 16:16:43 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/13 15:40:51 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ int	parser_main(char *input, t_data *data)
 	status = init_unsanitized_array(input, data);
 	free(input);
 	sanitiser(data);
+	if (get_heredoc(data) == -1)
+		return (MALLOC_ERROR);
 	return (status);
 }
 
