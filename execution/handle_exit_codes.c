@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 14:36:12 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 15:21:18 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:05:22 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	handle_exit_codes(t_data *data)
 	status = data->exit_code;
 	if (WIFEXITED(status))
 		return ;
+	else if (status == 2)
+		printf("\n");
 	else if (WIFSIGNALED(status))
 		print_signal(status);
 }

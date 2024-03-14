@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_external.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 16:14:48 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/14 15:54:53 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ int	init_children_and_fds(t_data *data)
 			return (FORK_ERROR);
 		if (data->comms[i]->child_id == 0)
 		{
+			signal(SIGINT, SIG_DFL);
 			if (open_redirects(data, i) == -1)
 				exit(1);//need better error handling here
 			if (redirect(data->comms[i]) == DUP2_ERROR)
