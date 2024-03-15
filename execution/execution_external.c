@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 10:46:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 13:52:34 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	init_child(t_comm *cmd)
 	return (status);
 }
 
-static int	open_redirects(t_data *data, int i)
+int	open_redirects(t_data *data, int i)
 {
 	int		j;
 	char	**redirect;
@@ -69,7 +69,7 @@ static int	open_redirects(t_data *data, int i)
 	return (0);
 }
 
-static int	redirect(t_comm *cmd)
+int	redirect(t_comm *cmd)
 {
 	int	status;
 

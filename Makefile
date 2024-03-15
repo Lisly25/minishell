@@ -7,6 +7,7 @@ SRCS	=	main.c \
 			signals.c \
 			execution/execution.c \
 			execution/execution_utils.c \
+			execution/execution_utils_2.c \
 			execution/execution_external.c \
 			execution/open_redirections.c \
 			execution/redirect_utils.c \

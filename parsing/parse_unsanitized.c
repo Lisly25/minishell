@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_unsanitized.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 11:42:15 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 14:27:58 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	init_t_comm_struct(t_data *data)
 		data->comms[i] = (t_comm *)malloc(sizeof(t_comm));
 		if (data->comms[i] == NULL)
 			return (MALLOC_ERROR);
+		data->comms[i]->input_fd = STDIN_FILENO;
+		data->comms[i]->output_fd = STDOUT_FILENO;
 		i++;
 	}
 	return (0);

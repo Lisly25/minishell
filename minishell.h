@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 14:10:37 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 14:40:35 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,14 @@ int		detect_built_in(char *command);
 int		run_built_in(char *arg, int code, t_env **env);
 void	wait_for_children(t_data *data);
 
+//execution_utils_2.c
+void	save_io(int io[]);
+void	reset_io(int io[]);
+
 //execution_external.c
 int		init_children_and_fds(t_data *data);
+int		open_redirects(t_data *data, int i);
+int		redirect(t_comm *cmd);
 
 //open_redirections.c
 int		open_read(char **redirect, int j, int i, t_data *data);

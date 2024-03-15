@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 14:40:42 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:30:26 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void	fill_str(char *str, char **san_str, int *d, int *s, t_data *data)
 		{
 			temp = expand_env_san(str, data->env);
 			handle_env(&temp, &ptr);
-			while (*str && *str != ' ' && *str != 34 && *str != 39)
+			str ++;
+			while (*str && *str != ' ' && *str != 34 && *str != 39 && *str != '$')
 				str ++;
 			str --;
 		}
