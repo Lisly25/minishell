@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:21:43 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 11:25:38 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:37:33 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static int	env_len(char *str, t_env *env)
 	int		rtn;
 
 	rtn = 0;
-	len = 0;
+	len = 1;
 	while (ft_isprint(str[len]) > 0 && str[len] != ' ' && \
-		str[len] != 34 && str[len] != 39)
+		str[len] != 34 && str[len] != 39 && str[len] != '$')
 		len ++;
 	len -- ;
 	if (len == 0)
@@ -59,9 +59,9 @@ char	*expand_env_san(char *str, t_env *env)
 	char	*rtn;
 
 	rtn = NULL;
-	len = 0;
+	len = 1;
 	while (ft_isprint(str[len]) > 0 && str[len] != ' ' && \
-		str[len] != 34 && str[len] != 39)
+		str[len] != 34 && str[len] != 39 && str[len] != '$')
 		len ++;
 	len -- ;
 	if (len == 0)
@@ -77,19 +77,19 @@ char	*expand_env_san(char *str, t_env *env)
 	return (rtn);
 }
 
-static void	handle_dollar(char **str_p, int *len, t_data *data)
+static void	handle_dollar(char **str, int *len, t_data *data)
 {
-	char	*str;
 	int		n;
 
-	str = *str_p;
 	n = data->exit_code;
-	if (*(str + 1) != '?')
+	if (*((*str) + 1) != '?')
 	{
-		*len += env_len(str, data->env);
-		while (**str_p && **str_p != ' ' && **str_p != 34 && **str_p != 39)
-			(*str_p) ++;
-		(*str_p) --;
+		*len += env_len((*str), data->env);
+		(*str) ++;
+		while (**str && **str != ' ' && **str != 34 && \
+			**str != 39 && **str != '$')
+			(*str) ++;
+		(*str) --;
 	}
 	else
 	{
@@ -100,9 +100,9 @@ static void	handle_dollar(char **str_p, int *len, t_data *data)
 			(*len) ++;
 			n /= 10;
 		}
-		while (**str_p && **str_p != ' ' && **str_p != 34 && **str_p != 39)
-			(*str_p) ++;
-		(*str_p) --;
+		while (**str && **str != ' ' && **str != 34 && **str != 39)
+			(*str) ++;
+		(*str) --;
 	}
 }
 
