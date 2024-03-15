@@ -6,13 +6,13 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 14:42:46 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:16:08 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_comm(t_data *data)//move this to error.c!
+void	free_comm(t_data *data)
 {
 	int		i;
 	int		j;
@@ -33,6 +33,7 @@ void	free_comm(t_data *data)//move this to error.c!
 		}
 		free(comms[i]->command);
 		free(comms[i]->san_command);
+		free(comms[i]);
 		i ++;
 		j = 0;
 	}

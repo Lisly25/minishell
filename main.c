@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 14:23:06 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:13:23 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	main(int argc, char *argv[], char *env[])
 			if (execute(data) == MALLOC_ERROR)
 				ft_message_and_exit(data, 1);
 		}
+		printf("1: %p\n2: %p\n3: %p\n", data->comms, data->comms[0], data->comms[0]->command);
 		free_comm(data);
 	}
 	ft_message_and_exit(data, 0);
