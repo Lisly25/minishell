@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_external.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/14 15:54:53 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 10:46:22 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	init_pipe(t_data *data, int i)
 	}
 	status = pipe(fds);
 	if (status == -1)
-		return (PIPE_ERROR);
+		ft_msg_free_and_exit(data, 1, "pipe error", NULL);
 	data->comms[i]->output_fd = fds[PIPE_WRITE_END];
 	data->comms[i + 1]->input_fd = fds[PIPE_READ_END];
 	if (i == 0)
@@ -40,8 +40,6 @@ static int	init_child(t_comm *cmd)
 
 	status = 0;
 	cmd->child_id = fork();
-	if (cmd->child_id == -1)
-		status = FORK_ERROR;
 	return (status);
 }
 
@@ -99,17 +97,15 @@ int	init_children_and_fds(t_data *data)
 	i = 0;
 	while (i < data->comm_count)
 	{
-		if (init_pipe(data, i) == PIPE_ERROR)
-			return (PIPE_ERROR);
-		if (init_child(data->comms[i]) == FORK_ERROR)
-			return (FORK_ERROR);
+		init_pipe(data, i);
+		if (init_child(data->comms[i]) == -1)
+			ft_msg_free_and_exit(data, 1, "fork error", NULL);
 		if (data->comms[i]->child_id == 0)
 		{
 			signal(SIGINT, SIG_DFL);
-			if (open_redirects(data, i) == -1)
-				exit(1);//need better error handling here
+			open_redirects(data, i);
 			if (redirect(data->comms[i]) == DUP2_ERROR)
-				exit(DUP2_ERROR);//this is not okay - also need to free!
+				ft_msg_free_and_exit(data, 1, "dup2 error", NULL);
 			child_process(data, data->comms[i]);
 		}
 		if (i == (data->comm_count - 1))
