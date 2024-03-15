@@ -26,6 +26,7 @@ SRCS	=	main.c \
 			built_ins/export.c \
 			built_ins/export_utils.c \
 			errors.c \
+			errors_2.c \
 			parsing/parse_errors.c \
 			parsing/parse_init.c \
 			parsing/parse_main.c \
