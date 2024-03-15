@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 14:40:35 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:18:36 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ void	*ft_error_message_and_return_null(char *msg, char *target);
 
 //errors_2.c
 void	ft_error_message(char *message, char *target);
+void	free_comm(t_data *data);
 
 //handle_exit_codes.c
 void	handle_exit_codes(t_data *data);

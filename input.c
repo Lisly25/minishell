@@ -6,40 +6,12 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:50 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 15:16:08 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:18:19 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_comm(t_data *data)
-{
-	int		i;
-	int		j;
-	t_comm	**comms;
-
-	comms = data->comms;
-	if (!comms || !(*comms))
-		return ;
-	i = 0;
-	j = 0;
-	while (i < data->comm_count)
-	{
-		while (comms[i]->command[j] != NULL)
-		{
-			free(comms[i]->command[j]);
-			free(comms[i]->san_command[j]);
-			j ++;
-		}
-		free(comms[i]->command);
-		free(comms[i]->san_command);
-		free(comms[i]);
-		i ++;
-		j = 0;
-	}
-	free(comms);
-	data->comms = NULL;
-}
 
 /*static t_comm	**dumb_parser(char *input)
 {
