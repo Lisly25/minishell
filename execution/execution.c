@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 16:04:02 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:40:04 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,25 +58,28 @@ static int	exec_built_in_no_exit(t_data *data)
 {
 	int		code;
 	int		i;
-	t_comm	*command;
+	int		io[2];
 
-	command = *(data->comms);
-	code = detect_built_in(command->san_command[0]);
+	save_io(io);
+	open_redirects(data, 0);
+	redirect(data->comms[0]);
+	code = detect_built_in(data->comms[0]->san_command[0]);
 	i = 1;
-	while (command->san_command[i] != NULL || i == 1)
+	while (data->comms[0]->san_command[i] != NULL || i == 1)
 	{
-		if (code == 1 && is_n_flag(command) && i == 1)
+		if (code == 1 && is_n_flag(data->comms[0]) && i == 1)
 			i ++;
-		if (run_built_in(command->san_command[i], code, &data->env) != 0)
+		if (run_built_in(data->comms[0]->san_command[i], code, &data->env) != 0)
 			return (-1);
-		if (command->san_command[i] == NULL)
+		if (data->comms[0]->san_command[i] == NULL)
 			break ;
-		if (code == 1 && command->san_command[i + 1] != NULL)
+		if (code == 1 && data->comms[0]->san_command[i + 1] != NULL)
 			printf(" ");
 		i ++;
 	}
-	if (code == 1 && !is_n_flag(command))
+	if (code == 1 && !is_n_flag(data->comms[0]))
 		printf("\n");
+	reset_io(io);
 	return (0);
 }
 
