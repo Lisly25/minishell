@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 16:04:02 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:25:41 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int	child_process(t_data *data, t_comm *comm)
 		ft_putstr_fd("execve failure\n", 2);
 	free_comm(data);
 	free(data);
+	free(path);
 	exit(EXIT_FAILURE);
 }
 
