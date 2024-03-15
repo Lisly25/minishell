@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 11:53:57 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:27:29 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	ft_free_t_data_struct(t_data *data)
 void	ft_message_and_exit(t_data *data, int code)
 {
 	printf("🐢💨 exiting\n");
+	rl_clear_history();
 	ft_free_t_data_struct(data);
 	exit(code);
 }

@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 15:13:23 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:27:46 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int	main(int argc, char *argv[], char *env[])
 		signal(SIGINT, ctl_c);
 		line = readline("minishell 🐢: ");
 		if (line == NULL)
-		{
-			rl_clear_history();
 			ft_message_and_exit(data, 1);
-		}
 		add_history(line);
 		parse_status = parser_main(line, data);
 		if (parse_status == MALLOC_ERROR)
@@ -36,11 +33,8 @@ int	main(int argc, char *argv[], char *env[])
 		else if (parse_status == SYNTAX_ERROR)
 			data->exit_code = SYNTAX_ERROR;
 		else
-		{
 			if (execute(data) == MALLOC_ERROR)
 				ft_message_and_exit(data, 1);
-		}
-		printf("1: %p\n2: %p\n3: %p\n", data->comms, data->comms[0], data->comms[0]->command);
 		free_comm(data);
 	}
 	ft_message_and_exit(data, 0);

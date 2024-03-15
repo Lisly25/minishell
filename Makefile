@@ -3,7 +3,6 @@ CC		=	cc
 CFLAGS	=	-Wall -Wextra -Werror
 SRCS	=	main.c \
 			init.c \
-			input.c \
 			signals.c \
 			execution/execution.c \
 			execution/execution_utils.c \
