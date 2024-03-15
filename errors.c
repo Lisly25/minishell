@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 10:40:09 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:53:57 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,16 @@ void	ft_msg_free_and_exit(t_data *data, int code, char *msg, char *target)
 	ft_putendl_fd(msg, 2);
 	ft_free_t_data_struct(data);
 	exit(code);
+}
+
+void	*ft_error_message_and_return_null(char *msg, char *target)
+{
+	ft_putstr_fd("minishell 🐢: ", 2);
+	if (target != NULL)
+	{
+		ft_putstr_fd(target, 2);
+		ft_putstr_fd(": ", 2);
+	}
+	ft_putendl_fd(msg, 2);
+	return (NULL);
 }
