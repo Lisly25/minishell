@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/14 16:11:37 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 11:41:36 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	heredoc(int i)
 
 static int	check_if_file_exists(char *filename)
 {
-	if (access(filename, F_OK) == 1)
+	if (access(filename, F_OK) == 0)
 		return (1);
 	else
 		return (0);
@@ -41,11 +41,7 @@ void	close_file(t_data *data, int fd, int j, char **file_arr)
 	int	is_last_redir;
 
 	if (fd == -2)
-	{
-		ft_printf("minishell 🐢: malloc error");
-		ft_free_t_data_struct(data);
-		exit(1);
-	}
+		ft_msg_free_and_exit(data, 1, "malloc error", NULL);
 	if (fd == -3)
 	{
 		ft_free_t_data_struct(data);
@@ -60,11 +56,8 @@ void	close_file(t_data *data, int fd, int j, char **file_arr)
 	if (fd > 0 && is_last_redir == 1)
 		return ;
 	if (check_if_file_exists(file_arr[j + 1]) == 1)
-		ft_printf("minishell 🐢: %s: Permission denied\n", file_arr[j + 1]);
-	else
-		ft_printf("minishell 🐢: %s: No such file or directory\n", file_arr[j + 1]);
-	ft_free_t_data_struct(data);
-	exit(1);
+		ft_msg_free_and_exit(data, 1, "Permission denied", file_arr[j + 1]);
+	ft_msg_free_and_exit(data, 1, "No such file or directory", file_arr[j + 1]);
 }
 
 int	open_read(char **redirect, int j, int i, t_data *data)

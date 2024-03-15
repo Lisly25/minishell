@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 13:47:56 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 12:16:19 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,16 @@
 char	*find_path(t_comm *cmd, char **env_s)
 {
 	char	*path;
+	char	**command;
 
 	//we also should check somewhere if the cmd is an empty string! this is assuming it's not
-	if (cmd->command[0][0] == '/')
-		path = find_absolute_path(cmd->command[0]);
-	else if (ft_strchr(cmd->command[0], '/') != NULL && cmd->command[0][0] != '/')
-		path = find_relative_path(cmd->command[0]);
+	command = cmd->san_command;
+	if (command[0][0] == '/')
+		path = find_absolute_path(command[0]);
+	else if (ft_strchr(command[0], '/') != NULL && command[0][0] != '/')
+		path = find_relative_path(command[0]);
 	else
-		path = find_path_from_path_env(cmd->command[0], env_s);
+		path = find_path_from_path_env(command[0], env_s);
 	return (path);
 }
 

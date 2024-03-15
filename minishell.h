@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
 /*   Updated: 2024/03/15 14:40:35 by fshields         ###   ########.fr       */
@@ -111,11 +111,11 @@ int		detect_ambiguous_redirect(char	*redirect, t_data *data);
 //execution_path.c
 char	*find_path_from_path_env(char *cmd, char **env_s);
 char	*find_absolute_path(char *cmd);
+char	*find_relative_path(char *cmd);
 
 //execution_path_utils.c
 char	**get_path_env_array(char **env_s, char *cmd);
-int		check_access_to_command(char *path);
-int		check_if_cmd_is_directory(char *path, char *cmd);
+int		check_access_to_command(char *path, char *cmd);
 
 //heredoc.c
 int		get_heredoc(t_data *data);
@@ -128,7 +128,11 @@ char	*derive_heredoc_name(int num);
 void	ft_message_and_exit(t_data *data, int code);
 void	ft_free_2d_array(char **arr);
 void	ft_free_t_data_struct(t_data *data);
-char	*find_relative_path(char *cmd);
+void	ft_msg_free_and_exit(t_data *data, int code, char *msg, char *target);
+void	*ft_error_message_and_return_null(char *msg, char *target);
+
+//errors_2.c
+void	ft_error_message(char *message, char *target);
 
 //handle_exit_codes.c
 void	handle_exit_codes(t_data *data);

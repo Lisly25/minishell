@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:37:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/14 16:27:45 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:07:47 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,13 @@ static int	check_for_space_in_expanded_value(char *str, t_data *data)
 	i = 0;
 	ptr_to_env_name = ft_strchr(str, '$');//not checking for null here, already checked that it contains '$'
 	env_value = check_if_existing_env(ptr_to_env_name, data);
-	printf("env value is: %s\n", env_value);
 	if (env_value == NULL)
 		return (0);
 	while (env_value[i] != '\0')
 	{
 		if (env_value[i] == ' ')
 		{
-			ft_printf("minishell 🐢: %s: ambiguous redirect\n", str);//need to change this to error handler function that write to stderr
+			ft_error_message("ambiguous redirect", str);
 			return (1);
 		}
 		i++;
@@ -86,6 +85,7 @@ static int	check_for_space_in_expanded_value(char *str, t_data *data)
 }
 //we still can't catch stuff like spacesinthere$PWD
 //it returns "no such file" error - or sometimes just giives us the file, with the space in its name
+
 int	detect_ambiguous_redirect(char	*redirect, t_data *data)
 {
 	char	*env_var_value;
@@ -99,14 +99,14 @@ int	detect_ambiguous_redirect(char	*redirect, t_data *data)
 	{
 		if (redirect[0] != '$')
 			return (check_for_space_in_expanded_value(redirect, data));
-		ft_printf("minishell 🐢: %s: ambiguous redirect\n", redirect);
+		ft_error_message("ambiguous redirect", redirect);
 		return (1);
 	}
 	while (env_var_value[i] != '\0')
 	{
 		if (env_var_value[i] == ' ')
 		{
-			ft_printf("minishell 🐢: %s: ambiguous redirect\n", redirect);//need to change this to error handler function that write to stderr
+			ft_error_message("ambiguous redirect", redirect);
 			return (1);
 		}
 		i++;

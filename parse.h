@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 14:18:10 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 10:42:31 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 
 # define MALLOC_ERROR 2
 # define UNCLOSED_QUOTE_ERROR 3
-# define PIPE_ERROR 4
-# define FORK_ERROR 5
 # define DUP2_ERROR 6
 # define SYNTAX_ERROR 258
 
