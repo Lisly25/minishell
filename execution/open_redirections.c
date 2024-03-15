@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 11:41:36 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:07:11 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static int	check_if_file_exists(char *filename)
 
 void	close_file(t_data *data, int fd, int j, char **file_arr)
 {
-	int	is_last_redir;
+	int		is_last_redir;
+	char	*sanitized_name;
 
 	if (fd == -2)
 		ft_msg_free_and_exit(data, 1, "malloc error", NULL);
@@ -55,9 +56,12 @@ void	close_file(t_data *data, int fd, int j, char **file_arr)
 	}
 	if (fd > 0 && is_last_redir == 1)
 		return ;
+	sanitized_name = sanitise_str(file_arr[j + 1], data);
+	if (sanitized_name == NULL)
+		ft_msg_free_and_exit(data, 1, "malloc error", NULL);
 	if (check_if_file_exists(file_arr[j + 1]) == 1)
-		ft_msg_free_and_exit(data, 1, "Permission denied", file_arr[j + 1]);
-	ft_msg_free_and_exit(data, 1, "No such file or directory", file_arr[j + 1]);
+		ft_msg_free_and_exit(data, 1, "Permission denied", sanitized_name);
+	ft_msg_free_and_exit(data, 1, "No such file or directory", sanitized_name);
 }
 
 int	open_read(char **redirect, int j, int i, t_data *data)
