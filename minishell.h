@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 14:40:35 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 12:28:54 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,7 @@ int		ft_env(t_env *env);
 int		ft_cd(char *path, t_env **env);
 
 //exit.c
-void	ft_exit(char *status);//this does not exist anymore, right? It does!!
-
+void	ft_exit(char *status, t_data *data);
 //export.c
 int		ft_export(char *arg, t_env **env);
 void	reset_printed(t_env **env);
@@ -85,7 +84,7 @@ int		execute(t_data *data);
 //execution_utils.c
 char	*find_path(t_comm *command, char **env_s);
 int		detect_built_in(char *command);
-int		run_built_in(char *arg, int code, t_env **env);
+int		run_built_in(char *arg, int code, t_data *data);
 void	wait_for_children(t_data *data);
 
 //execution_utils_2.c
@@ -133,6 +132,7 @@ void	*ft_error_message_and_return_null(char *msg, char *target);
 
 //errors_2.c
 void	ft_error_message(char *message, char *target);
+void	free_comm(t_data *data);
 
 //handle_exit_codes.c
 void	handle_exit_codes(t_data *data);

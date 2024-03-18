@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:58:00 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/05 16:27:35 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/15 14:56:57 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ void	display_vars(t_env **env)
 				smallest = ptr;
 			ptr = ptr->next;
 		}
-		printf("declare -x %s=\"%s\"\n", smallest->name, smallest->value);
+		if (smallest->value == NULL)
+			printf("declare -x %s\n", smallest->name);
+		else
+			printf("declare -x %s=\"%s\"\n", smallest->name, smallest->value);
 		smallest->printed = 1;
 	}
 	reset_printed(env);

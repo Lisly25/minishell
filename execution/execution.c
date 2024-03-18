@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 15:10:01 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 12:26:32 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	execute_built_in(t_data *data, t_comm *comm)
 	{
 		if (code == 1 && is_n_flag(comm) && i == 1)
 			i ++;
-		if (run_built_in(comm->san_command[i], code, &data->env) != 0)
+		if (run_built_in(comm->san_command[i], code, data) != 0)
 			return (-1);
 		if (comm->san_command[i] == NULL)
 			break ;
@@ -69,7 +69,7 @@ static int	exec_built_in_no_exit(t_data *data)
 	{
 		if (code == 1 && is_n_flag(data->comms[0]) && i == 1)
 			i ++;
-		if (run_built_in(data->comms[0]->san_command[i], code, &data->env) != 0)
+		if (run_built_in(data->comms[0]->san_command[i], code, data) != 0)
 			return (-1);
 		if (data->comms[0]->san_command[i] == NULL)
 			break ;

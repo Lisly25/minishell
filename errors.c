@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
 /*   Updated: 2024/03/18 11:21:23 by skorbai          ###   ########.fr       */
@@ -28,8 +28,6 @@ void	ft_free_2d_array(char **arr)
 	free(arr);
 	arr = NULL;
 }
-
-//some leaks still seem to happen after using this - revisit!
 
 void	ft_free_t_data_struct(t_data *data)
 {
@@ -63,6 +61,7 @@ void	ft_free_t_data_struct(t_data *data)
 void	ft_message_and_exit(t_data *data, int code)
 {
 	printf("🐢💨 exiting\n");
+	rl_clear_history();
 	ft_free_t_data_struct(data);
 	exit(code);
 }
