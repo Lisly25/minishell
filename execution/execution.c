@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 12:26:32 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:39:36 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
 
-	signal(SIGINT, ctl_c_exe);
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
 	path = find_path(comm, data->env_s);

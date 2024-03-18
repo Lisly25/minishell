@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 12:28:54 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:07:21 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void rl_clear_history (void);
 # include <unistd.h>
 # include <limits.h>
 # include <fcntl.h>
-# include <termios.h>
 # include "libft/libft.h"
 # include "parse.h"
 
@@ -45,9 +44,8 @@ int		already_in_list(char *arg, t_env *env);
 void	update_dir(char dir, char *value, t_env **env);
 
 //signals.c
-void	init_signals(void);
-void	ctl_c(int sig);
-void	ctl_c_exe(int sig);
+void	reset_signals(void);
+void	default_signals(void);
 
 //echo.c
 int		ft_echo(char *str);
