@@ -87,7 +87,6 @@ int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
 
-	signal(SIGINT, ctl_c_exe);
 	if (ft_strlen(comm->san_command[0]) == 0)
 	{
 		ft_error_message("command not found", "");

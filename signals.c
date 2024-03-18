@@ -6,13 +6,13 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 08:27:53 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 15:34:55 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:05:01 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ctl_c(int sig)
+static void	ctl_c(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -23,15 +23,14 @@ void	ctl_c(int sig)
 	}
 }
 
-void	ctl_c_exe(int sig)
-{
-	if (sig == SIGINT)
-		printf("\n");
-}
-
-
-void	init_signals(void)
+void	reset_signals(void)
 {
 	signal(SIGINT, ctl_c);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+void	default_signals(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
