@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 12:26:32 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:46:48 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,12 @@ int	child_process(t_data *data, t_comm *comm)
 	char	*path;
 
 	signal(SIGINT, ctl_c_exe);
+	if (ft_strlen(comm->san_command[0]) == 0)
+	{
+		ft_error_message("command not found", "");
+		ft_free_t_data_struct(data);
+		exit(1);
+	}
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
 	path = find_path(comm, data->env_s);
