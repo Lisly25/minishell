@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 08:27:53 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/14 15:34:55 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:37:25 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,6 @@ void	ctl_c(int sig)
 		rl_redisplay();
 	}
 }
-
-void	ctl_c_exe(int sig)
-{
-	if (sig == SIGINT)
-		printf("\n");
-}
-
 
 void	init_signals(void)
 {

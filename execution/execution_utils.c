@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 12:26:42 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 12:58:12 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	wait_for_children(t_data *data)
 			exit(1);
 		}
 		data->exit_code = child_status;
+		while (data->exit_code > 255)
+			data->exit_code -= 255;
 		i++;
 	}
 	//this is also where we need to check &child_status -> this is the info we need to return when the exit status is queried

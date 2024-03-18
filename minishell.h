@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 12:28:54 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:36:24 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	update_dir(char dir, char *value, t_env **env);
 //signals.c
 void	init_signals(void);
 void	ctl_c(int sig);
-void	ctl_c_exe(int sig);
 
 //echo.c
 int		ft_echo(char *str);
