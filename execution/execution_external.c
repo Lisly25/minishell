@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 14:54:07 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:03:17 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,7 @@ int	init_children_and_fds(t_data *data)
 			ft_msg_free_and_exit(data, 1, "fork error", NULL);
 		if (data->comms[i]->child_id == 0)
 		{
-			signal(SIGINT, SIG_DFL);
-			signal(SIGQUIT, SIG_DFL);
+			default_signals();
 			open_redirects(data, i);
 			if (redirect(data->comms[i]) == DUP2_ERROR)
 				ft_msg_free_and_exit(data, 1, "dup2 error", NULL);
