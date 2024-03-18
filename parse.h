@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 10:42:31 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 11:50:56 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,9 @@ char	**pipe_split(char *s);
 int		add_redir_data_to_parse_struct(char *str, t_comm *cmd);
 int		check_for_max_consequitve_chars_in_str(char *str);
 char	*ft_strdup_only_char_c_str(char c, char *str, int i);
-char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit);
+char	*ft_strdup_from_i_to_char(char c, char *str, int i);
+
+int		detect_redirect_limit(int i, char *str, char other_redir, char redir);
 
 //parse_sanitiser
 char	*sanitise_str(char *str, t_data *data);
