@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 15:48:51 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:21:23 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,28 @@ void	ft_free_t_data_struct(t_data *data)
 	int	i;
 
 	i = 0;
-	if (data != NULL)
+	if (data == NULL)
+		return ;
+	if (data->env != NULL)
+		free_env_list(&(data->env));
+	if (data->comms == NULL)
 	{
-		if (data->env != NULL)
-			free_env_list(&(data->env));
-		if (data->comms != NULL)
-		{
-			while (i < data->comm_count)
-			{
-				if (data->comms[i] != NULL)
-				{
-					ft_free_2d_array(data->comms[i]->redirect);
-					ft_free_2d_array(data->comms[i]->command);
-					ft_free_2d_array(data->comms[i]->san_command);
-					free(data->comms[i]);
-				}
-				i++;
-			}
-			free(data->comms);
-		}
 		free(data);
+		return ;
 	}
+	while (i < data->comm_count)
+	{
+		if (data->comms[i] != NULL)
+		{
+			ft_free_2d_array(data->comms[i]->redirect);
+			ft_free_2d_array(data->comms[i]->command);
+			ft_free_2d_array(data->comms[i]->san_command);
+			free(data->comms[i]);
+		}
+		i++;
+	}
+	free(data->comms);
+	free(data);
 }
 
 void	ft_message_and_exit(t_data *data, int code)

@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:37:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 15:07:47 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/15 15:47:20 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,8 @@ static int	check_for_space_in_expanded_value(char *str, t_data *data)
 	}
 	return (0);
 }
-//we still can't catch stuff like spacesinthere$PWD
-//it returns "no such file" error - or sometimes just giives us the file, with the space in its name
+//if there's several env variables:
+//havng any env variable wih a space in it should give an error - but ours does not right now, if there's extra letters before it
 
 int	detect_ambiguous_redirect(char	*redirect, t_data *data)
 {

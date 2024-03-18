@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 11:40:59 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 12:20:16 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 {
 	char	*buffer;
 	char	opposite_redir;
+	int		k;
 
 	if (c == '<')
 		opposite_redir = '>';
@@ -28,15 +29,15 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 		return (MALLOC_ERROR);
 	while (str[i] == c)
 		str[i++] = ' ';
-	while (str[i] != '\0' && str[i] == ' ' && (str[i] != opposite_redir \
-	|| check_if_quoted(str, i) == 0))
+	while (str[i] != '\0' && str[i] == ' ')
 		i++;
-	buffer = ft_strdup_from_i_to_char(c, str, i, ' ');
+	buffer = ft_strdup_from_i_to_char(c, str, i);
 	if (buffer == NULL)
 		return (MALLOC_ERROR);
 	if (vector_add_back(redir_array, buffer) == MALLOC_ERROR)
 		return (MALLOC_ERROR);
-	while (str[i] != '\0' && str[i] != c && str[i] != ' ')
+	k = detect_redirect_limit(i, str, opposite_redir, c);
+	while (i <= k)
 		str[i++] = ' ';
 	return (0);
 }

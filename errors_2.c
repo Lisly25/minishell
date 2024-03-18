@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:48:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 15:18:26 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:00:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,24 @@ void	ft_error_message(char *message, char *target)
 void	free_comm(t_data *data)
 {
 	int		i;
-	int		j;
-	t_comm	**comms;
 
-	comms = data->comms;
-	if (!comms || !(*comms))
-		return ;
 	i = 0;
-	j = 0;
 	while (i < data->comm_count)
 	{
-		while (comms[i]->command[j] != NULL)
+		if (data->comms == NULL)
+			return ;
+		while (i < data->comm_count)
 		{
-			free(comms[i]->command[j]);
-			free(comms[i]->san_command[j]);
-			j ++;
+			if (data->comms[i] != NULL)
+			{
+				ft_free_2d_array(data->comms[i]->redirect);
+				ft_free_2d_array(data->comms[i]->command);
+				ft_free_2d_array(data->comms[i]->san_command);
+				free(data->comms[i]);
+			}
+			i++;
 		}
-		free(comms[i]->command);
-		free(comms[i]->san_command);
-		free(comms[i]);
-		i ++;
-		j = 0;
 	}
-	free(comms);
+	free(data->comms);
 	data->comms = NULL;
 }
