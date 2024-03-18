@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:19:31 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 11:43:25 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 12:16:22 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ int	check_for_max_consequitve_chars_in_str(char *str)
 		if ((str[i] == '<' || str[i] == '>') && check_if_quoted(str, i) == 0)
 		{
 			c = str[i];
-			while (str[i++] == c)
+			while (str[i] == c)
+			{
+				i++;
 				c_count++;
-			if (c_count > 2)
+			}
+			if (c_count > 2 || (c_count == 1 && str[i] == '\0'))
 				return (ft_parse_error_too_many_chars(c));
 			while (str[i] == ' ')
 				i++;
@@ -58,8 +61,11 @@ char	*ft_strdup_only_char_c_str(char c, char *str, int i)
 
 	j = 0;
 	c_count = 0;
-	while (str[i++] == c)
+	while (str[i] == c)
+	{
+		i++;
 		c_count++;
+	}
 	result = (char *)malloc(c_count + 1);
 	if (result == NULL)
 		return (NULL);
@@ -72,7 +78,7 @@ char	*ft_strdup_only_char_c_str(char c, char *str, int i)
 	return (result);
 }
 
-char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit)
+char	*ft_strdup_from_i_to_char(char c, char *str, int i)
 {
 	int		j;
 	int		k;
@@ -85,10 +91,8 @@ char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit)
 		opposite_redir = '>';
 	else
 		opposite_redir = '<';
-	while (str[i] != '\0' && str[i] != c && ((str[i] != limit && str[i] \
-	!= opposite_redir) || (check_if_quoted(str, i == 0))))
-		i++;
-	result = (char *)malloc(i + 1);
+	i = detect_redirect_limit(i, str, opposite_redir, c);
+	result = (char *)malloc((i - j) + 1);
 	if (result == NULL)
 		return (NULL);
 	while (j < i)
@@ -99,4 +103,28 @@ char	*ft_strdup_from_i_to_char(char c, char *str, int i, char limit)
 	}
 	result[k] = '\0';
 	return (result);
+}
+
+int	detect_redirect_limit(int i, char *str, char other_redir, char redir)
+{
+	char	quote;
+
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			quote = str[i];
+			i++;
+			while (str[i] != quote)
+				i++;
+		}
+		if (str[i] == redir && check_if_quoted(str, i) == 0)
+			break ;
+		if (str[i] == other_redir && check_if_quoted(str, i) == 0)
+			break ;
+		if (str[i] == ' ' && check_if_quoted(str, i) == 0)
+			break ;
+		i++;
+	}
+	return (i);
 }
