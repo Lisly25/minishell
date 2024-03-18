@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 11:44:34 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 14:51:34 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,10 @@ int	main(int argc, char *argv[], char *env[])
 	t_data	*data;
 	int		parse_status;
 
-	init_signals();
 	data = init_data(env);
 	while (argc != 0 && argv != NULL)
 	{
-		signal(SIGINT, ctl_c);
+		init_signals();
 		line = readline("minishell 🐢: ");
 		if (line == NULL)
 			ft_message_and_exit(data, 0);
