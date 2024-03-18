@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 14:52:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 12:56:05 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 10:39:24 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	ft_parse_error_too_many_chars(char c)
 	else
 		ft_putstr_fd("newline", 2);
 	ft_putendl_fd("'", 2);
-	return (-1);
+	return (SYNTAX_ERROR);
 }
 
 int	check_for_unclosed_quotes(char *str)
