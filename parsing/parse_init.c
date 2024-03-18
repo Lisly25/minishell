@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 11:27:26 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 11:43:51 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_if_first_element(char *str)
 		return (0);
 }
 
-int	check_if_quoted(char *str, int i)
+int	check_if_quoted(char *str, int i)//have to test if this holds up in more wild cases
 {
 	int	j;
 	int	single_quote_count;
