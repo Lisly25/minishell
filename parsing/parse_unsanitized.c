@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_unsanitized.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 14:27:58 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:02:47 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,13 @@ static int	get_redirect_unsanit(char *str, t_comm *cmd)
 		cmd->redirect = NULL;
 		return (0);
 	}
-	if (check_for_max_consequitve_chars_in_str(str) == -1)
-		return (-1);
+	if (check_for_max_consequitve_chars_in_str(str) == SYNTAX_ERROR)
+	{
+		cmd->redirect = NULL;
+		cmd->command = NULL;
+		cmd->san_command = NULL;
+		return (SYNTAX_ERROR);
+	}
 	result = add_redir_data_to_parse_struct(str, cmd);
 	return (result);
 }
