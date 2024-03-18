@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 10:45:42 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:58:00 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,27 @@
 
 //this function should only be called if the input is not empty: 
 //neither NULL, nor containing only whitespace
+
+int	check_if_empty_line(char *line)
+{
+	int	i;
+	int	space_count;
+
+	i = 0;
+	space_count = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] == ' ')
+			space_count++;
+		i++;
+	}
+	if (space_count == i)
+	{
+		free(line);
+		return (1);
+	}
+	return (0);
+}
 
 int	parser_main(char *input, t_data *data)
 {

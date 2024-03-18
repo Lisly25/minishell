@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 11:44:34 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 13:54:07 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	main(int argc, char *argv[], char *env[])
 		if (line == NULL)
 			ft_message_and_exit(data, 0);
 		add_history(line);
+		if (check_if_empty_line(line) == 1)
+			continue ;
 		parse_status = parser_main(line, data);
 		if (parse_status == MALLOC_ERROR)
 			ft_message_and_exit(data, 1);

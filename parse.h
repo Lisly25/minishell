@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 11:50:56 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:55:43 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ typedef struct s_data
 	int			exit_code;
 }				t_data;
 
+//parse_main.c
 int		parser_main(char *input, t_data *data);
+int		check_if_empty_line(char *line);
+
 int		init_unsanitized_array(char *str, t_data *data);
 int		ft_parse_error(char *str);
 int		ft_parse_error_too_many_chars(char c);
