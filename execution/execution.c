@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 13:46:48 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 16:58:32 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,10 @@ int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
 
-	if (ft_strlen(comm->san_command[0]) == 0)
+	if (comm->san_command[0] == NULL || ft_strlen(comm->san_command[0]) == 0)
 	{
-		ft_error_message("command not found", "");
+		if (comm->redirect == NULL)
+			ft_error_message("command not found", "");
 		ft_free_t_data_struct(data);
 		exit(1);
 	}
@@ -113,7 +114,7 @@ int	execute(t_data *data)
 {
 	int		i;
 	t_comm	**comms;
-	int		exit_status;
+	int		exit_status;//this might be obsolete
 
 	i = 0;
 	signal(SIGINT, SIG_IGN);
@@ -123,7 +124,7 @@ int	execute(t_data *data)
 	if (data->comm_count == 1 && detect_built_in(comms[0]->san_command[0]))
 		return (exec_built_in_no_exit(data));
 	exit_status = init_children_and_fds(data);
-	if (exit_status != 0)
+	if (exit_status != 0)//this might be obsolete
 	{
 		printf("%d\n", exit_status);//this is just for debugging
 		exit(exit_status);
