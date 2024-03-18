@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 15:27:46 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 11:44:34 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	main(int argc, char *argv[], char *env[])
 		signal(SIGINT, ctl_c);
 		line = readline("minishell 🐢: ");
 		if (line == NULL)
-			ft_message_and_exit(data, 1);
+			ft_message_and_exit(data, 0);
 		add_history(line);
 		parse_status = parser_main(line, data);
 		if (parse_status == MALLOC_ERROR)
