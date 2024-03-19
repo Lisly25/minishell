@@ -86,7 +86,9 @@ static int	exec_built_in_no_exit(t_data *data)
 int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
+	char	**env_s;
 
+	env_s = env_to_str(data->env);
 	if (comm->san_command[0] == NULL || ft_strlen(comm->san_command[0]) == 0)
 	{
 		if (comm->redirect == NULL)
@@ -96,12 +98,13 @@ int	child_process(t_data *data, t_comm *comm)
 	}
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
-	path = find_path(comm, data->env_s, data);
-	if (execve(path, comm->san_command, data->env_s) == -1)
+	path = find_path(comm, env_s, data);
+	if (execve(path, comm->san_command, env_s) == -1)
 		ft_error_message("execve error", NULL);
 	free_comm(data);
 	free(data);
 	free(path);
+	ft_free_2d_array(env_s);
 	exit(EXIT_FAILURE);
 }
 

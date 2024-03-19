@@ -88,6 +88,7 @@ void	wait_for_children(t_data *data);
 //execution_utils_2.c
 void	save_io(int io[]);
 void	reset_io(int io[]);
+char	**env_to_str(t_env	*env);
 
 //execution_external.c
 int		init_children_and_fds(t_data *data);
