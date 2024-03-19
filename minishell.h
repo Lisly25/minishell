@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/19 10:41:55 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/19 11:25:56 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		child_process(t_data *data, t_comm *comm);
 int		execute(t_data *data);
 
 //execution_utils.c
-char	*find_path(t_comm *command, char **env_s);
+char	*find_path(t_comm *command, char **env_s, t_data *data);
 int		detect_built_in(char *command);
 int		run_built_in(char *arg, int code, t_data *data);
 void	wait_for_children(t_data *data);
@@ -107,13 +107,13 @@ int		check_if_last_redirect(char c, char **redirect, int j);
 int		detect_ambiguous_redirect(char	*redirect, t_data *data);
 
 //execution_path.c
-char	*find_path_from_path_env(char *cmd, char **env_s);
-char	*find_absolute_path(char *cmd);
-char	*find_relative_path(char *cmd);
+char	*find_path_from_path_env(char *cmd, char **env_s, t_data *data);
+char	*find_absolute_path(char *cmd, t_data *data);
+char	*find_relative_path(char *cmd, t_data *data);
 
 //execution_path_utils.c
-char	**get_path_env_array(char **env_s, char *cmd);
-int		check_access_to_command(char *path, char *cmd);
+char	**get_path_env_array(char **env_s, char *cmd, t_data *data);
+int		check_access_to_command(char *path, char *cmd, t_data *data);
 
 //heredoc.c
 int		get_heredoc(t_data *data);

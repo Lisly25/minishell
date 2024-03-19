@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:32:19 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 14:54:23 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/19 11:25:39 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	check_if_cmd_is_directory(char *path, char *cmd)
 	return (0);
 }
 
-int	check_access_to_command(char *path, char *cmd)
+int	check_access_to_command(char *path, char *cmd, t_data *data)
 {
 	if (access(path, F_OK) == 0)
 	{
@@ -34,18 +34,21 @@ int	check_access_to_command(char *path, char *cmd)
 		{
 			if (check_if_cmd_is_directory(path, cmd) == 0)
 				return (0);
-			return (1);
+			data->exit_code = 126;
+			return (126);
 		}
 		else
 		{
 			ft_error_message("Permission denied", cmd);
-			return (1);
+			data->exit_code = 126;
+			return (126);
 		}
 	}
-	return (2);
+	data->exit_code = 127;
+	return (127);
 }
 
-char	**get_path_env_array(char **env_s, char *cmd)
+char	**get_path_env_array(char **env_s, char *cmd, t_data *data)
 {
 	char	*path_env;
 	char	**path_env_array;
@@ -56,7 +59,7 @@ char	**get_path_env_array(char **env_s, char *cmd)
 		path_env_array = (char **)malloc(sizeof(char *) * 2);
 		if (path_env_array == NULL)
 			return (ft_error_message_and_return_null("malloc error", NULL));
-		path_env_array[0] = find_relative_path(cmd);
+		path_env_array[0] = find_relative_path(cmd, data);
 		if (path_env_array[0] == NULL)
 		{
 			free(path_env_array);
