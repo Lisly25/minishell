@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:01:56 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 15:40:55 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:58:15 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ t_data	*init_data(char *env[])
 		free(data);
 		return (NULL);
 	}
-	data->env_s = env;
 	data->comm_count = 1;
 	data->exit_code = 0;
 	data->comms = NULL;

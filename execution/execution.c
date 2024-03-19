@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 13:39:36 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:55:35 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,20 +86,23 @@ static int	exec_built_in_no_exit(t_data *data)
 int	child_process(t_data *data, t_comm *comm)
 {
 	char	*path;
+	char	**env_s;
 
+	env_s = env_to_str(data->env);
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
-	path = find_path(comm, data->env_s);
+	path = find_path(comm, env_s);
 	if (path == NULL)
 	{
 		ft_free_t_data_struct(data);
 		exit(1);
 	}
-	if (execve(path, comm->san_command, data->env_s) == -1)
+	if (execve(path, comm->san_command, env_s) == -1)
 		ft_error_message("execve error", NULL);
 	free_comm(data);
 	free(data);
 	free(path);
+	ft_free_2d_array(env_s);
 	exit(EXIT_FAILURE);
 }
 

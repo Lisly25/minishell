@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 15:07:21 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/19 10:41:55 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ void	wait_for_children(t_data *data);
 //execution_utils_2.c
 void	save_io(int io[]);
 void	reset_io(int io[]);
+char	**env_to_str(t_env	*env);
 
 //execution_external.c
 int		init_children_and_fds(t_data *data);
