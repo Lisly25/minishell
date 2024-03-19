@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 11:43:51 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/19 10:23:52 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,32 +30,30 @@ static int	check_if_first_element(char *str)
 		return (0);
 }
 
-int	check_if_quoted(char *str, int i)//have to test if this holds up in more wild cases
+//returns 0 if char is not in quotes, 1 if it is between quotes
+//will also return 0 if the character itself is a quote that is not between other quotes
+int	check_if_quoted(char *str, int i)
 {
-	int	j;
-	int	single_quote_count;
-	int	double_quote_count;
+	int		j;
+	char	quote;
 
 	j = 0;
-	single_quote_count = 0;
-	double_quote_count = 0;
-	while (j < i)
-	{
-		if (str[j] == '\'')
-			single_quote_count++;
-		if (str[j] == '\"')
-			double_quote_count++;
-		j++;
-	}
-	if (single_quote_count % 2 == 0 && double_quote_count % 2 == 0)
-		return (0);
 	while (str[j] != '\0')
 	{
 		if (str[j] == '\'' || str[j] == '\"')
-			return (1);
+		{
+			quote = str[j];
+			j++;
+			while (str[j] != quote)
+				j++;
+			if (j > i)
+				return (1);
+		}
+		else if (j == i)
+			return (0);
 		j++;
 	}
-	return (UNCLOSED_QUOTE_ERROR);//this should not happen, since we already check for it before
+	return (0);
 }
 
 static int	check_for_or_operator(char *str)
