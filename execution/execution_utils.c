@@ -6,24 +6,31 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 17:03:29 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/19 11:05:18 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*find_path(t_comm *cmd, char **env_s)
+char	*find_path(t_comm *cmd, char **env_s, t_data *data)
 {
 	char	*path;
 	char	**command;
+	int		exit_code;
 
 	command = cmd->san_command;
 	if (command[0][0] == '/')
-		path = find_absolute_path(command[0]);
+		path = find_absolute_path(command[0], data);
 	else if (ft_strchr(command[0], '/') != NULL && command[0][0] != '/')
-		path = find_relative_path(command[0]);
+		path = find_relative_path(command[0], data);
 	else
-		path = find_path_from_path_env(command[0], env_s);
+		path = find_path_from_path_env(command[0], env_s, data);
+	if (path == NULL)
+	{
+		exit_code = data->exit_code;
+		ft_free_t_data_struct(data);
+		exit(exit_code);
+	}
 	return (path);
 }
 
@@ -50,7 +57,7 @@ int	detect_built_in(char *command)
 
 int	run_built_in(char *arg, int code, t_data *data)
 {
-	t_env **env;
+	t_env	**env;
 
 	env = &data->env;
 	if (code == 1)
@@ -89,6 +96,4 @@ void	wait_for_children(t_data *data)
 			data->exit_code -= 255;
 		i++;
 	}
-	//this is also where we need to check &child_status -> this is the info we need to return when the exit status is queried
-	//we might need the &child_status from the middle children, too,
 }

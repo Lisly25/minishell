@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 16:58:32 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/19 11:02:42 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,7 @@ int	child_process(t_data *data, t_comm *comm)
 	}
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
-	path = find_path(comm, data->env_s);
-	if (path == NULL)
-	{
-		ft_free_t_data_struct(data);
-		exit(1);
-	}
+	path = find_path(comm, data->env_s, data);
 	if (execve(path, comm->san_command, data->env_s) == -1)
 		ft_error_message("execve error", NULL);
 	free_comm(data);
