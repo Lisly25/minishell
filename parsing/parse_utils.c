@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:19:31 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 12:16:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/19 15:53:23 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	check_for_max_consequitve_chars_in_str(char *str)
 {
 	int		i;
 	int		c_count;
-	char	c;
 
 	i = 0;
 	c_count = 0;
@@ -34,18 +33,17 @@ int	check_for_max_consequitve_chars_in_str(char *str)
 	{
 		if ((str[i] == '<' || str[i] == '>') && check_if_quoted(str, i) == 0)
 		{
-			c = str[i];
-			while (str[i] == c)
+			while (str[i] == '<' || str[i] == '>')
 			{
 				i++;
 				c_count++;
 			}
-			if (c_count > 2 || (c_count == 1 && str[i] == '\0'))
-				return (ft_parse_error_too_many_chars(c));
+			if (c_count > 2 || (c_count == 1 && (str[i] != str[i - 1])))
+				return (ft_parse_error_too_many_chars(str, i));
 			while (str[i] == ' ')
 				i++;
-			if (str[i] == '\0' || str[i] == c)
-				return (ft_parse_error_too_many_chars(c));
+			if (str[i] == '\0' || str[i] == '<' || str[i] == '>')
+				return (ft_parse_error_too_many_chars(str, i));
 			c_count = 0;
 		}
 		i++;

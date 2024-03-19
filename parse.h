@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/19 10:56:52 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:40:06 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		check_if_empty_line(char *line);
 
 int		init_unsanitized_array(char *str, t_data *data);
 int		ft_parse_error(char *str);
-int		ft_parse_error_too_many_chars(char c);
+int		ft_parse_error_too_many_chars(char *str, int i);
 int		get_command_count(char *input);
 int		check_for_unclosed_quotes(char *str);
 int		check_if_quoted(char *str, int i);
