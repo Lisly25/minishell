@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
 /*   Updated: 2024/03/19 10:55:35 by fshields         ###   ########.fr       */
@@ -89,6 +89,13 @@ int	child_process(t_data *data, t_comm *comm)
 	char	**env_s;
 
 	env_s = env_to_str(data->env);
+	if (comm->san_command[0] == NULL || ft_strlen(comm->san_command[0]) == 0)
+	{
+		if (comm->redirect == NULL)
+			ft_error_message("command not found", "");
+		ft_free_t_data_struct(data);
+		exit(1);
+	}
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
 	path = find_path(comm, env_s);
@@ -110,7 +117,7 @@ int	execute(t_data *data)
 {
 	int		i;
 	t_comm	**comms;
-	int		exit_status;
+	int		exit_status;//this might be obsolete
 
 	i = 0;
 	signal(SIGINT, SIG_IGN);
@@ -120,7 +127,7 @@ int	execute(t_data *data)
 	if (data->comm_count == 1 && detect_built_in(comms[0]->san_command[0]))
 		return (exec_built_in_no_exit(data));
 	exit_status = init_children_and_fds(data);
-	if (exit_status != 0)
+	if (exit_status != 0)//this might be obsolete
 	{
 		printf("%d\n", exit_status);//this is just for debugging
 		exit(exit_status);

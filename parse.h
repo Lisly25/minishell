@@ -51,7 +51,10 @@ typedef struct s_data
 	int			exit_code;
 }				t_data;
 
+//parse_main.c
 int		parser_main(char *input, t_data *data);
+int		check_if_empty_line(char *line);
+
 int		init_unsanitized_array(char *str, t_data *data);
 int		ft_parse_error(char *str);
 int		ft_parse_error_too_many_chars(char c);

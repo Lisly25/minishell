@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/18 12:58:12 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:03:29 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ char	*find_path(t_comm *cmd, char **env_s)
 	char	*path;
 	char	**command;
 
-	//we also should check somewhere if the cmd is an empty string! this is assuming it's not
 	command = cmd->san_command;
 	if (command[0][0] == '/')
 		path = find_absolute_path(command[0]);
@@ -30,6 +29,8 @@ char	*find_path(t_comm *cmd, char **env_s)
 
 int	detect_built_in(char *command)
 {
+	if (command == NULL)
+		return (0);
 	if (ft_strncmp("echo", command, 4) == 0 && ft_strlen(command) == 4)
 		return (1);
 	if (ft_strncmp("cd", command, 2) == 0 && ft_strlen(command) == 2)

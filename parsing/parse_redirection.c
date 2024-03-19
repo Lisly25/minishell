@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 12:20:16 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:40:44 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 	if (vector_add_back(redir_array, buffer) == MALLOC_ERROR)
 		return (MALLOC_ERROR);
 	k = detect_redirect_limit(i, str, opposite_redir, c);
-	while (i <= k)
+	while (i < k)
 		str[i++] = ' ';
 	return (0);
 }
