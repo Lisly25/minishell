@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/19 11:05:18 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/20 15:14:06 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	wait_for_children(t_data *data)
 	{
 		if (waitpid(data->comms[i]->child_id, &child_status, 0) == -1)
 		{
-			ft_printf("minishell 🐢: wait error\n");
+			ft_error_message("wait error", NULL);
 			ft_free_t_data_struct(data);
 			exit(1);
 		}
