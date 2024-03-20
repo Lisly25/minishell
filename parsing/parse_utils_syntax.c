@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:36:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/20 10:49:31 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/20 16:58:21 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ static int	check_if_valid_redir_token(char *str, int c_count, int i)
 		return (0);
 	if (c_count == 1)
 		return (0);
+	i--;
 	if (str[i] == str[i - 1])
 		return (0);
+	ft_putchar_fd(str[i], 2);
+	ft_putendl_fd(" <- Error found here?", 2);
 	return (1);
 }
 

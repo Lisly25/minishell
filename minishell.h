@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/20 11:44:40 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/20 15:43:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ int		redirect(t_comm *cmd);
 
 //execution_internal_redirection.c
 int		open_redirects_builtin(t_data *data, int i);
+
+//execution_pipe_utils.c
+void	clean_up_unused_pipes(t_data *data, int i);
 
 //open_redirections.c
 int		check_if_file_exists(char *filename);
