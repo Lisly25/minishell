@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:39:39 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/19 10:43:33 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:41:52 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static char	*to_str(t_env *env)
 	
 	len = ft_strlen(env->name) + ft_strlen(env->value) + 1;
 	str = (char *) malloc(sizeof(char) * (len + 1));
+	if (!str)
+		return (NULL);
 	ptr = env->name;
 	while (*ptr)
 		*(str++) = *(ptr++);
@@ -69,6 +71,8 @@ char	**env_to_str(t_env	*env)
 	i = 0;
 	len = len_of_env_arr(env);
 	arr = (char **) malloc(sizeof(char *) * (len + 1));
+	if (!arr)
+		return (NULL);
 	while (i < len)
 	{
 		arr[i] = to_str(env);
