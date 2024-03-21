@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/20 11:40:26 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 10:24:40 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,10 +93,10 @@ int	child_process(t_data *data, t_comm *comm)
 	env_s = env_to_str(data->env);
 	if (comm->san_command[0] == NULL || ft_strlen(comm->san_command[0]) == 0)
 	{
-		if (comm->redirect == NULL)
-			ft_error_message("command not found", "");
+		if (comm->redirect == NULL && ft_strchr(comm->command[0], '$') == NULL)
+			ft_msg_free_and_exit(data, 1, "command not found", NULL);
 		ft_free_t_data_struct(data);
-		exit(1);
+		exit(0);
 	}
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
