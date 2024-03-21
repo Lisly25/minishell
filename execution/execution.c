@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 16:23:22 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:33:46 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	execute_built_in(t_data *data, t_comm *comm, int j)
 static int	built_in_loop(t_data *data, int *i, int code)
 {
 	if (code == 1 && is_n_flag(data->comms[0]) && *i == 1)
-		(*i) ++;
+		(*i)++;
 	if (run_built_in(data->comms[0]->san_command[*i], code, data, 0) != 0)
 		return (1);
 	if (code == 1 && data->comms[0]->san_command[*i + 1] != NULL)
