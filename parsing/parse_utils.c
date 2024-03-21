@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 16:19:31 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 12:16:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/20 10:39:02 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,37 +20,6 @@ int	ft_get_arr_size(char **arr)
 	while (arr[i] != NULL)
 		i++;
 	return (i);
-}
-
-int	check_for_max_consequitve_chars_in_str(char *str)
-{
-	int		i;
-	int		c_count;
-	char	c;
-
-	i = 0;
-	c_count = 0;
-	while (str[i] != '\0')
-	{
-		if ((str[i] == '<' || str[i] == '>') && check_if_quoted(str, i) == 0)
-		{
-			c = str[i];
-			while (str[i] == c)
-			{
-				i++;
-				c_count++;
-			}
-			if (c_count > 2 || (c_count == 1 && str[i] == '\0'))
-				return (ft_parse_error_too_many_chars(c));
-			while (str[i] == ' ')
-				i++;
-			if (str[i] == '\0' || str[i] == c)
-				return (ft_parse_error_too_many_chars(c));
-			c_count = 0;
-		}
-		i++;
-	}
-	return (c_count);
 }
 
 char	*ft_strdup_only_char_c_str(char c, char *str, int i)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 11:21:23 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/20 11:51:44 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_free_t_data_struct(t_data *data)
 
 void	ft_message_and_exit(t_data *data, int code)
 {
-	printf("🐢💨 exiting\n");
+	//ft_putendl_fd("🐢💨 exiting", 2);//not sure which fd this should be outputted to
 	rl_clear_history();
 	ft_free_t_data_struct(data);
 	exit(code);
@@ -73,6 +73,7 @@ void	ft_msg_free_and_exit(t_data *data, int code, char *msg, char *target)
 	{
 		ft_putstr_fd(target, 2);
 		ft_putstr_fd(": ", 2);
+		free(target);
 	}
 	ft_putendl_fd(msg, 2);
 	ft_free_t_data_struct(data);
@@ -86,6 +87,7 @@ void	*ft_error_message_and_return_null(char *msg, char *target)
 	{
 		ft_putstr_fd(target, 2);
 		ft_putstr_fd(": ", 2);
+		free(target);
 	}
 	ft_putendl_fd(msg, 2);
 	return (NULL);

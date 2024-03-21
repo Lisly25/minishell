@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_external.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 15:03:17 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:07:08 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,17 +73,17 @@ int	redirect(t_comm *cmd)
 {
 	int	status;
 
-	if (cmd->input_fd != STDIN_FILENO)
-	{
-		status = dup2(cmd->input_fd, STDIN_FILENO);
-		close(cmd->input_fd);
-		if (status == -1)
-			return (DUP2_ERROR);
-	}
 	if (cmd->output_fd != STDOUT_FILENO)
 	{
 		status = dup2(cmd->output_fd, STDOUT_FILENO);
 		close (cmd->output_fd);
+		if (status == -1)
+			return (DUP2_ERROR);
+	}
+	if (cmd->input_fd != STDIN_FILENO)
+	{
+		status = dup2(cmd->input_fd, STDIN_FILENO);
+		close(cmd->input_fd);
 		if (status == -1)
 			return (DUP2_ERROR);
 	}
@@ -104,15 +104,16 @@ int	init_children_and_fds(t_data *data)
 		{
 			default_signals();
 			open_redirects(data, i);
+			clean_up_unused_pipes(data, i);
 			if (redirect(data->comms[i]) == DUP2_ERROR)
 				ft_msg_free_and_exit(data, 1, "dup2 error", NULL);
 			child_process(data, data->comms[i]);
 		}
+		if (i != 0)
+			close(data->comms[i]->input_fd);
 		if (i == (data->comm_count - 1))
 			break ;
 		close(data->comms[i]->output_fd);
-		if (i != 0)
-			close(data->comms[i]->input_fd);
 		i++;
 	}
 	return (0);

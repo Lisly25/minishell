@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/15 16:07:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/20 11:44:25 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	heredoc(int i)
 	return (fd);
 }
 
-static int	check_if_file_exists(char *filename)
+int	check_if_file_exists(char *filename)
 {
 	if (access(filename, F_OK) == 0)
 		return (1);

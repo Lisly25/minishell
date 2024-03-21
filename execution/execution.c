@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/19 10:55:35 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 10:24:40 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,10 @@ static int	exec_built_in_no_exit(t_data *data)
 	int		io[2];
 
 	save_io(io);
-	open_redirects(data, 0);
-	redirect(data->comms[0]);
+	if (open_redirects_builtin(data, 0) == 1)
+		return (1);
+	if (redirect(data->comms[0]) == DUP2_ERROR)
+		return (ft_error_msg_and_return_one("dup2 error", NULL));
 	code = detect_built_in(data->comms[0]->san_command[0]);
 	i = 1;
 	while (data->comms[0]->san_command[i] != NULL || i == 1)
@@ -70,7 +72,7 @@ static int	exec_built_in_no_exit(t_data *data)
 		if (code == 1 && is_n_flag(data->comms[0]) && i == 1)
 			i ++;
 		if (run_built_in(data->comms[0]->san_command[i], code, data) != 0)
-			return (-1);
+			return (1);
 		if (data->comms[0]->san_command[i] == NULL)
 			break ;
 		if (code == 1 && data->comms[0]->san_command[i + 1] != NULL)
@@ -91,19 +93,14 @@ int	child_process(t_data *data, t_comm *comm)
 	env_s = env_to_str(data->env);
 	if (comm->san_command[0] == NULL || ft_strlen(comm->san_command[0]) == 0)
 	{
-		if (comm->redirect == NULL)
-			ft_error_message("command not found", "");
+		if (comm->redirect == NULL && ft_strchr(comm->command[0], '$') == NULL)
+			ft_msg_free_and_exit(data, 1, "command not found", NULL);
 		ft_free_t_data_struct(data);
-		exit(1);
+		exit(0);
 	}
 	if (execute_built_in(data, comm) == -1)
 		exit(EXIT_FAILURE);
-	path = find_path(comm, env_s);
-	if (path == NULL)
-	{
-		ft_free_t_data_struct(data);
-		exit(1);
-	}
+	path = find_path(comm, env_s, data);
 	if (execve(path, comm->san_command, env_s) == -1)
 		ft_error_message("execve error", NULL);
 	free_comm(data);
@@ -117,7 +114,6 @@ int	execute(t_data *data)
 {
 	int		i;
 	t_comm	**comms;
-	int		exit_status;//this might be obsolete
 
 	i = 0;
 	signal(SIGINT, SIG_IGN);
@@ -125,16 +121,14 @@ int	execute(t_data *data)
 	if (data->comm_count == 0)
 		return (0);
 	if (data->comm_count == 1 && detect_built_in(comms[0]->san_command[0]))
-		return (exec_built_in_no_exit(data));
-	exit_status = init_children_and_fds(data);
-	if (exit_status != 0)//this might be obsolete
 	{
-		printf("%d\n", exit_status);//this is just for debugging
-		exit(exit_status);
+		data->exit_code = exec_built_in_no_exit(data);
+		return (0);
 	}
+	init_children_and_fds(data);
 	wait_for_children(data);
 	handle_exit_codes(data);
-	if (delete_heredocs(data) == -1)//we'll need to use malloc here, we might have to check the return value of execute() int the main function after all...
-		return (MALLOC_ERROR);
+	if (delete_heredocs(data) == -1)
+		ft_msg_free_and_exit(data, 1, "malloc error", NULL);
 	return (0);
 }

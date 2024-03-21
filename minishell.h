@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/19 10:41:55 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:43:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		child_process(t_data *data, t_comm *comm);
 int		execute(t_data *data);
 
 //execution_utils.c
-char	*find_path(t_comm *command, char **env_s);
+char	*find_path(t_comm *command, char **env_s, t_data *data);
 int		detect_built_in(char *command);
 int		run_built_in(char *arg, int code, t_data *data);
 void	wait_for_children(t_data *data);
@@ -95,7 +95,14 @@ int		init_children_and_fds(t_data *data);
 int		open_redirects(t_data *data, int i);
 int		redirect(t_comm *cmd);
 
+//execution_internal_redirection.c
+int		open_redirects_builtin(t_data *data, int i);
+
+//execution_pipe_utils.c
+void	clean_up_unused_pipes(t_data *data, int i);
+
 //open_redirections.c
+int		check_if_file_exists(char *filename);
 int		open_read(char **redirect, int j, int i, t_data *data);
 int		open_write(char **redirect, int j, t_data *data);
 void	close_file(t_data *data, int fd, int j, char **file_arr);
@@ -107,13 +114,13 @@ int		check_if_last_redirect(char c, char **redirect, int j);
 int		detect_ambiguous_redirect(char	*redirect, t_data *data);
 
 //execution_path.c
-char	*find_path_from_path_env(char *cmd, char **env_s);
-char	*find_absolute_path(char *cmd);
-char	*find_relative_path(char *cmd);
+char	*find_path_from_path_env(char *cmd, char **env_s, t_data *data);
+char	*find_absolute_path(char *cmd, t_data *data);
+char	*find_relative_path(char *cmd, t_data *data);
 
 //execution_path_utils.c
-char	**get_path_env_array(char **env_s, char *cmd);
-int		check_access_to_command(char *path, char *cmd);
+char	**get_path_env_array(char **env_s, char *cmd, t_data *data);
+int		check_access_to_command(char *path, char *cmd, t_data *data);
 
 //heredoc.c
 int		get_heredoc(t_data *data);
@@ -132,6 +139,7 @@ void	*ft_error_message_and_return_null(char *msg, char *target);
 //errors_2.c
 void	ft_error_message(char *message, char *target);
 void	free_comm(t_data *data);
+int		ft_error_msg_and_return_one(char *msg, char *target);
 
 //handle_exit_codes.c
 void	handle_exit_codes(t_data *data);

@@ -5,6 +5,8 @@ SRCS		=	main.c \
 				init.c \
 				signals.c \
 				execution/execution.c \
+				execution/execution_internal_redirection.c \
+				execution/execution_pipe_utils.c \
 				execution/execution_utils.c \
 				execution/execution_utils_2.c \
 				execution/execution_external.c \
@@ -35,6 +37,7 @@ SRCS		=	main.c \
 				parsing/parse_split.c \
 				parsing/parse_split_utils.c \
 				parsing/parse_unsanitized.c \
+				parsing/parse_utils_syntax.c \
 				parsing/parse_utils.c \
 				parsing/parse_sanitiser.c \
 				parsing/parse_sanitiser_utils.c \
