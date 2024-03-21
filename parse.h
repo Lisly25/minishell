@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/20 10:39:52 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 10:33:38 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int		get_san_len(char *str, t_data *data);
 //parse_sanitiser_utils_2
 void	handle_question(char **str, char **san_str, int exit_code);
 void	handle_env(char **env, char **san_str);
+void	handle_nulls(t_data *data);
 
 //parse_utils_syntax
 int		check_for_max_consequitve_chars_in_str(char *str);
