@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:23:17 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/20 16:17:04 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:31:39 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	overflow(char *status)
 	return (0);
 }
 
-void	ft_exit(char *status, t_data *data)
+void	ft_exit(char *status, t_data *data, int i)
 {
 	int		code;
 
@@ -52,8 +52,12 @@ void	ft_exit(char *status, t_data *data)
 	{
 		ft_putstr_fd("minishell 🐢: exit: ", 2);
 		ft_putstr_fd(status, 2);
-		return (ft_putstr_fd(": numeric argument required\n", 2));
+		ft_putstr_fd(": numeric argument required\n", 2);
+		ft_free_t_data_struct(data);
+		exit(255);
 	}
+	if (data->comms[i]->san_command[2] != NULL)
+		return (ft_putstr_fd("minishell 🐢: exit: too many arguments\n", 2));
 	code = ft_atoi(status);
 	ft_message_and_exit(data, code);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 15:19:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/20 15:14:06 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 11:26:26 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	detect_built_in(char *command)
 	return (0);
 }
 
-int	run_built_in(char *arg, int code, t_data *data)
+int	run_built_in(char *arg, int code, t_data *data, int i)
 {
 	t_env	**env;
 
@@ -73,7 +73,7 @@ int	run_built_in(char *arg, int code, t_data *data)
 	else if (code == 6)
 		return (ft_env(*env));
 	else if (code == 7)
-		ft_exit(arg, data);
+		ft_exit(arg, data, i);
 	return (1);
 }
 

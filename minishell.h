@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
 /*   Updated: 2024/03/21 13:51:58 by skorbai          ###   ########.fr       */
@@ -61,7 +61,8 @@ int		ft_env(t_env *env);
 int		ft_cd(char *path, t_env **env);
 
 //exit.c
-void	ft_exit(char *status, t_data *data);
+void	ft_exit(char *status, t_data *data, int i);
+
 //export.c
 int		ft_export(char *arg, t_env **env);
 void	reset_printed(t_env **env);
@@ -76,13 +77,13 @@ int		add_var(char *arg, t_env **env);
 int		ft_unset(char *arg, t_env **env);
 
 //execution.c
-int		child_process(t_data *data, t_comm *comm);
+int		child_process(t_data *data, t_comm *comm, int i);
 int		execute(t_data *data);
 
 //execution_utils.c
 char	*find_path(t_comm *command, char **env_s, t_data *data);
 int		detect_built_in(char *command);
-int		run_built_in(char *arg, int code, t_data *data);
+int		run_built_in(char *arg, int code, t_data *data, int i);
 void	wait_for_children(t_data *data);
 
 //execution_utils_2.c

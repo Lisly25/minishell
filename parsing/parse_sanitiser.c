@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 12:30:26 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 10:58:31 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,4 +105,5 @@ void	sanitiser(t_data *data)
 		count = 0;
 		i ++;
 	}
+	handle_nulls(data);
 }

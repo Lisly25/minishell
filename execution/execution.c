@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 10:24:40 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 11:41:29 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	is_n_flag(t_comm *command)
 //ret of 1: not built_in
 //ret of -1: error
 //exit: succcessul run of built-in
-static int	execute_built_in(t_data *data, t_comm *comm)
+static int	execute_built_in(t_data *data, t_comm *comm, int j)
 {
 	int	code;
 	int	i;
@@ -40,7 +40,7 @@ static int	execute_built_in(t_data *data, t_comm *comm)
 	{
 		if (code == 1 && is_n_flag(comm) && i == 1)
 			i ++;
-		if (run_built_in(comm->san_command[i], code, data) != 0)
+		if (run_built_in(comm->san_command[i], code, data, j) != 0)
 			return (-1);
 		if (comm->san_command[i] == NULL)
 			break ;
@@ -51,7 +51,6 @@ static int	execute_built_in(t_data *data, t_comm *comm)
 	if (code == 1 && !is_n_flag(comm))
 		printf("\n");
 	exit(0);
-	return (0);
 }
 
 static int	exec_built_in_no_exit(t_data *data)
@@ -71,7 +70,7 @@ static int	exec_built_in_no_exit(t_data *data)
 	{
 		if (code == 1 && is_n_flag(data->comms[0]) && i == 1)
 			i ++;
-		if (run_built_in(data->comms[0]->san_command[i], code, data) != 0)
+		if (run_built_in(data->comms[0]->san_command[i], code, data, 0) != 0)
 			return (1);
 		if (data->comms[0]->san_command[i] == NULL)
 			break ;
@@ -85,7 +84,7 @@ static int	exec_built_in_no_exit(t_data *data)
 	return (0);
 }
 
-int	child_process(t_data *data, t_comm *comm)
+int	child_process(t_data *data, t_comm *comm, int i)
 {
 	char	*path;
 	char	**env_s;
@@ -98,7 +97,7 @@ int	child_process(t_data *data, t_comm *comm)
 		ft_free_t_data_struct(data);
 		exit(0);
 	}
-	if (execute_built_in(data, comm) == -1)
+	if (execute_built_in(data, comm, i) == -1)
 		exit(EXIT_FAILURE);
 	path = find_path(comm, env_s, data);
 	if (execve(path, comm->san_command, env_s) == -1)

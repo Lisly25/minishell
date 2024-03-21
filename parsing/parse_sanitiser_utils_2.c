@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:06:42 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/13 12:07:38 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:08:58 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,46 @@ void	handle_question(char **str, char **san_str, int exit_code)
 	*san_str += (ft_strlen(free_me));
 	(*str) += 1;
 	free(free_me);
+}
+
+static void	remove_null(char **ptr)
+{
+	int		i;
+
+	i = 0;
+	free(ptr[i]);
+	ptr[i] = ptr[i + 1];
+	i ++;
+	while (ptr[i])
+	{
+		ptr[i] = ptr[i + 1];
+		i ++;
+	}
+}
+
+static void	remove_all_nulls(char **san_command)
+{
+	int	i;
+	char	**ptr;
+
+	i = 0;
+	ptr = san_command;
+	while (ptr[i] != NULL)
+	{
+		if (ptr[i][0] == '\0')
+			remove_null(&ptr[i]);
+		i ++;
+	}
+}
+
+void	handle_nulls(t_data *data)
+{
+	int		i;
+	t_comm	**comms;
+
+	i = 0;
+	comms = data->comms;
+	while (i < data->comm_count)
+		remove_all_nulls(comms[i++]->san_command);
+	
 }
