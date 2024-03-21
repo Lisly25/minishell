@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:12:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/19 10:23:52 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:43:49 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ static int	check_if_first_element(char *str)
 		return (0);
 }
 
-//returns 0 if char is not in quotes, 1 if it is between quotes
-//will also return 0 if the character itself is a quote that is not between other quotes
 int	check_if_quoted(char *str, int i)
 {
 	int		j;

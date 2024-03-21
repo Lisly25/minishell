@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sanitiser_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:21:43 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 12:37:33 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:48:02 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,24 +85,24 @@ static void	handle_dollar(char **str, int *len, t_data *data)
 	if (*((*str) + 1) != '?')
 	{
 		*len += env_len((*str), data->env);
-		(*str) ++;
+		(*str)++;
 		while (**str && **str != ' ' && **str != 34 && \
 			**str != 39 && **str != '$')
-			(*str) ++;
-		(*str) --;
+			(*str)++;
+		(*str)--;
 	}
 	else
 	{
 		if (n == 0)
-			(*len) ++;
+			(*len)++;
 		while (n > 1)
 		{
-			(*len) ++;
+			(*len)++;
 			n /= 10;
 		}
 		while (**str && **str != ' ' && **str != 34 && **str != 39)
-			(*str) ++;
-		(*str) --;
+			(*str)++;
+		(*str)--;
 	}
 }
 

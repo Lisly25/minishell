@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sanitiser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 10:58:31 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:48:50 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	handle_q2(char ch, int *d, int *s, char **san_str)
 		if ((*s && ch == 34) || (*d && ch == 39))
 		{
 			*ptr = ch;
-			(*san_str) ++;
+			(*san_str)++;
 		}
 	}
 }
@@ -49,7 +49,8 @@ static void	fill_str(char *str, char **san_str, int *d, int *s, t_data *data)
 			temp = expand_env_san(str, data->env);
 			handle_env(&temp, &ptr);
 			str ++;
-			while (*str && *str != ' ' && *str != 34 && *str != 39 && *str != '$')
+			while (*str && *str != ' ' && *str != 34 && *str != 39 && \
+			*str != '$')
 				str ++;
 			str --;
 		}
@@ -81,9 +82,9 @@ char	*sanitise_str(char *str, t_data *data)
 
 void	sanitiser(t_data *data)
 {
-	int	i;
-	int	j;
-	int	count;
+	int		i;
+	int		j;
+	int		count;
 	t_comm	**comms;
 
 	i = 0;

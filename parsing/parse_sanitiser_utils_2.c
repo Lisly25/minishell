@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sanitiser_utils_2.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:06:42 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 11:08:58 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:47:36 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_env(char **env, char **san_str)
 	while (*ptr)
 	{
 		*(san_str_p++) = *(ptr++);
-		(*san_str) ++;
+		(*san_str)++;
 	}
 	free(*env);
 }
@@ -62,7 +62,7 @@ static void	remove_null(char **ptr)
 
 static void	remove_all_nulls(char **san_command)
 {
-	int	i;
+	int		i;
 	char	**ptr;
 
 	i = 0;
@@ -84,5 +84,4 @@ void	handle_nulls(t_data *data)
 	comms = data->comms;
 	while (i < data->comm_count)
 		remove_all_nulls(comms[i++]->san_command);
-	
 }
