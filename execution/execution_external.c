@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_external.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/20 16:07:08 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 11:24:23 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	init_children_and_fds(t_data *data)
 			clean_up_unused_pipes(data, i);
 			if (redirect(data->comms[i]) == DUP2_ERROR)
 				ft_msg_free_and_exit(data, 1, "dup2 error", NULL);
-			child_process(data, data->comms[i]);
+			child_process(data, data->comms[i], i);
 		}
 		if (i != 0)
 			close(data->comms[i]->input_fd);
