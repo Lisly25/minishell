@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 11:25:58 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:41:29 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static int	execute_built_in(t_data *data, t_comm *comm, int j)
 	if (code == 1 && !is_n_flag(comm))
 		printf("\n");
 	exit(0);
-	return (0);
 }
 
 static int	exec_built_in_no_exit(t_data *data)
