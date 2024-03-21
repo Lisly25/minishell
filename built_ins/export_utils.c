@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:58:00 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 14:46:43 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 15:24:41 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,19 @@ void	ammend_var(char *arg, t_env **env)
 	}
 }
 
+static int	invalid_name(char *name)
+{
+	if (ft_isdigit(name[0]))
+		return (1);
+	while (*name != '=' && *name != '\0')
+	{
+		if (*name == '-')
+			return (1);
+		name ++;
+	}
+	return (0);
+}
+
 int	add_var(char *arg, t_env **env)
 {
 	char	*equals;
@@ -74,6 +87,13 @@ int	add_var(char *arg, t_env **env)
 	t_env	*node;
 
 	new_value = NULL;
+	if (invalid_name(arg))
+	{
+		ft_putstr_fd("minishell 🐢: export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("': not a valid identifier\n", 2);
+		return (1);
+	}
 	equals = ft_strchr(arg, '=');
 	if (equals)
 	{
