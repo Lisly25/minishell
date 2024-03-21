@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 10:55:05 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/21 10:33:38 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:30:57 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 
 # define MALLOC_ERROR 2
 # define UNCLOSED_QUOTE_ERROR 3
-# define DUP2_ERROR 6
+# define DUP2_ERROR 4
 # define SYNTAX_ERROR 258
 
 typedef struct s_comm
@@ -55,23 +55,37 @@ typedef struct s_data
 int		parser_main(char *input, t_data *data);
 int		check_if_empty_line(char *line);
 
-int		init_unsanitized_array(char *str, t_data *data);
+//parse_errors.c
 int		ft_parse_error(char *str);
 int		ft_parse_error_too_many_chars(char *str, int i);
-int		get_command_count(char *input);
 int		check_for_unclosed_quotes(char *str);
+
+//parse_init.c
 int		check_if_quoted(char *str, int i);
-int		ft_get_arr_size(char **arr);//this, too!
-char	**ft_quoted_split(char *s);
-char	*quote_split_strdup(char *str, int i, char limiter);
+int		get_command_count(char *input);
+
+//parse_redirection.c
+int		add_redir_data_to_parse_struct(char *str, t_comm *cmd);
+
+//parse_split_pipes.c
+char	**pipe_split(char *s);
+
+//parse_split_utils.c
 int		count_qsplit_frag_len(char *str, int i, char limiter);
 char	**qsplit_free_and_null(char **result);
 int		update_main_split_post_cpy(char *s, int i, char limiter);
-char	**pipe_split(char *s);
-int		add_redir_data_to_parse_struct(char *str, t_comm *cmd);
+
+//parse_split.c
+char	*quote_split_strdup(char *str, int i, char limiter);
+char	**ft_quoted_split(char *s);
+
+//parse_unsaitized.c
+int		init_unsanitized_array(char *str, t_data *data);
+
+//parse_utils.c
+int		ft_get_arr_size(char **arr);//this, too!
 char	*ft_strdup_only_char_c_str(char c, char *str, int i);
 char	*ft_strdup_from_i_to_char(char c, char *str, int i);
-
 int		detect_redirect_limit(int i, char *str, char other_redir, char redir);
 
 //parse_sanitiser

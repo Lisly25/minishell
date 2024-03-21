@@ -108,7 +108,7 @@ void	clean_up_unused_pipes(t_data *data, int i);
 //open_redirections.c
 int		check_if_file_exists(char *filename);
 int		open_read(char **redirect, int j, int i, t_data *data);
-int		open_write(char **redirect, int j, t_data *data);
+int		open_write(char **redirect, int j, int i, t_data *data);
 void	close_file(t_data *data, int fd, int j, char **file_arr);
 
 //redirect_utils.c
