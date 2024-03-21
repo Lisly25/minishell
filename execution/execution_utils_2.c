@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 14:39:39 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/19 13:41:52 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:27:44 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static char	*to_str(t_env *env)
 	int		len;
 	char	*str;
 	char	*ptr;
-	
+
 	len = ft_strlen(env->name) + ft_strlen(env->value) + 1;
 	str = (char *) malloc(sizeof(char) * (len + 1));
 	if (!str)

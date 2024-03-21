@@ -1,35 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   execution_utils_3.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 16:50:36 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 14:36:55 by fshields         ###   ########.fr       */
+/*   Created: 2024/03/21 14:22:01 by fshields          #+#    #+#             */
+/*   Updated: 2024/03/21 14:22:37 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-char	*get_pwd(void)
+int	is_n_flag(t_comm *command)
 {
-	char	*ret_path;
+	char	*str;
 
-	ret_path = getcwd(NULL, 0);
-	if (!ret_path)
-		return (NULL);
-	return (ret_path);
-}
-
-int	ft_print_pwd(void)
-{
-	char	*pwd;
-	
-	pwd = get_pwd();
-	if (!pwd)
-		return (MALLOC_ERROR);
-	printf("%s\n", pwd);
-	free(pwd);
+	str = command->san_command[1];
+	if (!str)
+		return (0);
+	if (ft_strncmp("-n", str, 2) == 0 && ft_strlen(str) == 2)
+		return (1);
 	return (0);
 }

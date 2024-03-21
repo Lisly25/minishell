@@ -6,23 +6,11 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 11:41:29 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:33:45 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-static int	is_n_flag(t_comm *command)
-{
-	char	*str;
-
-	str = command->san_command[1];
-	if (!str)
-		return (0);
-	if (ft_strncmp("-n", str, 2) == 0 && ft_strlen(str) == 2)
-		return (1);
-	return (0);
-}
 
 //ret of 1: not built_in
 //ret of -1: error
@@ -53,6 +41,17 @@ static int	execute_built_in(t_data *data, t_comm *comm, int j)
 	exit(0);
 }
 
+static int	built_in_loop(t_data *data, int i, int code)
+{
+	if (code == 1 && is_n_flag(data->comms[0]) && i == 1)
+		i ++;
+	if (run_built_in(data->comms[0]->san_command[i], code, data, 0) != 0)
+		return (1);
+	if (code == 1 && data->comms[0]->san_command[i + 1] != NULL)
+		printf(" ");
+	return (0);
+}
+
 static int	exec_built_in_no_exit(t_data *data)
 {
 	int		code;
@@ -68,14 +67,10 @@ static int	exec_built_in_no_exit(t_data *data)
 	i = 1;
 	while (data->comms[0]->san_command[i] != NULL || i == 1)
 	{
-		if (code == 1 && is_n_flag(data->comms[0]) && i == 1)
-			i ++;
-		if (run_built_in(data->comms[0]->san_command[i], code, data, 0) != 0)
+		if (built_in_loop(data, i, code) == 1)
 			return (1);
 		if (data->comms[0]->san_command[i] == NULL)
 			break ;
-		if (code == 1 && data->comms[0]->san_command[i + 1] != NULL)
-			printf(" ");
 		i ++;
 	}
 	if (code == 1 && !is_n_flag(data->comms[0]))
