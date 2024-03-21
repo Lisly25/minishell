@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 14:48:50 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 16:46:24 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	handle_q2(char ch, int *d, int *s, char **san_str)
 	}
 }
 
-static void	fill_str(char *str, char **san_str, int *d, int *s, t_data *data)
+static void	fill_str(char *str, char **san_str, int quotes[], t_data *data)
 {
 	char	*ptr;
 	char	*temp;
@@ -42,20 +42,20 @@ static void	fill_str(char *str, char **san_str, int *d, int *s, t_data *data)
 	ptr = *san_str;
 	while (*str)
 	{
-		if (ft_strncmp(str, "$?", 2) == 0 && !*s)
+		if (ft_strncmp(str, "$?", 2) == 0 && !quotes[1])
 			handle_question(&str, &ptr, data->exit_code);
-		else if (*str == '$' && !*s)
+		else if (*str == '$' && !quotes[1])
 		{
 			temp = expand_env_san(str, data->env);
 			handle_env(&temp, &ptr);
 			str ++;
-			while (*str && *str != ' ' && *str != 34 && *str != 39 && \
-			*str != '$')
+			while (*str && *str != ' ' && *str != 34 && \
+			*str != 39 && *str != '$')
 				str ++;
 			str --;
 		}
 		else if (*str == 34 || *str == 39)
-			handle_q2(*str, d, s, &ptr);
+			handle_q2(*str, &(quotes[0]), &(quotes[1]), &ptr);
 		else
 			*(ptr++) = *str;
 		str ++;
@@ -66,17 +66,16 @@ static void	fill_str(char *str, char **san_str, int *d, int *s, t_data *data)
 char	*sanitise_str(char *str, t_data *data)
 {
 	int		len;
-	int		d;
-	int		s;
 	char	*san_str;
+	int		quotes[2];
 
 	len = get_san_len(str, data);
-	d = 0;
-	s = 0;
+	quotes[0] = 0;
+	quotes[1] = 0;
 	san_str = (char *) malloc((len + 1) * sizeof(char));
 	if (!san_str)
 		return (NULL);
-	fill_str(str, &san_str, &d, &s, data);
+	fill_str(str, &san_str, quotes, data);
 	return (san_str);
 }
 

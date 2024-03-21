@@ -6,15 +6,12 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 14:23:02 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:32:37 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
-void rl_replace_line (const char *, int);
-void rl_clear_history (void);
 
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -27,6 +24,9 @@ void rl_clear_history (void);
 # include <fcntl.h>
 # include "libft/libft.h"
 # include "parse.h"
+
+void	rl_replace_line(const char *text, int clear_undo);
+void	rl_clear_history(void);
 
 //init.c
 int		get_list_size(t_env *list);
@@ -92,7 +92,7 @@ void	reset_io(int io[]);
 char	**env_to_str(t_env	*env);
 
 //execution_utils_3.c
-int	is_n_flag(t_comm *command);
+int		is_n_flag(t_comm *command);
 
 //execution_external.c
 int		init_children_and_fds(t_data *data);
