@@ -110,6 +110,7 @@ void	close_file(t_data *data, int fd, int j, char **file_arr);
 
 //redirect_utils.c
 int		check_if_last_redirect(char c, char **redirect, int j);
+int		ft_ambi_redirect_error_msg(char *redirect);
 
 //redirect_errors.c
 int		detect_ambiguous_redirect(char	*redirect, t_data *data);
