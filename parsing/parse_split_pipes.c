@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 09:52:32 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/07 10:30:54 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:49:24 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ static int	count_frags(char *str)
 	count = 1;
 	while (str[i] != '\0')
 	{
-		//by this point, we already tested for the first char being |, no need to repeat it here
 		if (str[i] == '\'' || str[i] == '\"')
 		{
 			quote = str[i];
 			while (str[i] != quote)
 				i++;
 		}
-		if (str[i] == '|' && str[i + 1] != '\0')//we have already checked for double pipes and ending with pipes by this point
+		if (str[i] == '|' && str[i + 1] != '\0')
 			count++;
 		i++;
 	}
