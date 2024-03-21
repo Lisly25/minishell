@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:59:12 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/20 16:07:08 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:51:46 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	open_redirects(t_data *data, int i)
 		}
 		else
 		{
-			data->comms[i]->output_fd = open_write(redirect, j, data);
+			data->comms[i]->output_fd = open_write(redirect, j, i, data);
 			close_file(data, data->comms[i]->output_fd, j, redirect);
 		}
 		j = j + 2;

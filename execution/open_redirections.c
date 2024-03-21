@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/20 11:44:25 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:54:57 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,12 @@ void	close_file(t_data *data, int fd, int j, char **file_arr)
 
 int	open_read(char **redirect, int j, int i, t_data *data)
 {
-	int		fd;
-	char	*sanitized_name;
+	int			fd;
+	int			old_fd;
+	char		*sanitized_name;
+	static int	count = 0;
 
+	old_fd = data->comms[i]->input_fd;
 	if (ft_strlen(redirect[j]) == 1)
 	{
 		if (detect_ambiguous_redirect(redirect[j + 1], data) == 1)
@@ -81,14 +84,20 @@ int	open_read(char **redirect, int j, int i, t_data *data)
 	}
 	else
 		fd = heredoc(i);
+	count++;
+	if (count == 1 && old_fd != STDIN_FILENO)
+		close (old_fd);
 	return (fd);
 }
 
-int	open_write(char **redirect, int j, t_data *data)
+int	open_write(char **redirect, int j, int i, t_data *data)
 {
-	int		fd;
-	char	*sanitized_name;
+	int			fd;
+	int			old_fd;
+	char		*sanitized_name;
+	static int	count = 0;
 
+	old_fd = data->comms[i]->output_fd;
 	if (detect_ambiguous_redirect(redirect[j + 1], data) == 1)
 		return (-3);
 	sanitized_name = sanitise_str(redirect[j + 1], data);
@@ -99,5 +108,8 @@ int	open_write(char **redirect, int j, t_data *data)
 	else
 		fd = open(sanitized_name, O_CREAT | O_WRONLY | O_APPEND, 0644);
 	free (sanitized_name);
+	count++;
+	if (count == 1 && old_fd != STDOUT_FILENO)
+		close(old_fd);
 	return (fd);
 }
