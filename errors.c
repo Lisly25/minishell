@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:11:46 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/20 11:51:44 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 13:22:45 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_free_t_data_struct(t_data *data)
 
 void	ft_message_and_exit(t_data *data, int code)
 {
-	//ft_putendl_fd("🐢💨 exiting", 2);//not sure which fd this should be outputted to
+	ft_putendl_fd("🐢💨 exiting", 2);
 	rl_clear_history();
 	ft_free_t_data_struct(data);
 	exit(code);
