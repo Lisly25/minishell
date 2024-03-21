@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sanitiser_utils.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 16:21:43 by fshields          #+#    #+#             */
 /*   Updated: 2024/03/21 16:48:57 by fshields         ###   ########.fr       */

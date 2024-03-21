@@ -6,11 +6,18 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/05 17:30:24 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 15:40:44 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:46:56 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+static char	get_opposite_redir_symbol(char redir)
+{
+	if (redir == '<')
+		return ('>');
+	return ('<');
+}
 
 static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 {
@@ -18,10 +25,7 @@ static int	extract_redir(char *str, int i, t_vector *redir_array, char c)
 	char	opposite_redir;
 	int		k;
 
-	if (c == '<')
-		opposite_redir = '>';
-	else
-		opposite_redir = '<';
+	opposite_redir = get_opposite_redir_symbol(c);
 	buffer = ft_strdup_only_char_c_str(c, str, i);
 	if (buffer == NULL)
 		return (MALLOC_ERROR);

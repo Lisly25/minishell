@@ -6,14 +6,11 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 11:08:11 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 13:58:00 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:44:11 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-//this function should only be called if the input is not empty: 
-//neither NULL, nor containing only whitespace
 
 int	check_if_empty_line(char *line)
 {
@@ -61,7 +58,3 @@ int	parser_main(char *input, t_data *data)
 		return (MALLOC_ERROR);
 	return (status);
 }
-
-//it returns SYNTAX_ERROR on parse error - in such a case, we just need to ask for a new prompt (and free any data we might have malloced before finding the syntax error)
-//if it returns MALLOC ERROR, the data struct must be freed and minishell must exit
-//if it returns 0, all is good and we can move on to the execution phase

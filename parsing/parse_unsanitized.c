@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 12:59:25 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/18 15:48:53 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:52:19 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static int	get_redirect_unsanit(char *str, t_comm *cmd)
 {
 	int	result;
 
-	if (ft_strchr(str, '<') == NULL && ft_strchr(str, '>') == NULL)//if there are redirect signs, but they are in quotes, do we also set the redirect array to NULL?
+	if (ft_strchr(str, '<') == NULL && ft_strchr(str, '>') == NULL)
 	{
 		cmd->redirect = NULL;
 		return (0);

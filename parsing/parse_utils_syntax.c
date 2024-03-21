@@ -6,13 +6,12 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 10:36:41 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/20 16:58:21 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:52:30 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//return 1 if not valid, 0 if it is
 static int	check_if_valid_redir_token(char *str, int c_count, int i)
 {
 	if (i == 1)
