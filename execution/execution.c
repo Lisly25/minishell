@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 14:33:45 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 16:23:22 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static int	execute_built_in(t_data *data, t_comm *comm, int j)
 	exit(0);
 }
 
-static int	built_in_loop(t_data *data, int i, int code)
+static int	built_in_loop(t_data *data, int *i, int code)
 {
-	if (code == 1 && is_n_flag(data->comms[0]) && i == 1)
-		i ++;
-	if (run_built_in(data->comms[0]->san_command[i], code, data, 0) != 0)
+	if (code == 1 && is_n_flag(data->comms[0]) && *i == 1)
+		(*i) ++;
+	if (run_built_in(data->comms[0]->san_command[*i], code, data, 0) != 0)
 		return (1);
-	if (code == 1 && data->comms[0]->san_command[i + 1] != NULL)
+	if (code == 1 && data->comms[0]->san_command[*i + 1] != NULL)
 		printf(" ");
 	return (0);
 }
@@ -67,9 +67,9 @@ static int	exec_built_in_no_exit(t_data *data)
 	i = 1;
 	while (data->comms[0]->san_command[i] != NULL || i == 1)
 	{
-		if (built_in_loop(data, i, code) == 1)
+		if (built_in_loop(data, &i, code) == 1)
 			return (1);
-		if (data->comms[0]->san_command[i] == NULL)
+		if (data->comms[0]->san_command[i] == NULL || (code == 2 && i == 1))
 			break ;
 		i ++;
 	}

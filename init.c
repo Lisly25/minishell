@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:01:56 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 12:18:23 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 14:51:45 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_env	*new_node(char *name, char *value)
 	return (new_node);
 }
 
-int		get_list_size(t_env *list)
+int	get_list_size(t_env *list)
 {
 	int	size;
 
