@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 11:11:48 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/20 11:30:18 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 11:27:20 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,7 @@ static int	close_f_builtin(t_data *data, int fd, int j, char **file_arr)
 	if (fd == -2)
 		ft_msg_free_and_exit(data, 1, "malloc error", NULL);
 	if (fd == -3)
-	{
-		ft_free_t_data_struct(data);
-		exit(1);
-	}
+		return (1);
 	is_last_redir = check_if_last_redirect(file_arr[j][0], file_arr, j);
 	if (fd > 0 && is_last_redir == 0)
 	{
