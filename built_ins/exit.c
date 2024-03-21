@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 17:23:17 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 11:31:39 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:45:46 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	ft_exit(char *status, t_data *data, int i)
 {
 	int		code;
 
-	
 	if (!status)
 		ft_message_and_exit(data, 0);
 	if (!check_valid(status) || overflow(status))

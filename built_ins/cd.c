@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:59:29 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 11:14:01 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:45:18 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static void	handle_bad_path(char **oldpwd, char *input, t_env **env)
 		ft_putstr_fd(": Not a directory\n", 2);
 }
 
-int ft_cd(char *input, t_env **env)
+int	ft_cd(char *input, t_env **env)
 {
 	char	*pwd;
 	char	*oldpwd;

@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/29 14:58:00 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/15 14:56:57 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:46:43 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	display_vars(t_env **env)
 {
 	t_env	*ptr;
 	t_env	*smallest;
-	
+
 	if (!*env)
 		return ;
 	while (!all_printed(env))
@@ -27,7 +27,8 @@ void	display_vars(t_env **env)
 		smallest = ptr;
 		while (ptr)
 		{
-			if (ft_strncmp(ptr->name, smallest->name, INT_MAX) <= 0 && !ptr->printed)
+			if (ft_strncmp(ptr->name, smallest->name, INT_MAX) \
+			<= 0 && !ptr->printed)
 				smallest = ptr;
 			ptr = ptr->next;
 		}
@@ -67,7 +68,7 @@ void	ammend_var(char *arg, t_env **env)
 
 int	add_var(char *arg, t_env **env)
 {
-	char 	*equals;
+	char	*equals;
 	char	*new_name;
 	char	*new_value;
 	t_env	*node;
