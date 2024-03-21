@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 11:59:29 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/20 15:05:53 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:14:01 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ int ft_cd(char *input, t_env **env)
 	char	*pwd;
 	char	*oldpwd;
 
+	if (!input)
+		return (0);
 	pwd = get_pwd();
 	oldpwd = getenv("OLDPWD");
 	if (already_in_list("OLDPWD", *env))
