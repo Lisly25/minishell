@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 12:34:57 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/13 12:41:13 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/21 11:25:08 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,13 @@ int	check_if_last_redirect(char c, char **redirect, int j)
 			return (0);
 		j = j + 2;
 	}
+	return (1);
+}
+
+int	ft_ambi_redirect_error_msg(char *redirect)
+{
+	ft_putstr_fd("minishell 🐢: ", 2);
+	ft_putstr_fd(redirect, 2);
+	ft_putendl_fd(": ambiguous redirect", 2);
 	return (1);
 }

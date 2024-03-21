@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:01:56 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/19 10:58:15 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/21 12:18:23 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,19 @@ static t_env	*init_env(char *env[])
 t_data	*init_data(char *env[])
 {
 	t_data	*data;
-	
+
 	data = (t_data *) malloc(sizeof(t_data));
 	if (!data)
-		return (NULL);
+	{
+		ft_error_message("malloc error", NULL);
+		exit(1);
+	}
 	data->env = init_env(env);
 	if (!data->env)
 	{
 		free(data);
-		return (NULL);
+		ft_error_message("malloc error", NULL);
+		exit(1);
 	}
 	data->comm_count = 1;
 	data->exit_code = 0;
