@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 16:32:37 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:48:39 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ int		delete_heredocs(t_data *data);
 
 //heredoc_utils.c
 char	*derive_heredoc_name(int num);
+char	*sanitize_heredoc_input(char *input, t_data *data);
+int		clean_up_after_reading_heredoc(char *hdoc_name, int hdoc_fd);
 
 //errors.c
 void	ft_message_and_exit(t_data *data, int code);
