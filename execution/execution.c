@@ -3,18 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/22 12:59:43 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 14:47:13 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//ret of 1: not built_in
-//ret of -1: error
-//exit: succcessul run of built-in
 static int	execute_built_in(t_data *data, t_comm *comm, int j)
 {
 	int	code;
