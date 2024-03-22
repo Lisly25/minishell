@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:18:02 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 11:48:02 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/22 14:34:59 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,9 @@ static int	read_hdoc(int i, char *limiter, t_data *data)
 	char	*hdoc_name;
 	int		hdoc;
 	char	*input;
+	int		io[2];
 
+	save_io(io);
 	hdoc_name = derive_heredoc_name(i);
 	if (hdoc_name == NULL)
 		return (-1);
@@ -62,7 +64,7 @@ static int	read_hdoc(int i, char *limiter, t_data *data)
 		ft_putendl_fd(input, hdoc);
 		free(input);
 	}
-	return (clean_up_after_reading_heredoc(hdoc_name, hdoc));
+	return (clean_up_after_reading_heredoc(hdoc_name, hdoc, io));
 }
 
 static int	is_heredoc(char *str)
@@ -71,6 +73,7 @@ static int	is_heredoc(char *str)
 		return (0);
 	if (str[0] != '<')
 		return (0);
+	signal(SIGINT, ctl_c_heredoc);
 	return (1);
 }
 
