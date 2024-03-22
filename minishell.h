@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/22 14:34:42 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:17:07 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ int		get_list_size(t_env *list);
 t_env	*new_node(char *name, char *value);
 void	add_to_back(t_env **list, t_env *new);
 t_data	*init_data(char *env[]);
+
+//init_utils.c
+void	increase_shlvl(t_env *env);
 
 //input.c
 void	free_comm(t_data *data);
