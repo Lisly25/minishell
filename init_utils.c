@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:12:24 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/22 15:16:40 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:43:36 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	increase_shlvl(t_env *env)
 {
 	int	lvl;
-	
+
 	while (env)
 	{
 		if (ft_strncmp(env->name, "SHLVL", 5) == 0 \
