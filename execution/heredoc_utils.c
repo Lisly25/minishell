@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:55:58 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 14:34:01 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:28:22 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,19 @@ char	*sanitize_heredoc_input(char *input, t_data *data)
 	return (result);
 }
 
-int	clean_up_after_reading_heredoc(char *hdoc_name, int hdoc_fd, int io[])
+int	clean_up_after_heredoc(char *fname, int hdoc_fd, int io[], char *input)
 {
 	reset_io(io);
 	reset_signals();
-	free(hdoc_name);
+	free(fname);
 	close(hdoc_fd);
+	if (input != NULL)
+		free (input);
 	return (0);
+}
+
+void	write_to_hdoc_and_free(int hdoc_fd, char *str)
+{
+	ft_putendl_fd(str, hdoc_fd);
+	free(str);
 }
