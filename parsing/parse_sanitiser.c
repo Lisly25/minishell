@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sanitiser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 16:46:24 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:48:12 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	sanitiser(t_data *data)
 	t_comm	**comms;
 
 	i = 0;
-	j = 0;
+	j = -1;
 	count = 0;
 	comms = data->comms;
 	while (i < data->comm_count)
@@ -95,13 +95,12 @@ void	sanitiser(t_data *data)
 		while (comms[i]->command[count])
 			count ++;
 		comms[i]->san_command = (char **) malloc(sizeof(char *) * (count + 1));
-		while (comms[i]->command[j])
-		{
+		if (!comms[i]->san_command)
+			return (ft_msg_free_and_exit(data, 1, "malloc error", NULL));
+		while (comms[i]->command[++j])
 			comms[i]->san_command[j] = sanitise_str(comms[i]->command[j], data);
-			j ++;
-		}
 		comms[i]->san_command[j] = NULL;
-		j = 0;
+		j = -1;
 		count = 0;
 		i ++;
 	}
