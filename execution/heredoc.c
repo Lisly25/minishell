@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:18:02 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/14 10:48:19 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/22 11:48:02 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	is_limiter(char *limiter, char *str)
 	return (0);
 }
 
-static int	read_to_heredoc(int i, char *limiter)
+static int	read_hdoc(int i, char *limiter, t_data *data)
 {
 	char	*hdoc_name;
 	int		hdoc;
@@ -51,6 +51,9 @@ static int	read_to_heredoc(int i, char *limiter)
 		input = readline(">");
 		if (input == NULL)
 			break ;
+		input = sanitize_heredoc_input(input, data);
+		if (input == NULL)
+			return (-1);
 		if (is_limiter(limiter, input) == 1)
 		{
 			free(input);
@@ -59,9 +62,7 @@ static int	read_to_heredoc(int i, char *limiter)
 		ft_putendl_fd(input, hdoc);
 		free(input);
 	}
-	close(hdoc);
-	free(hdoc_name);
-	return (0);
+	return (clean_up_after_reading_heredoc(hdoc_name, hdoc));
 }
 
 static int	is_heredoc(char *str)
@@ -91,7 +92,7 @@ int	get_heredoc(t_data *data)
 		{
 			if (is_heredoc(data->comms[i]->redirect[j]) == 1)
 			{
-				if (read_to_heredoc(i, data->comms[i]->redirect[j + 1]) == -1)
+				if (read_hdoc(i, data->comms[i]->redirect[j + 1], data) == -1)
 					return (-1);
 			}
 			j = j + 2;
@@ -104,7 +105,6 @@ int	get_heredoc(t_data *data)
 
 int	delete_heredocs(t_data *data)
 {
-	//we'll see if we get an error message for trying to delete nonexistent files, but I don't think so
 	int		i;
 	char	*hdoc_name;
 

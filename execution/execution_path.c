@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:41:21 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/19 11:25:18 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/22 10:28:11 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,10 @@ char	*find_absolute_path(char *cmd, t_data *data)
 char	*find_relative_path(char *cmd, t_data *data)
 {
 	char	*cwd;
-	char	buffer[9999];//we can't use the function pathconf() to get the size of the max path, so what else can we do?
 	char	*full_path;
 	int		cmd_access_status;
 
-	cwd = getcwd(buffer, 9999);
+	cwd = getcwd(NULL, 0);
 	if (cwd == NULL)
 		return (ft_error_message_and_return_null("getcwd error", NULL));
 	full_path = ft_three_strs_join(cwd, "/", cmd);
