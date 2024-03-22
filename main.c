@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 10:34:59 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 13:57:08 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:17:45 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	main(int argc, char *argv[], char *env[])
 	int		parse_status;
 
 	data = init_data(env);
+	increase_shlvl(data->env);
 	while (argc != 0 && argv != NULL)
 	{
 		reset_signals();
