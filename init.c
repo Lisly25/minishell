@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/27 11:01:56 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/22 11:01:02 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:24:42 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,12 @@ static t_env	*init_env(char *env[])
 	env_list = NULL;
 	while (env[i] != NULL)
 	{
-		env_split = ft_split(env[i], '=');
+		env_split = ft_split(env[i++], '=');
+		if (!env_split)
+		{
+			free_env_list(&env_list);
+			return (NULL);
+		}
 		node = new_node(env_split[0], env_split[1]);
 		if (!node)
 		{
@@ -76,10 +81,7 @@ static t_env	*init_env(char *env[])
 			return (NULL);
 		}
 		add_to_back(&env_list, node);
-		free(env_split[0]);
-		free(env_split[1]);
-		free(env_split);
-		i ++;
+		ft_free_2d_array(env_split);
 	}
 	return (env_list);
 }

@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 10:51:58 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 16:33:46 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:29:39 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ int	child_process(t_data *data, t_comm *comm, int i)
 	char	**env_s;
 
 	env_s = env_to_str(data->env);
+	if (!env_s)
+		ft_msg_free_and_exit(data, 1, "malloc error", NULL);
 	if (comm->san_command[0] == NULL || ft_strlen(comm->san_command[0]) == 0)
 	{
 		if (comm->redirect == NULL && ft_strchr(comm->command[0], '$') == NULL)
