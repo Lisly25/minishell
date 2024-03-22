@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:18:02 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 14:34:59 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:29:10 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,16 @@ static int	read_hdoc(int i, char *limiter, t_data *data)
 	hdoc = open(hdoc_name, O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	while (1)
 	{
-		input = readline(">");
+		input = readline("> ");
 		if (input == NULL)
-			break ;
+			return (clean_up_after_heredoc(hdoc_name, hdoc, io, NULL));
 		input = sanitize_heredoc_input(input, data);
 		if (input == NULL)
 			return (-1);
 		if (is_limiter(limiter, input) == 1)
-		{
-			free(input);
-			break ;
-		}
-		ft_putendl_fd(input, hdoc);
-		free(input);
+			return (clean_up_after_heredoc(hdoc_name, hdoc, io, input));
+		write_to_hdoc_and_free(hdoc, input);
 	}
-	return (clean_up_after_reading_heredoc(hdoc_name, hdoc, io));
 }
 
 static int	is_heredoc(char *str)

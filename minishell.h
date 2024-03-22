@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/22 15:17:07 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 15:38:42 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 # include <fcntl.h>
 # include "libft/libft.h"
 # include "parse.h"
-
-int	g_sig;
 
 void	rl_replace_line(const char *text, int clear_undo);
 void	rl_clear_history(void);
@@ -140,7 +138,8 @@ int		delete_heredocs(t_data *data);
 //heredoc_utils.c
 char	*derive_heredoc_name(int num);
 char	*sanitize_heredoc_input(char *input, t_data *data);
-int		clean_up_after_reading_heredoc(char *hdoc_name, int hdoc_fd, int io[]);
+int		clean_up_after_heredoc(char *fname, int hdoc_fd, int io[], char *input);
+void	write_to_hdoc_and_free(int hdoc_fd, char *str);
 
 //errors.c
 void	ft_message_and_exit(t_data *data, int code);
