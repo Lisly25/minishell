@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:55:58 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 15:28:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:43:52 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ char	*derive_heredoc_name(int num)
 	return (hdoc_name);
 }
 
-char	*sanitize_heredoc_input(char *input, t_data *data)
-{
-	char	*result;
-
-	result = sanitise_str(input, data);
-	free(input);
-	return (result);
-}
-
 int	clean_up_after_heredoc(char *fname, int hdoc_fd, int io[], char *input)
 {
 	reset_io(io);
@@ -45,8 +36,28 @@ int	clean_up_after_heredoc(char *fname, int hdoc_fd, int io[], char *input)
 	return (0);
 }
 
-void	write_to_hdoc_and_free(int hdoc_fd, char *str)
+void	write_to_hdoc_and_free(int hdoc_fd, char *str, t_data *data)
 {
-	ft_putendl_fd(str, hdoc_fd);
+	char	*env_var_value;
+
+	while (*str != '\0')
+	{
+		if (*str == '$')
+		{
+			if (check_if_correct_format(str) == 0)
+			{
+				ft_putchar_fd('$', hdoc_fd);
+				str++;
+				continue ;
+			}
+			str++;
+			env_var_value = check_if_existing_env(str, data);//function not yet written
+			if (env_var_value != NULL)
+				ft_putstr_fd(env_var_value, hdoc_fd);
+			while (*str != '$' && *str != ' ' && *str != '\0' && *str != '\'' && *str != '\"')
+				str++;
+		}
+	}
+	ft_putchar_fd('\n', hdoc_fd);
 	free(str);
 }
