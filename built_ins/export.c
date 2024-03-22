@@ -6,7 +6,7 @@
 /*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:13:17 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 15:23:59 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:59:35 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ void	reset_printed(t_env **env)
 
 int	ft_export(char *arg, t_env **env)
 {
-	if (*arg == '=' && ft_strlen(arg) == 1)
+	if (!arg)
+		display_vars(env);
+	else if (*arg == '=' && ft_strlen(arg) == 1)
 	{
 		ft_putstr_fd("minishell 🐢: export: `=': not a valid identifier\n", 2);
 		return (1);
 	}
-	if (!arg)
-		display_vars(env);
 	else if (already_in_list(arg, *env))
 		ammend_var(arg, env);
 	else

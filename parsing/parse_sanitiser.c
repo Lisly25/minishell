@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_sanitiser.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
+/*   By: fshields <fshields@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:17:27 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/21 16:46:24 by fshields         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:45:37 by fshields         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*sanitise_str(char *str, t_data *data)
 	quotes[1] = 0;
 	san_str = (char *) malloc((len + 1) * sizeof(char));
 	if (!san_str)
-		return (NULL);
+		ft_msg_free_and_exit(data, 1, "malloc error", NULL);
 	fill_str(str, &san_str, quotes, data);
 	return (san_str);
 }
@@ -83,27 +83,25 @@ void	sanitiser(t_data *data)
 {
 	int		i;
 	int		j;
-	int		count;
+	int		ct;
 	t_comm	**comms;
 
-	i = 0;
-	j = 0;
-	count = 0;
+	i = -1;
+	j = -1;
+	ct = 0;
 	comms = data->comms;
-	while (i < data->comm_count)
+	while (++i < data->comm_count)
 	{
-		while (comms[i]->command[count])
-			count ++;
-		comms[i]->san_command = (char **) malloc(sizeof(char *) * (count + 1));
-		while (comms[i]->command[j])
-		{
+		while (comms[i]->command[ct])
+			ct ++;
+		comms[i]->san_command = (char **)malloc(sizeof(char *) * (ct + 1));
+		if (!comms[i]->san_command)
+			return (ft_msg_free_and_exit(data, 1, "malloc error", NULL));
+		while (comms[i]->command[++j])
 			comms[i]->san_command[j] = sanitise_str(comms[i]->command[j], data);
-			j ++;
-		}
 		comms[i]->san_command[j] = NULL;
-		j = 0;
-		count = 0;
-		i ++;
+		j = -1;
+		ct = 0;
 	}
 	handle_nulls(data);
 }
