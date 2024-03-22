@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:32:19 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/19 11:25:39 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/22 10:28:54 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**get_path_env_array(char **env_s, char *cmd, t_data *data)
 			return (NULL);
 		}
 		path_env_array[1] = NULL;
-		return (path_env_array);//because even without the path variable, relative paths still work, and even a.out works, while normally only ./a.out would!
+		return (path_env_array);
 	}
 	path_env_array = ft_split(path_env, ':');
 	if (path_env_array == NULL)

@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 16:14:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/21 13:54:57 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/22 10:29:29 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,6 @@ int	check_if_file_exists(char *filename)
 	else
 		return (0);
 }
-
-//this close_file() function is used for both commands currently. For the input, it's completely fine
-//for the output, we obviously should not get the "no such file or directory" message, since we are supposed to create it
-//but I'm not sure why open() would fail otherwise, or what message bash would give
 
 void	close_file(t_data *data, int fd, int j, char **file_arr)
 {

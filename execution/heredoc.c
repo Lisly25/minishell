@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:18:02 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/14 10:48:19 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/22 10:29:11 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ int	get_heredoc(t_data *data)
 
 int	delete_heredocs(t_data *data)
 {
-	//we'll see if we get an error message for trying to delete nonexistent files, but I don't think so
 	int		i;
 	char	*hdoc_name;
 
