@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/25 10:51:41 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 11:26:05 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ char	*find_absolute_path(char *cmd, t_data *data);
 char	*find_relative_path(char *cmd, t_data *data);
 
 //execution_path_utils.c
-char	**get_path_env_array(char **env_s, char *cmd, t_data *data);
+char	**get_path_env_array(char **env_s);
 int		check_access_to_command(char *path, char *cmd, t_data *data);
 
 //heredoc.c

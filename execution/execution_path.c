@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:41:21 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 10:28:11 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 11:26:25 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*find_path_from_path_env(char *cmd, char **env_s, t_data *data)
 	int		cmd_access_status;
 
 	i = 0;
-	path_env_array = get_path_env_array(env_s, cmd, data);
+	path_env_array = get_path_env_array(env_s);
 	if (path_env_array == NULL)
 		return (NULL);
 	while (path_env_array[i] != NULL)
