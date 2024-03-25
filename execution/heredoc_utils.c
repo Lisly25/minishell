@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:55:58 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/25 10:55:13 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 12:09:58 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	clean_up_after_heredoc(char *fname, int hdoc_fd, int io[], char *input)
 
 static int	check_if_env_format(char *str)
 {
-	str++;
 	if (*str == '$')
 		return (1);
 	else if (*str == ' ')
@@ -52,6 +51,32 @@ static int	check_if_env_format(char *str)
 	return (0);
 }
 
+static char	*check_if_existing_env_hdoc(char *str, t_data *data)
+{
+	t_env	*env;
+	int		i;
+	char	*str_start;
+
+	str_start = str;
+	env = data->env;
+	i = 0;
+	while (env != NULL)
+	{
+		while (env->name[i] != '\0' && check_if_env_format(str) == 0 \
+		&& env->name[i] == *str)
+		{
+			i++;
+			str++;
+		}
+		if (env->name[i] == '\0' && check_if_env_format(str) == 1)
+			return (env->value);
+		i = 0;
+		str = str_start;
+		env = env->next;
+	}
+	return (NULL);
+}
+
 void	write_to_heredoc(int hdoc_fd, char *str, t_data *data)
 {
 	char	*env_var_value;
@@ -60,20 +85,20 @@ void	write_to_heredoc(int hdoc_fd, char *str, t_data *data)
 	{
 		if (*str == '$')
 		{
+			str++;
 			if (check_if_env_format(str) == 1)
 			{
 				ft_putchar_fd('$', hdoc_fd);
-				str++;
 				continue ;
 			}
-			str++;
-			env_var_value = check_if_existing_env(str, data);
+			env_var_value = check_if_existing_env_hdoc(str, data);
 			if (env_var_value != NULL)
 				ft_putstr_fd(env_var_value, hdoc_fd);
 			while (check_if_env_format(str) == 0)
 				str++;
 			if (*str == '\0')
 				break ;
+			ft_putchar_fd(*str, hdoc_fd);
 		}
 		else
 			ft_putchar_fd(*str, hdoc_fd);
