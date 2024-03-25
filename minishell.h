@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/25 11:26:05 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 11:37:34 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@
 # include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
-# include <limits.h>
 # include <fcntl.h>
 # include "libft/libft.h"
 # include "parse.h"
+
+# define LONG_MAX 9223372036854775807
+# define INT_MAX 2147483647
 
 void	rl_replace_line(const char *text, int clear_undo);
 void	rl_clear_history(void);
