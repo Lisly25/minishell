@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:32:19 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 10:28:54 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 11:25:53 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	check_access_to_command(char *path, char *cmd, t_data *data)
 	return (127);
 }
 
-char	**get_path_env_array(char **env_s, char *cmd, t_data *data)
+char	**get_path_env_array(char **env_s)
 {
 	char	*path_env;
 	char	**path_env_array;
@@ -59,7 +59,7 @@ char	**get_path_env_array(char **env_s, char *cmd, t_data *data)
 		path_env_array = (char **)malloc(sizeof(char *) * 2);
 		if (path_env_array == NULL)
 			return (ft_error_message_and_return_null("malloc error", NULL));
-		path_env_array[0] = find_relative_path(cmd, data);
+		path_env_array[0] = getcwd(NULL, 0);
 		if (path_env_array[0] == NULL)
 		{
 			free(path_env_array);
