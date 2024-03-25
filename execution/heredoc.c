@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:18:02 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/25 10:21:34 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 10:55:07 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ static int	read_hdoc(int i, char *limiter, t_data *data)
 			return (clean_up_after_heredoc(hdoc_name, hdoc, io, NULL));
 		if (is_limiter(limiter, input) == 1)
 			return (clean_up_after_heredoc(hdoc_name, hdoc, io, input));
-		write_to_hdoc_and_free(hdoc, input, data);
+		write_to_heredoc(hdoc, input, data);
+		ft_putchar_fd('\n', hdoc);
 		free(input);
 	}
 }

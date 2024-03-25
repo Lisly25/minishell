@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/22 16:21:52 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 10:51:41 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int		delete_heredocs(t_data *data);
 //heredoc_utils.c
 char	*derive_heredoc_name(int num);
 int		clean_up_after_heredoc(char *fname, int hdoc_fd, int io[], char *input);
-void	write_to_hdoc_and_free(int hdoc_fd, char *str, t_data *data);
+void	write_to_heredoc(int hdoc_fd, char *str, t_data *data);
 
 //errors.c
 void	ft_message_and_exit(t_data *data, int code);

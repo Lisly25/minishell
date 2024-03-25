@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:55:58 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/25 10:44:22 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 10:55:13 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	check_if_env_format(char *str)
 	return (0);
 }
 
-void	write_to_hdoc_and_free(int hdoc_fd, char *str, t_data *data)
+void	write_to_heredoc(int hdoc_fd, char *str, t_data *data)
 {
 	char	*env_var_value;
 
@@ -79,5 +79,4 @@ void	write_to_hdoc_and_free(int hdoc_fd, char *str, t_data *data)
 			ft_putchar_fd(*str, hdoc_fd);
 		str++;
 	}
-	ft_putchar_fd('\n', hdoc_fd);
 }
