@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/20 10:17:46 by fshields          #+#    #+#             */
-/*   Updated: 2024/03/22 15:38:42 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 10:51:41 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int		check_if_last_redirect(char c, char **redirect, int j);
 int		ft_ambi_redirect_error_msg(char *redirect);
 
 //redirect_errors.c
+char	*check_if_existing_env(char *redirect, t_data *data);
 int		detect_ambiguous_redirect(char	*redirect, t_data *data);
 
 //execution_path.c
@@ -137,9 +138,8 @@ int		delete_heredocs(t_data *data);
 
 //heredoc_utils.c
 char	*derive_heredoc_name(int num);
-char	*sanitize_heredoc_input(char *input, t_data *data);
 int		clean_up_after_heredoc(char *fname, int hdoc_fd, int io[], char *input);
-void	write_to_hdoc_and_free(int hdoc_fd, char *str);
+void	write_to_heredoc(int hdoc_fd, char *str, t_data *data);
 
 //errors.c
 void	ft_message_and_exit(t_data *data, int code);

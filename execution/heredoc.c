@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 15:18:02 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 15:29:10 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 10:55:07 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ static int	read_hdoc(int i, char *limiter, t_data *data)
 		input = readline("> ");
 		if (input == NULL)
 			return (clean_up_after_heredoc(hdoc_name, hdoc, io, NULL));
-		input = sanitize_heredoc_input(input, data);
-		if (input == NULL)
-			return (-1);
 		if (is_limiter(limiter, input) == 1)
 			return (clean_up_after_heredoc(hdoc_name, hdoc, io, input));
-		write_to_hdoc_and_free(hdoc, input);
+		write_to_heredoc(hdoc, input, data);
+		ft_putchar_fd('\n', hdoc);
+		free(input);
 	}
 }
 
@@ -89,10 +88,8 @@ int	get_heredoc(t_data *data)
 		while (data->comms[i]->redirect[j] != NULL)
 		{
 			if (is_heredoc(data->comms[i]->redirect[j]) == 1)
-			{
 				if (read_hdoc(i, data->comms[i]->redirect[j + 1], data) == -1)
 					return (-1);
-			}
 			j = j + 2;
 		}
 		i++;

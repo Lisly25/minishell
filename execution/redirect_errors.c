@@ -6,13 +6,13 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 11:37:43 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/21 12:37:59 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:20:34 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static char	*check_if_existing_env(char *redirect, t_data *data)
+char	*check_if_existing_env(char *redirect, t_data *data)
 {
 	t_env	*env;
 	int		i;
