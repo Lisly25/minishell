@@ -6,7 +6,7 @@
 /*   By: skorbai <skorbai@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:55:58 by skorbai           #+#    #+#             */
-/*   Updated: 2024/03/22 16:43:52 by skorbai          ###   ########.fr       */
+/*   Updated: 2024/03/25 10:44:22 by skorbai          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,22 @@ int	clean_up_after_heredoc(char *fname, int hdoc_fd, int io[], char *input)
 	return (0);
 }
 
+static int	check_if_env_format(char *str)
+{
+	str++;
+	if (*str == '$')
+		return (1);
+	else if (*str == ' ')
+		return (1);
+	else if (*str == '\'')
+		return (1);
+	else if (*str == '\"')
+		return (1);
+	else if (*str == '\0')
+		return (1);
+	return (0);
+}
+
 void	write_to_hdoc_and_free(int hdoc_fd, char *str, t_data *data)
 {
 	char	*env_var_value;
@@ -44,20 +60,24 @@ void	write_to_hdoc_and_free(int hdoc_fd, char *str, t_data *data)
 	{
 		if (*str == '$')
 		{
-			if (check_if_correct_format(str) == 0)
+			if (check_if_env_format(str) == 1)
 			{
 				ft_putchar_fd('$', hdoc_fd);
 				str++;
 				continue ;
 			}
 			str++;
-			env_var_value = check_if_existing_env(str, data);//function not yet written
+			env_var_value = check_if_existing_env(str, data);
 			if (env_var_value != NULL)
 				ft_putstr_fd(env_var_value, hdoc_fd);
-			while (*str != '$' && *str != ' ' && *str != '\0' && *str != '\'' && *str != '\"')
+			while (check_if_env_format(str) == 0)
 				str++;
+			if (*str == '\0')
+				break ;
 		}
+		else
+			ft_putchar_fd(*str, hdoc_fd);
+		str++;
 	}
 	ft_putchar_fd('\n', hdoc_fd);
-	free(str);
 }
