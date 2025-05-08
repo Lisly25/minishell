@@ -85,4 +85,7 @@ tidymake:
 					@make all
 					@make clean
 
+debug:			
+				$(CC) $(CFLAGS) -g $(SRCS) $(LIBFT) -lreadline -L $(RL_PATH) -o debug
+
 .PHONY:			all makelibft clean fclean re tidymake san

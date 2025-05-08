@@ -16,7 +16,7 @@ int	ft_env(t_env *env)
 {
 	while (env)
 	{
-		if (env->value && env->value != '\0')
+		if (env->value && (ft_strlen(env->value) != 0))
 			printf("%s=%s\n", env->name, env->value);
 		env = env->next;
 	}

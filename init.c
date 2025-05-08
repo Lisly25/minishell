@@ -31,12 +31,12 @@ t_env	*new_node(char *name, char *value)
 {
 	t_env	*new_node;
 
-	new_node = (t_env *) malloc(sizeof(t_env));
+	new_node = (t_env *) ft_calloc(1, sizeof(t_env));
 	if (!new_node)
 		return (NULL);
 	new_node->name = ft_strdup(name);
 	if (value == NULL)
-		new_node->value = NULL;
+		new_node->value = "\0";
 	else
 		new_node->value = ft_strdup(value);
 	new_node->printed = 0;

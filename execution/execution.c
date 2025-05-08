@@ -105,10 +105,8 @@ int	child_process(t_data *data, t_comm *comm, int i)
 
 int	execute(t_data *data)
 {
-	int		i;
 	t_comm	**comms;
 
-	i = 0;
 	signal(SIGINT, SIG_IGN);
 	comms = data->comms;
 	if (data->comm_count == 0)

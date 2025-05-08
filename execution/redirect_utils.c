@@ -14,9 +14,6 @@
 
 int	check_if_last_redirect(char c, char **redirect, int j)
 {
-	int	i;
-
-	i = 0;
 	if (j == (ft_get_arr_size(redirect) + 2))
 		return (1);
 	j = j + 2;
