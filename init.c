@@ -36,7 +36,7 @@ t_env	*new_node(char *name, char *value)
 		return (NULL);
 	new_node->name = ft_strdup(name);
 	if (value == NULL)
-		new_node->value = "\0";
+		new_node->value = ft_strdup("\0");
 	else
 		new_node->value = ft_strdup(value);
 	new_node->printed = 0;
