@@ -21,6 +21,7 @@ static int	heredoc(int i)
 	if (hdoc_name == NULL)
 		return (-2);
 	fd = open(hdoc_name, O_RDONLY);
+	free(hdoc_name);
 	return (fd);
 }
 
