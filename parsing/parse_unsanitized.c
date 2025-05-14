@@ -23,7 +23,7 @@ static int	init_t_comm_struct(t_data *data)
 		return (MALLOC_ERROR);
 	while (i < data->comm_count)
 	{
-		data->comms[i] = (t_comm *)malloc(sizeof(t_comm));
+		data->comms[i] = (t_comm *)ft_calloc(1, sizeof(t_comm));
 		if (data->comms[i] == NULL)
 			return (MALLOC_ERROR);
 		data->comms[i]->input_fd = STDIN_FILENO;
